@@ -2,9 +2,31 @@
 
 \documentclass[twocolumn]{article}
 
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{varioref}
+\usepackage{fancyvrb}
+\usepackage[pdfstartview=FitH]{hyperref}
+
 \title{Divergent Color Maps for Scientific Visualization}
 
 \author{Kenneth~Moreland}
+
+% Commands I use for citing.
+\newcommand{\lcite}[1]{~\cite{#1}}
+\newcommand{\scite}[1]{~\cite{#1}}
+
+% Avoid putting figures on their own page.
+\renewcommand{\textfraction}{0.05}
+\renewcommand{\topfraction}{0.95}
+
+% Make sure this is big enough so that only big figures end up on their own
+% page but small enough so that if a figure does have to be on its own
+% page, it won't push everything to the bottom because it's not big enough
+% to have its own page.
+\renewcommand{\floatpagefraction}{.75}
 
 \begin{document}
 
@@ -37,6 +59,35 @@
 
 At its core, visualization is the process of providing a visual
 representation of data.  One of the most fundamental and important aspects
-of this process is the mapping of numbers to colors.
+of this process is the mapping of numbers to colors.  This mapping allows
+us to pseudocolor an image or object based on varying numerical data.
+Obviously, the choice of color map is important to allow the viewer to
+easily perform the reverse mapping back to scalar values.
+
+\begin{figure}
+  \centering
+  \fbox{The rainbow color map.}
+  \caption{The rainbow color map.  Know thy enemy.}
+  \label{fig:RainbowColorMap}
+\end{figure}
+
+By far the most common color map used in scientific visualization is the
+rainbow color map, shown in Figure~\ref{fig:RainbowColorMap}.  In a recent
+review on the use of color map, Borland and Taylor\scite{Borland07} found
+that the rainbow color map was used as the default in 8 out of the 9
+toolkits they examined.  Borland and Taylor also found that in IEEE
+Visualization papers from 2001 to 2005 the rainbow color maps was used 51
+percent of the time.
+
+\section{Acknowledgements}
+
+
+This work was done at Sandia National Laboratories.  Sandia is a
+multiprogram laboratory operated by Sandia Corporation, a Lockheed Martin
+Company, for the United States Department of Energy'’s National Nuclear
+Security Administration under contract DE-AC04-94AL85000.
+
+\bibliographystyle{plain}
+\bibliography{ColorMaps}
 
 \end{document}
