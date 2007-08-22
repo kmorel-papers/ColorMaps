@@ -3,4 +3,10 @@ PROJECT(ColorMaps NONE)
 INCLUDE(UseLATEX.cmake)
 ADD_LATEX_DOCUMENT(ColorMaps.tex
   BIBFILES ColorMaps.bib
+  IMAGE_DIRS images
   )
+
+OPTION(BUILD_CODE "Build the VTK based code." OFF)
+IF (BUILD_CODE)
+  ADD_SUBDIRECTORY(tools/VTK)
+ENDIF (BUILD_CODE)
