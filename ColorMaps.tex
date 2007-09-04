@@ -30,6 +30,13 @@
 
 \newcommand{\sticky}[1]{\textsc{[#1]}}
 
+\newcommand{\RGB}{RGB}
+\newcommand{\CMYK}{CMYK}
+\newcommand{\XYZ}{XYZ}
+\newcommand{\Lab}{CIELAB}
+\newcommand{\Luv}{CIELUV}
+\newcommand{\Msh}{Msh}
+
 \begin{document}
 
 \maketitle
@@ -130,7 +137,6 @@ which are used heavily in the subsequent discussions in this paper.
   \caption{The grayscale color map.}
   \label{fig:GrayscaleColorMap}
 \end{figure}
-
 Let us start with perhaps the simplest color map of all: the grayscale
 color map shown in Figure~\ref{fig:GrayscaleColorMap}.  Completely devoid
 of any chromaticity, this map relies entirely on luminance to demonstrate
@@ -157,23 +163,132 @@ separated by distance and background, human subjects error up to 20\%.
 This effect is demonstrated in Figure~\ref{fig:GrayscaleLocality}.  The
 problem can be corrected by adding a chromaticity shift.
 
-% \begin{figure}
-%   \centering
-%   \includegraphics[width=1.25in]{images/GrayscaleDiscontinuity}
-%   \qquad
-%   \includegraphics[width=1.25in]{images/RainbowDiscontinuity}
-%   \caption{A discontinuity in the data is easily visible with a grayscale
-%     color map (left) but is completely hidden by the rainbow color map
-%     (right).  Instead, the rainbow color map appears to show variation in
-%     the cyan and yellow regions that do not exist.}
-%   \label{fig:discontinuity}
-% \end{figure}
+\begin{figure}
+  \centering
+  \includegraphics[width=1.25in]{images/GrayscaleShading}
+  \includegraphics[width=1.25in]{images/IsoluminantShading}
+  \caption{Maps with big changes in luminance hides shading cue important
+    for determining 3D structure whereas isoluminant maps minimize shading
+    interference.}
+  \label{fig:LuminanceVsShading}
+\end{figure}
+Another problem with grayscale color maps that is of greater concern for
+general purpose scientific visualization is its interference with surface
+shading.  The shading of 3D surfaces based on light sources is of utmost
+importance for perceiving the surface shape.  These shading cues are
+composed almost entirely of luminance shifts.  Thus the luminance shift of
+the grayscale color map mask the surface luminance shifts, especially in
+the darker part of the spectrum.  The problem cannot be corrected without a
+major reduction in the range the luminance shifts in the color map.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=2.5in]{images/Green2RedBar}\qquad
+  \includegraphics[width=2.5in]{images/Cyan2MauveBar}
+  \caption{Isoluminant color maps.  The green to red color map is popular
+    because it uses opposing colors \sticky{Check the nomenclature.}, but
+    the cyan to mauve color map is much easier to see by individuals with
+    deuteranope or protanopic vision.}
+  \label{fig:IsoluminantColorMap}
+\end{figure}
+Another class of color maps that is often suggested for use with 3D
+surfaces is the isoluminant color map that is demonstrated in
+Figure~\ref{fig:IsoluminantColorMap}.  Somewhat opposite to the grayscale
+map, an isoluminant map maintains a constant (perceptual) luminance and
+relies entirely on chromatic shifts.  An isoluminant color map is
+theoretically ideal for mapping onto shaded surfaces, as is demonstrated in
+Figure~\ref{fig:LuminanceVsShading}.
+
+Isoluminant color maps are not without their detractors, however.  Human
+perception is less sensitive to changes in saturation or hue than changes
+in luminance, especially for high frequency data\lcite{Rogowitz96}.
+Holding the luminance constant also restricts the colors that can be
+represented.  Thus, the isoluminant color map will have a lower fidelity
+than one in which the luminance is allowed to change.  Isoluminant color
+maps also tend to look dull and ugly, which means that a casual user will
+almost never choose one over a more vibrant color map like, say, the
+rainbow color map.
+
+However, as vibrant as the rainbow color map might be, it is actually an
+extremely poor choice.  Based on the colors of light at different
+wavelengths, the rainbow color map's design has nothing to do with how
+humans perceive color.  This results in multiple problems when humans try
+to do the reverse mapping from colors back to numbers.
+
+The first problem with the rainbow color map is that it is sensitive to
+deficiencies in vision.  Humans with color-deficient vision, such as
+protanopic vision, which effects roughly 10\% of the male population
+\sticky{Check my facts here.}, cannot resolve all of the colors of the
+rainbow color map\lcite{Light04}.
+
+The second problem is that the colors do not follow any natural perceived
+ordering.  Perceptual experiments show that although a test subject, with
+no prior training, will always order grayscale colors in order of luminance,
+the test subjects will order rainbow colors in numerous different
+ways\lcite{Ware04}.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=1.0in]{images/GrayscaleSpatialContrast}
+  \qquad
+  \includegraphics[width=1.0in]{images/RainbowSpatialContrast}
+  \caption{A spatial contrast sensitivity function.  The frequency of the
+    function increases from left to right, and the contrast increases from
+    top to bottom.  Notice that the grayscale mapping faithfully reproduces
+    the function.  The rainbow color mapping hides the variation in the low
+    contrast region and appears less smooth in the high-contrast,
+    low-frequency region.}
+  \label{fig:RainbowSpatialContrast}
+\end{figure}
+
+A third problem is that the perceptual changes in the colors are not
+uniform.  The colors appear to change faster in the cyan and yellow
+regions, which can cause Mach bands in those regions.  The colors appear to
+change slower in the blue, green, and red regions, which creates larger
+bands of color.  Within these bands it can hide important changes in the
+underlying data.  Thus, the nonuniform perceptual changes works to
+simultaneously introduce artifacts and obfuscate real
+data\lcite{Borland07} as demonstrated in
+Figure~\ref{fig:RainbowSpatialContrast}.
+
+These color maps comprise the most commonly used in literature and tools
+today.  Other color maps are proposed by Ware\scite{Ware04} as well as
+several others.  Most are similar in spirit to those here with uniform
+changes in luminance, saturation, or hue or some combination thereof.
 
 \subsection{Color Spaces}
 \label{sec:PreviousWork:ColorSpaces}
 
-\section{Acknowledgements}
+The remainder of this paper relies on using different color spaces to
+describe color map generation.  This section quickly reviews some of these
+color spaces.
 
+All color spaces are based on the tri-color stimulous theory, which states
+that any perceived color can be uniquely represented by a 3-tuple
+\sticky{Reference}.  This result is a side effect of the fact that there
+are exactly 3 different types of color receptors in the human eye.
+
+The color space most frequently used is the \RGB color space
+\sticky{Reference}.  This color space is adopted by many graphics packages
+such as OpenGL and is presented to users by just about every computer
+application in existence that provides a color chooser.  The three values
+in the \RGB color space refer to the intensity output by each of the three
+wavelengths of light used by monitors, televisions, and projectors to
+create colors.  There is also a similar \CMYK color space that defines
+colors by how printers mix ink \sticky{Reference}.
+
+Although the \RGB and \CMYK color spaces are good for many practical
+purposes, since they are defined exactly over the gamut of colors that can
+be displayed, it is sometimes useful to define colors over the gamut of
+visible colors.  However, it is not as useful for describing colors that
+are visible but not representable by the display.  To this end the
+International Commission on Illumination (better known as CIE from its
+French title, the \emph{Commission Internationale de l'Eclairage}) convened
+in \sticky{when?} and defined the \XYZ color space.  The \XYZ color space
+provides a convienient way to consistently describe all visible colors.
+
+
+\section{Acknowledgements}
 
 This work was done at Sandia National Laboratories.  Sandia is a
 multiprogram laboratory operated by Sandia Corporation, a Lockheed Martin
