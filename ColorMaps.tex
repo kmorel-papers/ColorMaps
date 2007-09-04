@@ -8,6 +8,7 @@
 \usepackage{graphicx}
 \usepackage{varioref}
 \usepackage{fancyvrb}
+\usepackage{xspace}
 \usepackage[pdfstartview=FitH]{hyperref}
 
 \title{Divergent Color Maps for Scientific Visualization}
@@ -30,12 +31,13 @@
 
 \newcommand{\sticky}[1]{\textsc{[#1]}}
 
-\newcommand{\RGB}{RGB}
-\newcommand{\CMYK}{CMYK}
-\newcommand{\XYZ}{XYZ}
-\newcommand{\Lab}{CIELAB}
-\newcommand{\Luv}{CIELUV}
-\newcommand{\Msh}{Msh}
+\newcommand{\RGB}{RGB\xspace}
+\newcommand{\CMYK}{CMYK\xspace}
+\newcommand{\XYZ}{XYZ\xspace}
+\newcommand{\Lab}{CIELAB\xspace}
+\newcommand{\Luv}{CIELUV\xspace}
+\newcommand{\Msh}{Msh\xspace}
+\newcommand{\DeltaE}{\ensuremath{\Delta{}E}\xspace}
 
 \begin{document}
 
@@ -263,7 +265,7 @@ The remainder of this paper relies on using different color spaces to
 describe color map generation.  This section quickly reviews some of these
 color spaces.
 
-All color spaces are based on the tri-color stimulous theory, which states
+All color spaces are based on the tri-color stimulus theory, which states
 that any perceived color can be uniquely represented by a 3-tuple
 \sticky{Reference}.  This result is a side effect of the fact that there
 are exactly 3 different types of color receptors in the human eye.
@@ -283,9 +285,21 @@ be displayed, it is sometimes useful to define colors over the gamut of
 visible colors.  However, it is not as useful for describing colors that
 are visible but not representable by the display.  To this end the
 International Commission on Illumination (better known as CIE from its
-French title, the \emph{Commission Internationale de l'Eclairage}) convened
-in \sticky{when?} and defined the \XYZ color space.  The \XYZ color space
-provides a convienient way to consistently describe all visible colors.
+French title, the \emph{Commission Internationale de l'\'{E}clairage})
+convened in 1931 and defined the \XYZ color space \sticky{Reference}.  The
+\XYZ color space provides a convenient way to consistently describe all
+visible colors without being tied to any particular display device.
+
+The \XYZ color space, however, is still defined by the physical properties
+of light.  Movements within the \XYZ space are not perceptually linear.  To
+address the need for a perceptually linear color space, the CIE developed
+two more color spaces in 1976: \Lab and \Luv.  The choice between the two
+is fairly arbitrary; this paper uses \Lab \sticky{Reference}.
+
+\Lab is an approximation of how humans perceive light.  The Euclidean
+distance between two points is the approximate perceived difference between
+the two colors.  This Euclidean distance in \Lab space is known as \DeltaE
+and makes a good metric for comparing color differences \sticky{Reference?}.
 
 
 \section{Acknowledgements}
