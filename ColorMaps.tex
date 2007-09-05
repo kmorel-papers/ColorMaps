@@ -299,8 +299,48 @@ is fairly arbitrary; this paper uses \Lab \sticky{Reference}.
 \Lab is an approximation of how humans perceive light.  The Euclidean
 distance between two points is the approximate perceived difference between
 the two colors.  This Euclidean distance in \Lab space is known as \DeltaE
-and makes a good metric for comparing color differences \sticky{Reference?}.
+and makes a good metric for comparing color differences
+\sticky{Reference?}.
 
+
+\section{Color Map Requirements}
+\label{sec:ColorMapRequirements}
+
+Our ultimate goal is to design a color map that works well for in
+general-purpose scientific visualization.  It should work well for a wide
+breadth of tasks and users.  As such we have the following requirements.
+
+\begin{itemize}
+\item The map yields images that are colorful and vibrant.
+\item The perceptual interpolation matches the underlying scalars the map
+  represents.
+\item The map maximizes the perceptual resolution.
+\item Interference the shading of 3D surfaces is minimal.
+\item The map is not sensitive with vision deficiencies.
+\item The order of the colors should be natural.
+\end{itemize}
+
+The reasoning behind most of these requirements is self explanatory.  The
+requirement that the color map be ``pretty,'' however, is not one often
+found in the scientific literature.  After all, the attractiveness of the
+color map, which is difficult to quantify in the first place, has little to
+do its effectiveness in conveying information.  Nevertheless, aesthetic
+appeal is important as users will use that as a criteria in selecting
+visualization products and generating images.
+
+% \begin{itemize}
+% \item Due to the proliferation of visualization programs and images using
+%   the rainbow color map, many users will have ``learned'' the order of the
+%   colors and will continue to have to use them.  Our color map should try
+%   not to break that convention.
+% \end{itemize}
+
+Several of these requirements are contradictory, which makes choosing a
+general purpose color map so difficult.  All of the examples in
+Section~\ref{sec:PreviousWork:ColorMaps} excel in some of the requirements,
+but fail completely in one or more of the others.  It is impossible to have
+a color map that performs perfectly in all of the requirements.  Our color
+map must be a compromise that works reasonable well in all areas.
 
 \section{Acknowledgements}
 
