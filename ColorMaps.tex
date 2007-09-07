@@ -8,6 +8,7 @@
 \usepackage{graphicx}
 \usepackage{varioref}
 \usepackage{fancyvrb}
+\usepackage{cite}
 \usepackage{xspace}
 \usepackage[pdfstartview=FitH]{hyperref}
 
@@ -110,9 +111,9 @@ their dubious scientific value.
 A second major contributor to the dominance of the rainbow color map is the
 lack of a clear alternative, especially in terms of scientific
 visualization.  There are certainly many publications that recommend some
-very good choices for color maps\lcite{Ware04}\sticky{Site
-  Brewer. Tufte?}.  However, each has its sets of features and detractors,
-and the choice of the ``right'' one is difficult.
+very good choices for color maps\lcite{Ware04,Brewer05}.  However, each has
+its sets of features and detractors, and the choice of the ``right'' one is
+difficult.
 
 This paper is a concluding report on the quest for finding a good default
 color map for a general purpose scientific visualization application.  The
@@ -144,10 +145,8 @@ color map shown in Figure~\ref{fig:GrayscaleColorMap}.  Completely devoid
 of any chromaticity, this map relies entirely on luminance to demonstrate
 the numerical value.  Although a very simple map to create and use, this
 map is surprisingly effective as the human visual system is most sensitive
-to changes in luminance\sticky{Find the appropriate reference.  I think
-  Ware's book might have this.  Rogowitz might also mention this.}.  The
-grayscale color map is used heavily in the image processing and medical
-visualization fields.
+to changes in luminance\lcite{Ware04,Mullen85}.  The grayscale color map is
+used heavily in the image processing and medical visualization fields.
 
 \begin{figure}
   \centering
@@ -188,9 +187,9 @@ major reduction in the range the luminance shifts in the color map.
   \includegraphics[width=2.5in]{images/Green2RedBar}\qquad
   \includegraphics[width=2.5in]{images/Cyan2MauveBar}
   \caption{Isoluminant color maps.  The green to red color map is popular
-    because it uses opposing colors \sticky{Check the nomenclature.}, but
-    the cyan to mauve color map is much easier to see by individuals with
-    deuteranope or protanopic vision.}
+    because it uses a pair of opponent colors, but the cyan to mauve color
+    map is much easier to see by individuals with deuteranope or protanopic
+    vision.}
   \label{fig:IsoluminantColorMap}
 \end{figure}
 Another class of color maps that is often suggested for use with 3D
@@ -218,10 +217,10 @@ humans perceive color.  This results in multiple problems when humans try
 to do the reverse mapping from colors back to numbers.
 
 The first problem with the rainbow color map is that it is sensitive to
-deficiencies in vision.  Humans with color-deficient vision, such as
-protanopic vision, which effects roughly 10\% of the male population
-\sticky{Check my facts here.}, cannot resolve all of the colors of the
-rainbow color map\lcite{Light04}.
+deficiencies in vision.  A significant proportion of the population, most
+of which are males, cannot distinguish between the red and green colors.
+These unfortunate soles cannot distinguish many colors considered ``far
+appart'' in the rainbow color map\lcite{Light04}.
 
 The second problem is that the colors do not follow any natural perceived
 ordering.  Perceptual experiments show that although a test subject, with
