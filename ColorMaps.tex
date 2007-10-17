@@ -9,6 +9,7 @@
 \usepackage{varioref}
 \usepackage{fancyvrb}
 \usepackage{cite}
+\usepackage{subfigure}
 \usepackage{xspace}
 \usepackage[pdfstartview=FitH]{hyperref}
 
@@ -19,6 +20,10 @@
 % Commands I use for citing.
 \newcommand{\lcite}[1]{~\cite{#1}}
 \newcommand{\scite}[1]{~\cite{#1}}
+
+% Put figures inline with text when possible
+\usepackage{float}
+\floatplacement{figure}{htb}
 
 % Avoid putting figures on their own page.
 \renewcommand{\textfraction}{0.05}
@@ -164,6 +169,17 @@ separated by distance and background, human subjects error up to 20\%.
 This effect is demonstrated in Figure~\ref{fig:GrayscaleLocality}.  The
 problem can be corrected by adding a chromaticity shift.
 
+Another problem with grayscale color maps that is of greater concern for
+general purpose scientific visualization is its interference with surface
+shading.  The shading of 3D surfaces based on light sources is of utmost
+importance for perceiving the surface shape.  These shading cues are
+composed almost entirely of luminance shifts.  Thus the luminance shift of
+the grayscale color map mask the surface luminance shifts, especially in
+the darker part of the spectrum as demonstrated in
+Figure~\ref{fig:LuminanceVsShading}.  The problem cannot be corrected
+without a major reduction in the range the luminance shifts in the color
+map.
+
 \begin{figure}
   \centering
   \includegraphics[width=1.25in]{images/GrayscaleShading}
@@ -173,14 +189,6 @@ problem can be corrected by adding a chromaticity shift.
     interference.}
   \label{fig:LuminanceVsShading}
 \end{figure}
-Another problem with grayscale color maps that is of greater concern for
-general purpose scientific visualization is its interference with surface
-shading.  The shading of 3D surfaces based on light sources is of utmost
-importance for perceiving the surface shape.  These shading cues are
-composed almost entirely of luminance shifts.  Thus the luminance shift of
-the grayscale color map mask the surface luminance shifts, especially in
-the darker part of the spectrum.  The problem cannot be corrected without a
-major reduction in the range the luminance shifts in the color map.
 
 \begin{figure}
   \centering
@@ -310,13 +318,13 @@ general-purpose scientific visualization.  It should work well for a wide
 breadth of tasks and users.  As such we have the following requirements.
 
 \begin{itemize}
-\item The map yields images that are colorful and vibrant.
-\item The perceptual interpolation matches the underlying scalars the map
-  represents.
+\item The map yields images that are aesthetically pleasing.
 \item The map maximizes the perceptual resolution.
 \item Interference the shading of 3D surfaces is minimal.
 \item The map is not sensitive with vision deficiencies.
 \item The order of the colors should be natural.
+\item The perceptual interpolation matches the underlying scalars the map
+  represents.
 \end{itemize}
 
 The reasoning behind most of these requirements is self explanatory.  The
@@ -332,6 +340,10 @@ visualization products and generating images.
 %   the rainbow color map, many users will have ``learned'' the order of the
 %   colors and will continue to have to use them.  Our color map should try
 %   not to break that convention.
+% \item Color maps often co-exist with other visible elements: labels,
+%   backgrounds, auxiliary structures and features, annotation, etc.  Thus,
+%   the color map should yield well other elements with carefully chosen
+%   colors.
 % \end{itemize}
 
 Several of these requirements are contradictory, which makes choosing a
@@ -340,6 +352,92 @@ Section~\ref{sec:PreviousWork:ColorMaps} excel in some of the requirements,
 but fail completely in one or more of the others.  It is impossible to have
 a color map that performs perfectly in all of the requirements.  Our color
 map must be a compromise that works reasonable well in all areas.
+
+
+\section{Color Map Design}
+\label{sec:ColorMapDesign}
+
+There are many color maps in existence today, but very few of them satisfy
+all of the requirements listed in Section~\ref{sec:ColorMapRequirements}.
+For inspiration, I look at the very mature field of cartography.  People
+have been making maps for thousands of years.  Throughout the history of
+cartography there has been much focus on both the effectiveness of
+conveying information as well as the aesthetics of the design.
+
+Brewer\scite{Brewer05} provides excellent advice for designing cartographic
+color maps as well as many examples of well designed color
+maps.\footnote{Brewer's color maps are also available on her web site:
+  \href{http://www.colorbrewer.org}{www.colorbrewer.org}} Brewer divides
+her color maps into three classes: \sticky{unorderd: that's not the real
+  name, but I'm drawing a blank and I'm on a plane so I cannot check},
+sequential\sticky{that may not be the name}, and divergent.  Examples of
+these color maps are shown in Figure~\ref{fig:BrewerExamples}.
+
+\begin{figure}
+  \centering
+  \subfigure[\sticky{Unordered}]{\sticky{Unordered}}
+  \subfigure[Sequential]{\sticky{Sequential}}
+  \subfigure[Divergent]{\sticky{Divergent}}
+  \caption{Examples of color maps from
+    \href{http://www.colorbrewer.org}{www.colorbrewer.org}.}
+  \label{fig:BrewerExamples}
+\end{figure}
+
+The \sticky{unordered} color maps are used to represent a collection of
+discrete, unordered classes.  Since the colors have no ordering (by
+design), they are not appropriate for mapping a scalar variable.
+
+The sequential color maps are monochromatic.\sticky{Verify that they are all
+  like that.}  The range from a heavily saturated color to various levels
+of unsaturation, terminating in white.  The monotonic nature of the
+saturation level maps well to a scalar value.  Sequential maps are usually
+oriented such that the most saturated color represents the lowest scalar
+value whereas the more luminant white represents the highest scalar value.
+However, the color map, which has a limited range of luminance, can
+sometimes be flipped.  For example, if a red or orange sequential color map
+represented temperature, it would be more natural to represent the highest
+temperature with the most saturated color.
+
+The divergent color maps (also known as \sticky{look it up}) have two major
+color components.  The map transitions from one color component to the
+other by passing through an unsaturated color (white or yellow).  Divergent
+color maps are typically used for to represent a scalar with a significant
+value at or near the median.  For example, a color map for elevation could
+put sea level at white with below sea level\lcite{Tufte97}.  The ordering
+of the colors is usually based on the context with which they are used.  In
+the elevation example, blues can be used to represent the sea floor depth
+and tans can be used to represent land elevation.
+
+Sequential color maps are clearly appropriate for scientific visualization.
+Their monotonic nature yields well to mapping scalar values.  Divergent
+color maps are a less obvious choice.  We cannot expect there to be some
+significant median value that the divergent color map is designed to
+highlight.
+
+However, divergent color maps can better satisfy the requirements given in
+Section~\ref{sec:ColorMapRequirements} then their sequential counterparts.
+First, the more colorful nature of the divergent color map can be more
+aesthetically pleasing.  Second, the diverget color map can have up to
+twice the perceptual resolution of the sequential color map without
+sacrificing the requirements of surface shading or accommodating viewers
+with bi-chromatic \sticky{Correct?} vision.
+
+What divergent color maps lack in general is a natural ordering of colors.
+To impose a color ordering, we carefully chose two colors that most
+naturally have ``low'' and ``high'' connotations.  We achieve this with the
+concept of ``cool'' and ``warm'' colors \sticky{Cite}.  Color temperature
+has been used for centuries as a means of evoking an emotional response.
+The response is psychosomatic \sticky{word use?}.  The resons for the
+interpretation are unclear although it may have to do with how light at the
+opposite ends of the visibile spectrum refract in the eye \sticky{I had a
+  reference for this, what did I do with it?}.  We can best evoke the
+cool-warm response by using blue and red for the low and high extrema,
+respectively.
+
+Using our initial criteria, we can think of divergent color map as
+``locally'' optimal.  We cannot add any color to anywhere in the map
+without degrading one or more of the requirements.
+
 
 \section{Acknowledgements}
 
