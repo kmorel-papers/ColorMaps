@@ -68,5 +68,30 @@ int main(int, char **)
   cyan2mauve->AddRGBPoint(1.0, 0.768, 0.467, 0.341);
   generate_bar("Cyan2MauveBar.png", cyan2mauve);
 
+  VTK_CREATE(vtkColorTransferFunction, purple2orange);
+  purple2orange->SetColorSpaceToMsh();
+  purple2orange->AddRGBPoint(0.0, 0.436, 0.308, 0.631);
+  // Spin the other way.
+  purple2orange->AddRGBPoint(15.0/32.0, 0.965, 0.908, 0.912);
+  purple2orange->AddRGBPoint(0.5, 0.943, 0.943, 0.943);
+  purple2orange->AddRGBPoint(1.0, 0.759, 0.334, 0.046);
+  generate_bar("Purple2OrangeBar.png", purple2orange);
+
+  VTK_CREATE(vtkColorTransferFunction, green2purple);
+  green2purple->SetColorSpaceToMsh();
+  green2purple->AddRGBPoint(0.0, 0.085, 0.532, 0.201);
+  green2purple->AddRGBPoint(0.5, 0.943, 0.943, 0.943);
+  // Spin the other way.
+  green2purple->AddRGBPoint(17.0/32.0, 0.965, 0.908, 0.912);
+  green2purple->AddRGBPoint(1.0, 0.436, 0.308, 0.631);
+  generate_bar("Green2PurpleBar.png", green2purple);
+
+  VTK_CREATE(vtkColorTransferFunction, blue2tan);
+  blue2tan->SetColorSpaceToMsh();
+  blue2tan->AddRGBPoint(0.0, 0.293, 0.562, 0.873);
+  blue2tan->AddRGBPoint(0.5, 0.943, 0.943, 0.943);
+  blue2tan->AddRGBPoint(1.0, 0.845, 0.643, 0.204);
+  generate_bar("Blue2TanBar.png", blue2tan);
+
   return 0;
 }

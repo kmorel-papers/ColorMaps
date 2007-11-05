@@ -613,8 +613,9 @@ determine a good hue to use for the white point (from the given side).
 Note that Equation~\ref{eqn:adjusted_hu} will most certainly yield a
 different value for each of the saturated colors used in the diverging
 color map.  The direction in which the hue is ``spun'' is unimportant with
-regard to perception.  I usually adjust the hue to be away from 0 because
-it provides slightly more aesthetically pleasing results.
+regard to perception.  I usually adjust the hue to be away from 0 (except
+in the purple hues) because it provides slightly more aesthetically
+pleasing results.
 
 
 \section{Results}
@@ -673,7 +674,7 @@ shown in Figure~\ref{fig:ColorMapWithAnnotation}.
 \begin{figure}
   \centering
   \includegraphics[width=3in]{images/AnnotationExample}
-  \caption{Terrain with the color map applied and heavily annotated. \sticky{An example invovling sci vis would probably be better.  Do we have anything?}
+  \caption{Terrain with the color map applied and heavily annotated. \sticky{An example invovling sci vis would probably be better.  Do we have anything?}}
   \label{fig:ColorMapWithAnnotation}
 \end{figure}
 
@@ -685,8 +686,12 @@ Figure~\ref{fig:OtherColorMaps}.
 
 \begin{figure}
   \centering
-  \sticky{More diverging color maps.}
-  \caption{Further examples of color maps.}
+  \begin{tabular}{c}
+    \includegraphics[width=2.5in]{images/Purple2OrangeBar} \\
+    \includegraphics[width=2.5in]{images/Green2PurpleBar} \\
+    \includegraphics[width=2.5in]{images/Blue2TanBar}
+  \end{tabular}
+  \caption{Further examples of color maps defined in \Msh space.}
   \label{fig:OtherColorMaps}
 \end{figure}
 
