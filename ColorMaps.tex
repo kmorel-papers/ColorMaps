@@ -13,7 +13,7 @@
 \usepackage{xspace}
 \usepackage[pdfstartview=FitH]{hyperref}
 
-\title{Divergent Color Maps for Scientific Visualization}
+\title{Diverging Color Maps for Scientific Visualization}
 
 \author{Kenneth~Moreland}
 
@@ -63,9 +63,9 @@
 
   Although many other color maps have been proposed and used, none have
   been adopted by the visualization community as a good default in
-  scientific visualization.  In this paper we explore the use of divergent
+  scientific visualization.  In this paper we explore the use of diverging
   color maps (sometimes also called bipolar color maps) for use in
-  scientific visualization.  We conclude with a divergent color map that
+  scientific visualization.  We conclude with a diverging color map that
   generally performs well in scientific visualization applications.  This
   color map is a clear replacement for the rainbow color map and can
   hopefully, once and for all, kill the use of the rainbow color map for
@@ -376,7 +376,7 @@ Brewer\scite{Brewer05} provides excellent advice for designing cartographic
 color maps as well as many examples of well designed color
 maps.\footnote{Brewer's color maps are also available on her web site:
   \href{http://www.colorbrewer.org}{www.colorbrewer.org}.} Brewer divides
-her color maps into three classes: qualitative, sequential, and divergent.
+her color maps into three classes: qualitative, sequential, and diverging.
 Examples of these color maps are shown in Figure~\ref{fig:BrewerExamples}.
 
 \begin{figure}
@@ -385,7 +385,7 @@ Examples of these color maps are shown in Figure~\ref{fig:BrewerExamples}.
   \quad
   \subfigure[Sequential]{\includegraphics{images/ColorMapsSequential}}
   \quad
-  \subfigure[Divergent]{\includegraphics{images/ColorMapsDiverging}}
+  \subfigure[Diverging]{\includegraphics{images/ColorMapsDiverging}}
   \caption{Examples of color maps from
     \href{http://www.colorbrewer.org}{www.colorbrewer.org}.}
   \label{fig:BrewerExamples}
@@ -395,20 +395,20 @@ The qualitative color maps are used to represent a collection of discrete,
 unordered classes.  Since the colors have no ordering (by design), they are
 not appropriate for mapping a scalar variable.
 
-The sequential color maps are monochromatic.\sticky{Verify that they are all
-  like that.}  The range from a heavily saturated color to various levels
-of unsaturation, terminating in white.  The monotonic nature of the
-saturation level maps well to a scalar value.  Sequential maps are usually
-oriented such that the most saturated color represents the lowest scalar
-value whereas the more luminant white represents the highest scalar value.
-However, the color map, which has a limited range of luminance, can
-sometimes be flipped.  For example, if a red or orange sequential color map
-represented temperature, it would be more natural to represent the highest
-temperature with the most saturated color.
+The sequential color maps are (nearly) monochromatic.  The range from a
+heavily saturated color to various levels of unsaturation, terminating at
+or close to white.  The monotonic nature of the saturation level maps well
+to a scalar value.  Sequential maps are usually oriented such that the most
+saturated color represents the lowest scalar value whereas the more
+luminant white represents the highest scalar value.  However, the color
+map, which has a limited range of luminance, can sometimes be flipped.  For
+example, if a red or orange sequential color map represented temperature,
+it would be more natural to represent the highest temperature with the most
+saturated color.
 
-The divergent color maps (also known as \sticky{look it up}) have two major
+The diverging color maps (also known as \sticky{look it up}) have two major
 color components.  The map transitions from one color component to the
-other by passing through an unsaturated color (white or yellow).  Divergent
+other by passing through an unsaturated color (white or yellow).  Diverging
 color maps are typically used for to represent a scalar with a significant
 value at or near the median.  For example, a color map for elevation could
 put sea level at white with below sea level\lcite{Tufte97}.  The ordering
@@ -417,31 +417,31 @@ the elevation example, blues can be used to represent the sea floor depth
 and tans can be used to represent land elevation.
 
 Sequential color maps are clearly appropriate for scientific visualization.
-Their monotonic nature yields well to mapping scalar values.  Divergent
+Their monotonic nature yields well to mapping scalar values.  Diverging
 color maps are a less obvious choice.  We cannot expect there to be some
-significant median value that the divergent color map is designed to
+significant median value that the diverging color map is designed to
 highlight.
 
-However, divergent color maps can better satisfy the requirements given in
+However, diverging color maps can better satisfy the requirements given in
 Section~\ref{sec:ColorMapRequirements} then their sequential counterparts.
-First, the more colorful nature of the divergent color map can be more
+First, the more colorful nature of the diverging color map can be more
 aesthetically pleasing.  Second, the diverget color map can have up to
 twice the perceptual resolution of the sequential color map without
 sacrificing the requirements of surface shading or accommodating viewers
 with bi-chromatic \sticky{Correct?} vision.
 
-What divergent color maps lack in general is a natural ordering of colors.
+What diverging color maps lack in general is a natural ordering of colors.
 To impose a color ordering, we carefully chose two colors that most
 naturally have ``low'' and ``high'' connotations.  We achieve this with the
 concept of ``cool'' and ``warm'' colors \sticky{Cite}.  Color temperature
 has been used for centuries as a means of evoking an emotional response.
-The response is psychosomatic \sticky{word use?}.  The resons for the
-interpretation are unclear although it may have to do with how light at the
-opposite ends of the visibile spectrum refract in the eye\lcite{Bailey06}.
-We can best evoke the cool-warm response by using blue and red for the low
-and high extrema, respectively.
+The response is psychosomatic.  The resons for the interpretation are
+unclear although it may have to do with how light at the opposite ends of
+the visibile spectrum refract in the eye\lcite{Bailey06}.  We can best
+evoke the cool-warm response by using blue and red for the low and high
+extrema, respectively.
 
-Using our initial criteria, we can think of divergent color map as
+Using our initial criteria, we can think of diverging color map as
 ``locally'' optimal.  We cannot add any color to anywhere in the map
 without degrading one or more of the requirements.
 
@@ -467,7 +467,7 @@ is constant for all valid $x$.
 
 The easiest way to ensure that Equation~\ref{eq:ContinuousDE} is constant
 is to linearly interpolate colors in the \Lab color space.  However, that
-is not entirely possible to do for divergent color maps.  Lines from red to
+is not entirely possible to do for diverging color maps.  Lines from red to
 blue will not go through white.  A piecewise linear interpolation is mostly
 effective, but can create an artificial Mach band at white where the
 luminance sharply transitions from increasing to decreasing as demonstrated
@@ -479,7 +479,7 @@ in Figure~\ref{fig:LinearMachBands}.
   \qquad
   \includegraphics[width=1in]{images/Cool2WarmRadial}
   \caption{Using piecewise linear interpolations in \Lab color space causes
-    Mach bands in the white part of divergent color maps (left image).  The
+    Mach bands in the white part of diverging color maps (left image).  The
     problem can be corrected by interpolating in \Msh space (right image).}
   \label{fig:LinearMachBands}
 \end{figure}
@@ -493,7 +493,7 @@ the next section.
 \subsection{\Msh Color Space}
 \label{sec:MshColorSpace}
 
-To simplify the design of continuous, divergent color maps, I derive a new
+To simplify the design of continuous, diverging color maps, I derive a new
 color space called \Msh.  \Msh is basically a polar form of the \Lab color
 space.  $M$ is the magnitude of the vector, $s$ (the saturation) is the
 angle away from the $L*$ axis, and $h$ (the hue) is the angle of the
@@ -525,14 +525,14 @@ color has no hue.  It is therefor possible to make a discontinuous jump
 in the hue while still maintaining perceptual continuance.
 
 Piecewise linear interpolations in \Msh space behave very well for
-divergent color maps.  As $s$ linearly approaches zero, the luminance
+diverging color maps.  As $s$ linearly approaches zero, the luminance
 naturally levels out while the chromaticity changes faster.  Although this
 will lead to a more significant rate of change in the chromaticity, it will
 not be noticeable as it coincides with a singularity in perception.  In
 fact, we can make a jump in the value of the hue at that point without it
 being noticeable.
 
-An ideal way to build a divergent color map in \Msh space is to start at
+An ideal way to build a diverging color map in \Msh space is to start at
 one color, linearly reduce $s$ to 0 (to get white), flip $h$ to the
 appropriate value for the last color, and then linearly increase $s$ to the
 desired value.  Unfortunately, this strategy tends to produce colors that
@@ -611,7 +611,7 @@ determine a good hue to use for the white point (from the given side).
 \end{equation}
 
 Note that Equation~\ref{eqn:adjusted_hu} will most certainly yield a
-different value for each of the saturated colors used in the divergent
+different value for each of the saturated colors used in the diverging
 color map.  The direction in which the hue is ``spun'' is unimportant with
 regard to perception.  I usually adjust the hue to be away from 0 because
 it provides slightly more aesthetically pleasing results.
@@ -623,7 +623,7 @@ it provides slightly more aesthetically pleasing results.
 \begin{figure}
   \centering
   \includegraphics[width=2.5in]{images/Cool2WarmBar}
-  \caption{A continuous divergent color map well suited to scientific
+  \caption{A continuous diverging color map well suited to scientific
     visualization.}
   \label{fig:Cool2WarmBar}
 \end{figure}
@@ -648,7 +648,7 @@ Table~\ref{table:Cool2Warm}.  \sticky{It would be nice to provide a large
   \label{table:Cool2Warm}
 \end{table}
 
-This divergent color map works admirably for all of our scientific
+This diverging color map works admirably for all of our scientific
 visualization requirements.  The colors are asthetically pleasing, the
 order of the colors is natural, the rate of change is perceptually linear,
 and the colors are still easily distinguished by those with bichromatic
@@ -662,7 +662,7 @@ Figure~\ref{fig:Cool2WarmResponse}.
   \quad
   \includegraphics[height=1in]{images/Cool2WarmShading}
   \caption{The spatial contrast response (left) and effect on shading
-    (right) of the divergent color map.}
+    (right) of the diverging color map.}
   \label{fig:Cool2WarmResponse}
 \end{figure}
 
@@ -678,14 +678,14 @@ shown in Figure~\ref{fig:ColorMapWithAnnotation}.
 \end{figure}
 
 Using the techniques described in Section~\ref{sec:ColorMapDesign}, we can
-also design continuous divergent color maps with different colors.  Such
+also design continuous diverging color maps with different colors.  Such
 color maps may be useful in domain specific situations when colors have
 specific meaning.  Some examples are given in
 Figure~\ref{fig:OtherColorMaps}.
 
 \begin{figure}
   \centering
-  \sticky{More divergent color maps.}
+  \sticky{More diverging color maps.}
   \caption{Further examples of color maps.}
   \label{fig:OtherColorMaps}
 \end{figure}
