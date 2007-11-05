@@ -44,6 +44,7 @@
 \newcommand{\Luv}{CIELUV\xspace}
 \newcommand{\Msh}{Msh\xspace}
 \newcommand{\DeltaE}{\ensuremath{\Delta{}E}\xspace}
+\newcommand*{\cvec}[1]{\mathbf{#1}}
 
 \begin{document}
 
@@ -155,19 +156,21 @@ used heavily in the image processing and medical visualization fields.
 
 \begin{figure}
   \centering
-  \includegraphics[width=2.5in]{images/GrayscaleLocality}
-  \includegraphics[width=2.5in]{images/BlackBodyLocality}
+  \begin{tabular}{c}
+    \includegraphics[width=2.5in]{images/GrayscaleLocality} \\
+    \includegraphics[width=2.5in]{images/BlackBodyLocality}
+  \end{tabular}
   \caption{Pixels of the same luminance may look different depending on the
-    surrounding pixels (as demonstrated on the top), but color perception
-    is relatively stable (as demonstrated on the bottom).}
-  \label{fig:GrayscaleLocality}
+    surrounding pixels.}
+  \label{fig:SimultaneousContrast}
 \end{figure}
 The grayscale color map also has a couple of detractors.  One problem is
 that a human's perception to brightness is subject to the brightness of the
 surrounding area.  Thus, when asked to compare the luminance of two objects
 separated by distance and background, human subjects error up to 20\%.
-This effect is demonstrated in Figure~\ref{fig:GrayscaleLocality}.  The
-problem can be corrected by adding a chromaticity shift.
+This effect, is demonstrated in Figure~\ref{fig:SimultaneousContrast}, is
+called simultaneous contrast\lcite{Stone05}.  Adding a chromaticity shift
+helps, but does not fix the problem entirely.
 
 Another problem with grayscale color maps that is of greater concern for
 general purpose scientific visualization is its interference with surface
@@ -192,8 +195,10 @@ map.
 
 \begin{figure}
   \centering
-  \includegraphics[width=2.5in]{images/Green2RedBar}\qquad
-  \includegraphics[width=2.5in]{images/Cyan2MauveBar}
+  \begin{tabular}{c}
+    \includegraphics[width=2.5in]{images/Green2RedBar} \\
+    \includegraphics[width=2.5in]{images/Cyan2MauveBar}
+  \end{tabular}
   \caption{Isoluminant color maps.  The green to red color map is popular
     because it uses a pair of opponent colors, but the cyan to mauve color
     map is much easier to see by individuals with deuteranope or protanopic
@@ -272,9 +277,9 @@ The remainder of this paper relies on using different color spaces to
 describe color map generation.  This section quickly reviews some of these
 color spaces.
 
-All color spaces are based on the tri-color stimulus theory, which states
-that any perceived color can be uniquely represented by a 3-tuple
-\sticky{Reference}.  This result is a side effect of the fact that there
+All color spaces are based on the tristimulus theory, which states that any
+perceived color can be uniquely represented by a 3-tuple\lcite{Stone05}
+\sticky{Feynman also?}.  This result is a side effect of the fact that there
 are exactly 3 different types of color receptors in the human eye.
 
 The color space most frequently used is the \RGB color space
@@ -287,8 +292,8 @@ create colors.  There is also a similar \CMYK color space that defines
 colors by how printers mix ink \sticky{Reference}.
 
 Although the \RGB and \CMYK color spaces are good for many practical
-purposes, since they are defined exactly over the gamut of colors that can
-be displayed, it is sometimes useful to define colors over the gamut of
+purposes, they are defined exactly over the gamut of colors that can be
+displayed, and it is sometimes useful to define colors over the gamut of
 visible colors.  However, it is not as useful for describing colors that
 are visible but not representable by the display.  To this end the
 International Commission on Illumination (better known as CIE from its
@@ -307,7 +312,9 @@ is fairly arbitrary; this paper uses \Lab \sticky{Reference}.
 distance between two points is the approximate perceived difference between
 the two colors.  This Euclidean distance in \Lab space is known as \DeltaE
 and makes a good metric for comparing color differences
-\sticky{Reference?}.
+\sticky{Reference?}.  This paper uses the notation
+$\DeltaE\{\cvec{c_1},\cvec{c_2}\}$ to denote the \DeltaE for the pair of
+colors $\cvec{c_1}$ and $\cvec{c_2}$.
 
 
 \section{Color Map Requirements}
@@ -367,15 +374,13 @@ conveying information as well as the aesthetics of the design.
 Brewer\scite{Brewer05} provides excellent advice for designing cartographic
 color maps as well as many examples of well designed color
 maps.\footnote{Brewer's color maps are also available on her web site:
-  \href{http://www.colorbrewer.org}{www.colorbrewer.org}} Brewer divides
-her color maps into three classes: \sticky{unorderd: that's not the real
-  name, but I'm drawing a blank and I'm on a plane so I cannot check},
-sequential\sticky{that may not be the name}, and divergent.  Examples of
-these color maps are shown in Figure~\ref{fig:BrewerExamples}.
+  \href{http://www.colorbrewer.org}{www.colorbrewer.org}.} Brewer divides
+her color maps into three classes: qualitative, sequential, and divergent.
+Examples of these color maps are shown in Figure~\ref{fig:BrewerExamples}.
 
 \begin{figure}
   \centering
-  \subfigure[\sticky{Unordered}]{\sticky{Unordered}}
+  \subfigure[Qualitative]{\sticky{Qualitative}}
   \subfigure[Sequential]{\sticky{Sequential}}
   \subfigure[Divergent]{\sticky{Divergent}}
   \caption{Examples of color maps from
@@ -383,9 +388,9 @@ these color maps are shown in Figure~\ref{fig:BrewerExamples}.
   \label{fig:BrewerExamples}
 \end{figure}
 
-The \sticky{unordered} color maps are used to represent a collection of
-discrete, unordered classes.  Since the colors have no ordering (by
-design), they are not appropriate for mapping a scalar variable.
+The qualitative color maps are used to represent a collection of discrete,
+unordered classes.  Since the colors have no ordering (by design), they are
+not appropriate for mapping a scalar variable.
 
 The sequential color maps are monochromatic.\sticky{Verify that they are all
   like that.}  The range from a heavily saturated color to various levels
@@ -437,6 +442,269 @@ respectively.
 Using our initial criteria, we can think of divergent color map as
 ``locally'' optimal.  We cannot add any color to anywhere in the map
 without degrading one or more of the requirements.
+
+
+\subsection{Perceptual Uniformity}
+\label{sec:PerceptualUniformity}
+
+An important characteristic of any color map is that it is perceptually
+uniform throughout.  For a discrete color map, perceptual uniformity means
+that all pairs of adjacent colors will look equally different from each
+other.  That is, the \DeltaE for each adjacent pair is (roughly) the same.
+
+For a continuous color map, we want the rate of change for the color to be
+constant.  If we characterize our color map with function $\cvec{c}(x)$
+that takes scalar value $x$ and returns a color vector, the color map is
+perceptually uniform if
+\begin{equation}
+  \lim_{\Delta{}x \rightarrow 0}{
+    \frac{\DeltaE\{\cvec{c}(x),\cvec{c}(x+\Delta{x})}{\Delta{}x} }
+  \label{eq:ContinuousDE}
+\end{equation}
+is constant for all valid $x$.
+
+The easiest way to ensure that Equation~\ref{eq:ContinuousDE} is constant
+is to linearly interpolate colors in the \Lab color space.  However, that
+is not entirely possible to do for divergent color maps.  Lines from red to
+blue will not go through white.  A piecewise linear interpolation is mostly
+effective, but can create an artificial Mach band at white where the
+luminance sharply transitions from increasing to decreasing as demonstrated
+in Figure~\ref{fig:LinearMachBands}.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=1in]{images/Cool2WarmLabRadial}
+  \qquad
+  \includegraphics[width=1in]{images/Cool2WarmRadial}
+  \caption{Using piecewise linear interpolations in \Lab color space causes
+    Mach bands in the white part of divergent color maps (left image).  The
+    problem can be corrected by interpolating in \Msh space (right image).}
+  \label{fig:LinearMachBands}
+\end{figure}
+
+Rather than have a sharp transition in the luminance, we require a
+``leveling off'' of the luminance as the color map approaches white.  To
+compensate, the chromaticity must change more dramatically in this part of
+the color map.  A method for designing this type of color map is defined in
+the next section.
+
+\subsection{\Msh Color Space}
+\label{sec:MshColorSpace}
+
+To simplify the design of continuous, divergent color maps, I derive a new
+color space called \Msh.  \Msh is basically a polar form of the \Lab color
+space.  $M$ is the magnitude of the vector, $s$ (the saturation) is the
+angle away from the $L*$ axis, and $h$ (the hue) is the angle of the
+vector's projection in the $a*$-$b*$ plane.  Conversion between the two
+color spaces is straightforward.
+
+\begin{equation}
+  \begin{split}
+    M &= \sqrt{{L*}^2 + a*^2 + b*^2} \\
+    s &= \arccos\left(\frac{L*}{M}\right) \\
+    h &= \arctan\left(\frac{b*}{a*}\right)
+  \end{split}
+  \label{eqn:LabToMsh}
+\end{equation}
+
+\begin{equation}
+  \begin{split}
+    L* &= M \cos\left(s\right) \\
+    a* &= M \sin\left(s\right) \cos\left(h\right) \\
+    b* &= M \sin\left(s\right) \sin\left(h\right)
+  \end{split}
+\end{equation}
+
+Note that \Msh, like all polar coordinates, has a pole in which one of the
+coordinates is ill defined.  Specifically, when $s = 0$ (the color is on
+the $L$ axis), $h$ has no effect.  This pole was chosen because it
+coincides with a singularity in human vision.  When saturation is low, the
+color has no hue.  It is therefor possible to make a discontinuous jump
+in the hue while still maintaining perceptual continuance.
+
+Piecewise linear interpolations in \Msh space behave very well for
+divergent color maps.  As $s$ linearly approaches zero, the luminance
+naturally levels out while the chromaticity changes faster.  Although this
+will lead to a more significant rate of change in the chromaticity, it will
+not be noticeable as it coincides with a singularity in perception.  In
+fact, we can make a jump in the value of the hue at that point without it
+being noticeable.
+
+An ideal way to build a divergent color map in \Msh space is to start at
+one color, linearly reduce $s$ to 0 (to get white), flip $h$ to the
+appropriate value for the last color, and then linearly increase $s$ to the
+desired value.  Unfortunately, this strategy tends to produce colors that
+are not reproducible by physical display systems.  We can correct for this
+problem by reducing $M$ at each end, but this adds the problem that colors
+will change faster near white when $M$ is larger.
+
+We can restore the uniformity of the color map again by adding some
+``spin'' to the hue.  Even though $h$ is interpolated linearly, the changes
+have a greater effect on the color when $s$ is larger, which can
+counterbalance the growing $M$.  The next section describes how to chose an
+appropriate hue change.
+
+\subsection{Choosing a Hue Spin}
+\label{sec:ChoosingAHueSpin}
+
+Let us consider the transition from a saturated color, $\cvec{c}_s=(M_s,
+s_s, h_s)$, at an end of the color map to an unsaturated ``white'' color,
+$\cvec{c}_u=(M_u, 0, h_u)$, at the beginning of the color map.  As the
+color map moves from $\cvec{c}_s$ to $\cvec{c}_u$, the $M$, $s$, and $h$
+coordinates are varied linearly.  The slope of these coordinates can be
+characterized as $M_m = M_u - M_s$, $s_m = -s_s$, and $h_m = h_u - h_m$.
+(Note that $h_u$ has no effect on the unsaturated color, but is provided to
+conveniently define the rate of change.)
+
+\begin{figure}
+  \centering
+  \includegraphics[height=1.5in]{images/MshDeltaMovements}
+  \caption{A small linear movement in \Msh space}
+  \label{sec:LinearMshMovement}
+\end{figure}
+
+Figure~\ref{sec:LinearMshMovement} shows how a small movement in this
+linear \Msh function behaves in \Lab space.  The distance measurements take
+advantage of the property that if you rotate a vector of radius $r$ by some
+small angle $\Delta\alpha$, then the change in the vector is
+$\lim_{\Delta\alpha \rightarrow 0}r \Delta\alpha$.  Clearly the \DeltaE,
+the magnitude of change in \Lab space, is
+\begin{equation}
+  \sqrt{(M_m \Delta x)^2 + (s_m \Delta x M)^2 + (h_m \Delta x M \sin s)^2}
+  \label{eq:DeltaEforLinearMshMovement}
+\end{equation}
+
+Equation~\ref{eq:DeltaEforLinearMshMovement} will not be constant unless
+$M$ and $h_m$ is zero which, as described in the previous section, is
+unacceptable.  However we can get pretty close to constant by choosing
+$h_u$ so that Equation~\ref{eq:DeltaEforLinearMshMovement} is equal for
+$\cvec{c}_s$ and $\cvec{c}_u$.
+
+\begin{multline*}
+  \sqrt{(M_m \Delta x)^2 + (s_m \Delta x M_s)^2 + (h_m \Delta x M_s \sin s_s)^2}
+  \\ =
+  \sqrt{(M_m \Delta x)^2 + (s_m \Delta x M_u)^2}
+\end{multline*}
+
+Note that the right side of the equation is missing a term because it
+evaluates to 0 for the unsaturated color.  We can safely get rid of the
+square roots because there is a sum of square real numbers inside them
+both.
+
+\begin{align}
+    (M_m \Delta x)^2 + (s_m M_s)^2 \quad & \notag \\
+    + (h_m M_s \sin s_s)^2 &= (M_m \Delta x)^2 + (s_m M_u)^2 \notag \\
+    h_m^2 M_s^2 \sin^2 s_s &= s_m^2 (M_u^2 - M_s^2) \notag \\
+    h_m^2 &= \frac{s_m^2 (M_u^2 - M_s^2)}{M_s^2 \sin^2 s_s} \notag \\
+    h_m &= \pm \frac{s_m \sqrt{M_u^2 - M_s^2}}{M_s \sin s_s}
+    \label{eqn:adjusted_hm}
+\end{align}
+
+Remember that $s_m=-s_s$.  We can use Equation~\ref{eqn:adjusted_hm} to
+determine a good hue to use for the white point (from the given side).
+
+\begin{equation}
+  h_u = h_s \pm \frac{s_s \sqrt{M_u^2 - M_s^2}}{M_s \sin s_s}
+  \label{eqn:adjusted_hu}
+\end{equation}
+
+Note that Equation~\ref{eqn:adjusted_hu} will most certainly yield a
+different value for each of the saturated colors used in the divergent
+color map.  The direction in which the hue is ``spun'' is unimportant with
+regard to perception.  I usually adjust the hue to be away from 0 because
+it provides slightly more aesthetically pleasing results.
+
+
+\section{Results}
+\label{sec:Results}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=2.5in]{images/Cool2WarmBar}
+  \caption{A continuous divergent color map well suited to scientific
+    visualization.}
+  \label{fig:Cool2WarmBar}
+\end{figure}
+
+Applying the design described in Section~\ref{sec:ColorMapDesign} results
+in the color map shown in Figure~\ref{fig:Cool2WarmBar}.  The control
+points, to be interpolated in \Msh space, are given in
+Table~\ref{table:Cool2Warm}.  \sticky{It would be nice to provide a large
+  table containing the full range of colors.  How can I best do that?  A
+  web link?  Where?}
+
+\begin{table}
+  \centering
+  \caption{Cool to warm color map control points.}
+  \begin{tabular}{c@{\qquad}ccc}
+    Color & M & s & h \\
+    \hline
+    Red & 77 & 0.95 & 0.5 \\
+    White & 95 & 0 & 1.34/-2.35 \\
+    Blue & 70 & 0.9 & -1.3
+  \end{tabular}
+  \label{table:Cool2Warm}
+\end{table}
+
+This divergent color map works admirably for all of our scientific
+visualization requirements.  The colors are asthetically pleasing, the
+order of the colors is natural, the rate of change is perceptually linear,
+and the colors are still easily distinguished by those with bichromatic
+\sticky{Correct?} vision.  The map also has a good perceptual range and
+minimally interfears with shading, as demonstrated in
+Figure~\ref{fig:Cool2WarmResponse}.
+
+\begin{figure}
+  \centering
+  \includegraphics[height=1in]{images/Cool2WarmSpatialContrast}
+  \quad
+  \includegraphics[height=1in]{images/Cool2WarmShading}
+  \caption{The spatial contrast response (left) and effect on shading
+    (right) of the divergent color map.}
+  \label{fig:Cool2WarmResponse}
+\end{figure}
+
+In addition, dispite having a relatively large perceptual response, the
+color map still allows for a significant amount of annotation added as
+shown in Figure~\ref{fig:ColorMapWithAnnotation}.
+
+\begin{figure}
+  \centering
+  \sticky{Cool image showing lots of stuff on color map.}
+  \caption{Terrain with the color map applied and heavily annotated.}
+  \label{fig:ColorMapWithAnnotation}
+\end{figure}
+
+Using the techniques described in Section~\ref{sec:ColorMapDesign}, we can
+also design continuous divergent color maps with different colors.  Such
+color maps may be useful in domain specific situations when colors have
+specific meaning.  Some examples are given in
+Figure~\ref{fig:OtherColorMaps}.
+
+\begin{figure}
+  \centering
+  \sticky{More divergent color maps.}
+  \caption{Further examples of color maps.}
+  \label{fig:OtherColorMaps}
+\end{figure}
+
+\sticky{Is there anything else I can put in the results section?  Is there
+  some less qualitative evidence that this is a good color map?}
+
+
+\section{Discussion}
+\label{sec:Discussion}
+
+This paper provides a color map that is a good all-around performer for
+scientific visualization.  The map is an effective way to communicate data
+through colors.  Because its endpoints match those of the horrible rainbow
+color map most often currently used, it can be used as a drop-in
+replacement.
+
+Although we have not been able to do user studies, the design of this color
+map is based on well established theories on color perception.  This map is
+a clear improvement over what is commonly used today, and I hope that many
+will follow in adopting it as the new standard.
 
 
 \section{Acknowledgements}

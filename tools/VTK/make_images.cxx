@@ -45,8 +45,16 @@ int main(int, char **)
   cool2warm->AddRGBPoint(1.0, 0.758, 0.214, 0.233);
   generate_bar("Cool2WarmBar.png", cool2warm);
 //   generate_discontinuity("Cool2WarmDiscontinuity.png", cool2warm);
-//   generate_spatial_contrast_sensitivity("Cool2WarmSpatialContrast.png",
-//                                         cool2warm);
+  generate_spatial_contrast_sensitivity("Cool2WarmSpatialContrast.png",
+                                        cool2warm);
+  generate_radial("Cool2WarmRadial.png", cool2warm);
+
+  VTK_CREATE(vtkColorTransferFunction, cool2warmLab);
+  cool2warmLab->SetColorSpaceToLab();
+  cool2warmLab->AddRGBPoint(0.0, 0.186, 0.392, 0.749);
+  cool2warmLab->AddRGBPoint(0.5, 0.943, 0.943, 0.943);
+  cool2warmLab->AddRGBPoint(1.0, 0.758, 0.214, 0.233);
+  generate_radial("Cool2WarmLabRadial.png", cool2warmLab);
 
   VTK_CREATE(vtkColorTransferFunction, green2red);
   green2red->SetColorSpaceToLab();
