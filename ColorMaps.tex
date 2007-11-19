@@ -64,10 +64,10 @@
   Although many other color maps have been proposed and used, none have
   been adopted by the visualization community as a good default in
   scientific visualization.  In this paper we explore the use of diverging
-  color maps (sometimes also called bipolar color maps) for use in
-  scientific visualization.  We conclude with a diverging color map that
-  generally performs well in scientific visualization applications.  This
-  color map is a clear replacement for the rainbow color map and can
+  color maps (sometimes also called bipolar or double-ended color maps) for
+  use in scientific visualization.  We conclude with a diverging color map
+  that generally performs well in scientific visualization applications.
+  This color map is a clear replacement for the rainbow color map and can
   hopefully, once and for all, kill the use of the rainbow color map for
   serious scientific visualization applications.
 \end{abstract}
@@ -117,9 +117,15 @@ their dubious scientific value.
 A second major contributor to the dominance of the rainbow color map is the
 lack of a clear alternative, especially in terms of scientific
 visualization.  There are certainly many publications that recommend some
-very good choices for color maps\lcite{Ware04,Brewer05}.  However, each has
-its sets of features and detractors, and the choice of the ``right'' one is
-difficult.
+very good choices for color maps\lcite{Rheingans99,Ware04,Brewer05}.
+However, each has its sets of features and detractors, and the choice of
+the ``right'' one is difficult.  The conclusion of these publications of
+all these publications is to pick from a variety of color maps for the best
+choice for a domain-specific visualization.  Although perhaps a reasonable
+request for the designer of a targeted visualization application, a general
+purpose application, designed for multiple problem domains, would have to
+push this decision to the end-user with a dizzying array of color map
+choices.
 
 This paper is a concluding report on the quest for finding a good default
 color map for a general purpose scientific visualization application.  The
@@ -168,7 +174,7 @@ The grayscale color map also has a couple of detractors.  One problem is
 that a human's perception to brightness is subject to the brightness of the
 surrounding area.  Thus, when asked to compare the luminance of two objects
 separated by distance and background, human subjects error up to 20\%.
-This effect, is demonstrated in Figure~\ref{fig:SimultaneousContrast}, is
+This effect, demonstrated in Figure~\ref{fig:SimultaneousContrast}, is
 called simultaneous contrast\lcite{Stone05}.  Adding a chromaticity shift
 helps, but does not fix the problem entirely.
 
@@ -177,7 +183,7 @@ general purpose scientific visualization is its interference with surface
 shading.  The shading of 3D surfaces based on light sources is of utmost
 importance for perceiving the surface shape.  These shading cues are
 composed almost entirely of luminance shifts.  Thus the luminance shift of
-the grayscale color map mask the surface luminance shifts, especially in
+the grayscale color map masks the surface luminance shifts, especially in
 the darker part of the spectrum as demonstrated in
 Figure~\ref{fig:LuminanceVsShading}.  The problem cannot be corrected
 without a major reduction in the range the luminance shifts in the color
@@ -187,7 +193,7 @@ map.
   \centering
   \includegraphics[width=1.25in]{images/GrayscaleShading}
   \includegraphics[width=1.25in]{images/IsoluminantShading}
-  \caption{Maps with big changes in luminance hides shading cue important
+  \caption{Maps with big changes in luminance hide shading cues important
     for determining 3D structure whereas isoluminant maps minimize shading
     interference.}
   \label{fig:LuminanceVsShading}
@@ -205,8 +211,8 @@ map.
     vision.}
   \label{fig:IsoluminantColorMap}
 \end{figure}
-Another class of color maps that is often suggested for use with 3D
-surfaces is the isoluminant color map that is demonstrated in
+Another type of color map that is often suggested for use with 3D surfaces
+is an isoluminant color map such as those demonstrated in
 Figure~\ref{fig:IsoluminantColorMap}.  Somewhat opposite to the grayscale
 map, an isoluminant map maintains a constant (perceptual) luminance and
 relies entirely on chromatic shifts.  An isoluminant color map is
@@ -294,14 +300,13 @@ colors by how printers mix ink \sticky{Reference}.
 
 Although the \RGB and \CMYK color spaces are good for many practical
 purposes, they are defined exactly over the gamut of colors that can be
-displayed, and it is sometimes useful to define colors over the gamut of
-visible colors.  However, it is not as useful for describing colors that
-are visible but not representable by the display.  To this end the
-International Commission on Illumination (better known as CIE from its
-French title, the \emph{Commission Internationale de l'\'{E}clairage})
-convened in 1931 and defined the \XYZ color space \sticky{Reference}.  The
-\XYZ color space provides a convenient way to consistently describe all
-visible colors without being tied to any particular display device.
+displayed, and it is sometimes useful to define colors over everything a
+human can see.  To this end the International Commission on Illumination
+(better known as CIE from its French title, the \emph{Commission
+  Internationale de l'\'{E}clairage}) convened in 1931 and defined the \XYZ
+color space \sticky{Reference}.  The \XYZ color space provides a convenient
+way to consistently describe all visible colors without being tied to any
+particular display device.
 
 The \XYZ color space, however, is still defined by the physical properties
 of light.  Movements within the \XYZ space are not perceptually linear.  To
@@ -321,15 +326,15 @@ colors $\cvec{c_1}$ and $\cvec{c_2}$.
 \section{Color Map Requirements}
 \label{sec:ColorMapRequirements}
 
-Our ultimate goal is to design a color map that works well for in
+Our ultimate goal is to design a color map that works well in
 general-purpose scientific visualization.  It should work well for a wide
 breadth of tasks and users.  As such we have the following requirements.
 
 \begin{itemize}
 \item The map yields images that are aesthetically pleasing.
-\item The map maximizes the perceptual resolution.
-\item Interference the shading of 3D surfaces is minimal.
-\item The map is not sensitive with vision deficiencies.
+\item The map has a maximal perceptual resolution.
+\item Interference with the shading of 3D surfaces is minimal.
+\item The map is not sensitive to vision deficiencies.
 \item The order of the colors should be natural.
 \item The perceptual interpolation matches the underlying scalars the map
   represents.
@@ -382,12 +387,9 @@ Examples of these color maps are shown in Figure~\ref{fig:BrewerExamples}.
 \begin{figure}
   \centering
   \subfigure[Qualitative]{\includegraphics{images/ColorMapsQualitative}}
-  \quad
   \subfigure[Sequential]{\includegraphics{images/ColorMapsSequential}}
-  \quad
   \subfigure[Diverging]{\includegraphics{images/ColorMapsDiverging}}
-  \caption{Examples of color maps from
-    \href{http://www.colorbrewer.org}{www.colorbrewer.org}.}
+  \caption{Examples of color maps from Brewer\scite{Brewer05}.}
   \label{fig:BrewerExamples}
 \end{figure}
 
@@ -395,32 +397,33 @@ The qualitative color maps are used to represent a collection of discrete,
 unordered classes.  Since the colors have no ordering (by design), they are
 not appropriate for mapping a scalar variable.
 
-The sequential color maps are (nearly) monochromatic.  The range from a
-heavily saturated color to various levels of unsaturation, terminating at
-or close to white.  The monotonic nature of the saturation level maps well
-to a scalar value.  Sequential maps are usually oriented such that the most
-saturated color represents the lowest scalar value whereas the more
-luminant white represents the highest scalar value.  However, the color
-map, which has a limited range of luminance, can sometimes be flipped.  For
-example, if a red or orange sequential color map represented temperature,
-it would be more natural to represent the highest temperature with the most
-saturated color.
+The sequential color maps (also known as saturation color
+maps\lcite{Rheingans99}) are (nearly) monochromatic.  They range from a
+heavily saturated color to various levels of unsaturation.  Luminance is
+also often increased as saturation is decreased so that the color map
+terminates in a color at or close to white.  The monotonic nature of the
+saturation level maps well to a scalar value.  Sequential maps are usually
+oriented such that the most saturated color represents the lowest scalar
+value whereas the more luminant white represents the highest scalar value.
+However, the color map, which has a limited range of luminance, can
+sometimes be flipped.  For example, if a red or orange sequential color map
+represented temperature, it would be more natural to represent the highest
+temperature with the most saturated color.
 
-The diverging color maps (also known as \sticky{look it up}) have two major
+The diverging color maps (also known as bipolar\sticky{Reference
+  from\lcite{Ware04}} or double-ended\lcite{Rheingans99}) have two major
 color components.  The map transitions from one color component to the
 other by passing through an unsaturated color (white or yellow).  Diverging
-color maps are typically used for to represent a scalar with a significant
+color maps are typically used to represent a scalar with a significant
 value at or near the median.  For example, a color map for elevation could
-put sea level at white with below sea level\lcite{Tufte97}.  The ordering
-of the colors is usually based on the context with which they are used.  In
-the elevation example, blues can be used to represent the sea floor depth
-and tans can be used to represent land elevation.
+put sea level at white with below sea level in blue and above sea level in
+tan\lcite{Tufte97}.  The ordering of the colors is usually based on the
+context with which they are used.
 
 Sequential color maps are clearly appropriate for scientific visualization.
-Their monotonic nature yields well to mapping scalar values.  Diverging
-color maps are a less obvious choice.  We cannot expect there to be some
-significant median value that the diverging color map is designed to
-highlight.
+Their monotonic nature maps well to scalar values.  Diverging color maps
+are a less obvious choice.  We cannot expect there to be some significant
+median value that the diverging color map is designed to highlight.
 
 However, diverging color maps can better satisfy the requirements given in
 Section~\ref{sec:ColorMapRequirements} then their sequential counterparts.
@@ -442,9 +445,11 @@ called chromatic aberration.\sticky{Well, maybe not.  That's disputed.}  We
 can best evoke the cool-warm response by using blue and red for the low and
 high extrema, respectively.
 
-Using our initial criteria, we can think of diverging color map as
+Using our initial criteria, we can think of diverging color maps as
 ``locally'' optimal.  We cannot add any color to anywhere in the map
-without degrading one or more of the requirements.
+without degrading one or more of the requirements. \sticky{Levkowitz92,
+  referenced by\lcite{Rheingans99} introduces the concept of ``optimal
+  color scale,'' which may allow me to formalize this concept.}
 
 
 \subsection{Perceptual Uniformity}
@@ -520,7 +525,7 @@ color spaces is straightforward.
 
 Note that \Msh, like all polar coordinates, has a pole in which one of the
 coordinates is ill defined.  Specifically, when $s = 0$ (the color is on
-the $L$ axis), $h$ has no effect.  This pole was chosen because it
+the $L*$ axis), $h$ has no effect.  This pole was chosen because it
 coincides with a singularity in human vision.  When saturation is low, the
 color has no hue.  It is therefor possible to make a discontinuous jump
 in the hue while still maintaining perceptual continuance.
@@ -552,7 +557,7 @@ appropriate hue change.
 
 Let us consider the transition from a saturated color, $\cvec{c}_s=(M_s,
 s_s, h_s)$, at an end of the color map to an unsaturated ``white'' color,
-$\cvec{c}_u=(M_u, 0, h_u)$, at the beginning of the color map.  As the
+$\cvec{c}_u=(M_u, 0, h_u)$, at the middle of the color map.  As the
 color map moves from $\cvec{c}_s$ to $\cvec{c}_u$, the $M$, $s$, and $h$
 coordinates are varied linearly.  The slope of these coordinates can be
 characterized as $M_m = M_u - M_s$, $s_m = -s_s$, and $h_m = h_u - h_m$.
