@@ -52,8 +52,8 @@
 
 \begin{abstract}
   One of the most fundamental features of scientific visualization is the
-  process of mapping scalar values to colors.  This processes allows us to
-  view scalar fields by coloring surfaces and volumes.  Dispite the
+  process of mapping scalar values to colors.  This process allows us to
+  view scalar fields by coloring surfaces and volumes.  Despite the
   importance of this mapping operation, the majority of scientific
   visualization tools and research are still using a color map that is
   famous for its ineffectiveness: the rainbow color map.  The rainbow color
@@ -139,7 +139,7 @@ low impact on the shading of three dimensional surfaces.
 \label{sec:PreviousWork}
 
 This previous work section is divided into two parts.  The first part is a
-quick review on previously proposed color maps and lists the benifits and
+quick review on previously proposed color maps and lists the benefits and
 detractors of each.  The second section is a quick review on color spaces,
 which are used heavily in the subsequent discussions in this paper.
 
@@ -239,7 +239,7 @@ The first problem with the rainbow color map is that it is sensitive to
 deficiencies in vision.  A significant proportion of the population, most
 of which are males, cannot distinguish between the red and green colors.
 These unfortunate soles cannot distinguish many colors considered ``far
-appart'' in the rainbow color map\lcite{Light04}.
+apart'' in the rainbow color map\lcite{Light04}.
 
 The second problem is that the colors do not follow any natural perceived
 ordering.  Perceptual experiments show that although a test subject, with
@@ -428,7 +428,7 @@ median value that the diverging color map is designed to highlight.
 However, diverging color maps can better satisfy the requirements given in
 Section~\ref{sec:ColorMapRequirements} then their sequential counterparts.
 First, the more colorful nature of the diverging color map can be more
-aesthetically pleasing.  Second, the diverget color map can have up to
+aesthetically pleasing.  Second, the diverging color map can have up to
 twice the perceptual resolution of the sequential color map without
 sacrificing the requirements of surface shading or accommodating viewers
 with dichromatic vision.
@@ -438,9 +438,9 @@ To impose a color ordering, we carefully chose two colors that most
 naturally have ``low'' and ``high'' connotations.  We achieve this with the
 concept of ``cool'' and ``warm'' colors \sticky{Cite}.  Color temperature
 has been used for centuries as a means of evoking an emotional response.
-The response is psychosomatic.  The resons for the interpretation are
+The response is psychosomatic.  The reasons for the interpretation are
 unclear although it may be partially caused by how light at the opposite
-ends of the visibile spectrum refract in the eye\lcite{Bailey06}, an effect
+ends of the visible spectrum refract in the eye\lcite{Bailey06}, an effect
 called chromatic aberration.\sticky{Well, maybe not.  That's disputed.}  We
 can best evoke the cool-warm response by using blue and red for the low and
 high extrema, respectively.
@@ -656,10 +656,10 @@ Table~\ref{table:Cool2Warm}.  \sticky{It would be nice to provide a large
 \end{table}
 
 This diverging color map works admirably for all of our scientific
-visualization requirements.  The colors are asthetically pleasing, the
+visualization requirements.  The colors are aesthetically pleasing, the
 order of the colors is natural, the rate of change is perceptually linear,
 and the colors are still easily distinguished by those with dichromatic
-vision.  The map also has a good perceptual range and minimally interfears
+vision.  The map also has a good perceptual range and minimally interferes
 with shading, as demonstrated in Figure~\ref{fig:Cool2WarmResponse}.
 
 \begin{figure}
@@ -672,14 +672,14 @@ with shading, as demonstrated in Figure~\ref{fig:Cool2WarmResponse}.
   \label{fig:Cool2WarmResponse}
 \end{figure}
 
-In addition, dispite having a relatively large perceptual response, the
+In addition, despite having a relatively large perceptual response, the
 color map still allows for a significant amount of annotation added as
 shown in Figure~\ref{fig:ColorMapWithAnnotation}.
 
 \begin{figure}
   \centering
   \includegraphics[width=3in]{images/AnnotationExample}
-  \caption{Terrain with the color map applied and heavily annotated. \sticky{An example invovling sci vis would probably be better.  Do we have anything?}}
+  \caption{Terrain with the color map applied and heavily annotated. \sticky{An example involving sci vis would probably be better.  Do we have anything?}}
   \label{fig:ColorMapWithAnnotation}
 \end{figure}
 
@@ -719,7 +719,7 @@ a clear improvement over what is commonly used today, and I hope that many
 will follow in adopting it as the new standard.
 
 
-\section{Acknowledgements}
+\section{Acknowledgments}
 
 This work was done at Sandia National Laboratories.  Sandia is a
 multiprogram laboratory operated by Sandia Corporation, a Lockheed Martin
