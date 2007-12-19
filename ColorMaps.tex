@@ -281,48 +281,43 @@ changes in luminance, saturation, hue, or some combination thereof.
 \subsection{Color Spaces}
 \label{sec:PreviousWork:ColorSpaces}
 
-The remainder of this paper relies on using different color spaces to
-describe color map generation.  This section quickly reviews some of these
-color spaces.
-
 All color spaces are based on the tristimulus theory, which states that any
 perceived color can be uniquely represented by a
-3-tuple\lcite{Feynman63,Stone05} .  This result is a side effect of the
-fact that there are exactly 3 different types of color receptors in the
-human eye.
+3-tuple\lcite{Feynman63,Stone05,Wyszecki82}.  This result is a side effect
+of the fact that there are exactly 3 different types of color receptors in
+the human eye.  Limited space prevents more than a few applicable additive
+color spaces from being listed here.  Any textbook on color will provide
+more spaces in more detail\lcite{Stone03,Wyszecki82}.
 
-The color space most frequently used is the \RGB color space
-\sticky{Reference}.  This color space is adopted by many graphics packages
-such as OpenGL and is presented to users by just about every computer
-application in existence that provides a color chooser.  The three values
-in the \RGB color space refer to the intensity output by each of the three
-wavelengths of light used by monitors, televisions, and projectors to
-create colors.  There is also a similar \CMYK color space that defines
-colors by how printers mix ink \sticky{Reference}.
+The color space most frequently used in computer applications is the \RGB
+color space.  This color space is adopted by many graphics packages such as
+OpenGL and is presented to users by just about every computer application
+in existence that provides a color chooser.  The three values in the \RGB
+color space refer to the intensity output by each of the three light colors
+used in a monitor, television, or projector.
 
-Although the \RGB and \CMYK color spaces are good for many practical
-purposes, they are defined exactly over the gamut of colors that can be
-displayed, and it is sometimes useful to define colors over everything a
-human can see.  To this end the International Commission on Illumination
-(better known as CIE from its French title, the \emph{Commission
-  Internationale de l'\'{E}clairage}) convened in 1931 and defined the \XYZ
-color space \sticky{Reference}.  The \XYZ color space provides a convenient
-way to consistently describe all visible colors without being tied to any
-particular display device.
+Although it is often convenient to use \RGB to specify colors in terms of
+the output medium, the display may have nonlinearities that interfere with
+the blending and interpolation of colors\lcite{Stone03}.  Differences
+between displays also make the color definition somewhat
+ambiguous\lcite{Fortner97}.  When computing physical light effects, it is
+best to use a color space defined by the physical properties of light.
+\XYZ is a widely used color space defined defined by physical light
+spectra.
 
-The \XYZ color space, however, is still defined by the physical properties
-of light.  Movements within the \XYZ space are not perceptually linear.  To
-address the need for a perceptually linear color space, the CIE developed
-two more color spaces in 1976: \Lab and \Luv.  The choice between the two
-is fairly arbitrary; this paper uses \Lab \sticky{Reference}.
+There is a nonlinear relationship between light intensity and color
+perception.  Often times, such as when defining a color map, we are more
+interested in how a color is perceived than how it is formed.  In these
+cases, it is better to use a color map based on how humans perceive color.
+\Lab and \Luv are two common spaces.  The choice between the two is fairly
+arbitrary; this paper uses \Lab.
 
 \Lab is an approximation of how humans perceive light.  The Euclidean
 distance between two points is the approximate perceived difference between
 the two colors.  This Euclidean distance in \Lab space is known as \DeltaE
-and makes a good metric for comparing color differences
-\sticky{Reference?}.  This paper uses the notation
-$\DeltaE\{\cvec{c_1},\cvec{c_2}\}$ to denote the \DeltaE for the pair of
-colors $\cvec{c_1}$ and $\cvec{c_2}$.
+and makes a good metric for comparing color differences\lcite{Wyszecki82}.
+This paper uses the notation $\DeltaE\{\cvec{c_1},\cvec{c_2}\}$ to denote
+the \DeltaE for the pair of colors $\cvec{c_1}$ and $\cvec{c_2}$.
 
 
 \section{Color Map Requirements}
@@ -396,25 +391,26 @@ Examples of these color maps are shown in Figure~\ref{fig:BrewerExamples}.
   \label{fig:BrewerExamples}
 \end{figure}
 
-The qualitative color maps are used to represent a collection of discrete,
-unordered classes.  Since the colors have no ordering (by design), they are
-not appropriate for mapping a scalar variable.
+The qualitative color maps (also known as nominal color maps\lcite{Ware04})
+are used to represent a collection of discrete, unordered classes.  Since
+the colors have no ordering (by design), they are not appropriate for
+mapping a scalar variable.
 
-The sequential color maps (also known as saturation color
-maps\lcite{Rheingans99}) are (nearly) monochromatic.  They range from a
-heavily saturated color to various levels of unsaturation.  Luminance is
-also often increased as saturation is decreased so that the color map
-terminates in a color at or close to white.  The monotonic nature of the
-saturation level maps well to a scalar value.  Sequential maps are usually
-oriented such that the most saturated color represents the lowest scalar
-value whereas the more luminant white represents the highest scalar value.
-However, the color map, which has a limited range of luminance, can
+The sequential color maps (also known as interval\lcite{Ware04} or
+saturation\lcite{Rheingans99} color maps) are (nearly) monochromatic.  They
+range from a heavily saturated color to various levels of unsaturation.
+Luminance is also often increased as saturation is decreased so that the
+color map terminates in a color at or close to white.  The monotonic nature
+of the saturation level maps well to a scalar value.  Sequential maps are
+usually oriented such that the most saturated color represents the lowest
+scalar value whereas the more luminant white represents the highest scalar
+value.  However, the color map, which has a limited range of luminance, can
 sometimes be flipped.  For example, if a red or orange sequential color map
 represented temperature, it would be more natural to represent the highest
 temperature with the most saturated color.
 
-The diverging color maps (also known as bipolar\sticky{Reference
-  from\lcite{Ware04}} or double-ended\lcite{Rheingans99}) have two major
+The diverging color maps (also known as ratio\lcite{Ware04},
+bipolar\lcite{Spence01} or double-ended\lcite{Rheingans99}) have two major
 color components.  The map transitions from one color component to the
 other by passing through an unsaturated color (white or yellow).  Diverging
 color maps are typically used to represent a scalar with a significant
@@ -699,7 +695,8 @@ Figure~\ref{fig:OtherColorMaps}.
     \includegraphics[width=2.5in]{images/Green2PurpleBar} \\
     \includegraphics[width=2.5in]{images/Blue2TanBar}
   \end{tabular}
-  \caption{Further examples of color maps defined in \Msh space.}
+  \caption{Further examples of color maps defined in \Msh
+  space. \sticky{Add green-red.}}
   \label{fig:OtherColorMaps}
 \end{figure}
 
