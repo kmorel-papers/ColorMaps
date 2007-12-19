@@ -39,9 +39,8 @@ int main(int, char **)
   generate_locality("BlackBodyLocality.png", blackbody);
 
   VTK_CREATE(vtkColorTransferFunction, cool2warm);
-  cool2warm->SetColorSpaceToMsh();
+  cool2warm->SetColorSpaceToDiverging();
   cool2warm->AddRGBPoint(0.0, 0.186, 0.392, 0.749);
-  cool2warm->AddRGBPoint(0.5, 0.943, 0.943, 0.943);
   cool2warm->AddRGBPoint(1.0, 0.758, 0.214, 0.233);
   generate_bar("Cool2WarmBar.png", cool2warm);
 //   generate_discontinuity("Cool2WarmDiscontinuity.png", cool2warm);
@@ -69,23 +68,20 @@ int main(int, char **)
   generate_bar("Cyan2MauveBar.png", cyan2mauve);
 
   VTK_CREATE(vtkColorTransferFunction, purple2orange);
-  purple2orange->SetColorSpaceToMsh();
+  purple2orange->SetColorSpaceToDiverging();
   purple2orange->AddRGBPoint(0.0, 0.436, 0.308, 0.631);
-  purple2orange->AddRGBPoint(0.5, 0.943, 0.943, 0.943);
   purple2orange->AddRGBPoint(1.0, 0.759, 0.334, 0.046);
   generate_bar("Purple2OrangeBar.png", purple2orange);
 
   VTK_CREATE(vtkColorTransferFunction, green2purple);
-  green2purple->SetColorSpaceToMsh();
+  green2purple->SetColorSpaceToDiverging();
   green2purple->AddRGBPoint(0.0, 0.085, 0.532, 0.201);
-  green2purple->AddRGBPoint(0.5, 0.943, 0.943, 0.943);
   green2purple->AddRGBPoint(1.0, 0.436, 0.308, 0.631);
   generate_bar("Green2PurpleBar.png", green2purple);
 
   VTK_CREATE(vtkColorTransferFunction, blue2tan);
-  blue2tan->SetColorSpaceToMsh();
+  blue2tan->SetColorSpaceToDiverging();
   blue2tan->AddRGBPoint(0.0, 0.293, 0.562, 0.873);
-  blue2tan->AddRGBPoint(0.5, 0.943, 0.943, 0.943);
   blue2tan->AddRGBPoint(1.0, 0.845, 0.643, 0.204);
   generate_bar("Blue2TanBar.png", blue2tan);
 
