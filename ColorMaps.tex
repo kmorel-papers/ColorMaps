@@ -117,7 +117,7 @@ their dubious scientific value.
 A second major contributor to the dominance of the rainbow color map is the
 lack of a clear alternative, especially in terms of scientific
 visualization.  There are certainly many publications that recommend some
-very good choices for color maps\lcite{Rheingans99,Ware04,Brewer05}.
+very good choices for color maps\lcite{Levkowitz92,Rheingans99,Ware04,Brewer05}.
 However, each candidate has its sets of features and flaws, and the choice of
 the ``right'' one is difficult.  The conclusion of these publications of
 all these publications is to pick from a variety of color maps for the best
@@ -326,6 +326,8 @@ the \DeltaE for the pair of colors $\cvec{c_1}$ and $\cvec{c_2}$.
 Our ultimate goal is to design a color map that works well for
 general-purpose scientific visualization.  It should work well for a wide
 breadth of tasks and users.  As such we have the following requirements.
+These criteria conform to many of those proposed
+previously\lcite{Levkowitz92,Fortner97,Light04}.
 
 \begin{itemize}
 \item The map yields images that are aesthetically pleasing.
@@ -396,7 +398,7 @@ are used to represent a collection of discrete, unordered classes.  Since
 the colors have no ordering (by design), they are not appropriate for
 mapping a scalar variable.
 
-The sequential color maps (also known as interval\lcite{Ware04} or
+The sequential color maps (also known as ordinal\lcite{Ware04} or
 saturation\lcite{Rheingans99} color maps) are (nearly) monochromatic.  They
 range from a heavily saturated color to various levels of unsaturation.
 Luminance is also often increased as saturation is decreased so that the
@@ -443,12 +445,6 @@ cultures.  Furthermore, subjects associate warmth with positive activation
 and coolness with negative activation\lcite{Hardin97}.  Consequently,
 mapping cool blues to low values and warm reds to high values is
 natural\lcite{Fortner97}.
-
-Using our initial criteria, we can think of a diverging color map as
-``locally'' optimal.  We cannot add any color to anywhere in the map
-without degrading one or more of the requirements. \sticky{Levkowitz92,
-  referenced by\lcite{Rheingans99} introduces the concept of ``optimal
-  color scale,'' which may allow me to formalize this concept.}
 
 
 \subsection{Perceptual Uniformity}
@@ -660,6 +656,9 @@ order of the colors is natural, the rate of change is perceptually linear,
 and the colors are still easily distinguished by those with dichromatic
 vision.  The map also has a good perceptual range and minimally interferes
 with shading, as demonstrated in Figure~\ref{fig:Cool2WarmResponse}.
+Using our initial criteria, we can think of a diverging color map as
+``locally'' optimal.  We cannot add or modify any color anywhere in the map
+without degrading one or more of the requirements.
 
 \begin{figure}
   \centering
