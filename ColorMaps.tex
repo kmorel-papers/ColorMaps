@@ -125,14 +125,16 @@ choice for a domain-specific visualization.  Although perhaps a reasonable
 request for the designer of a targeted visualization application, a general
 purpose application, designed for multiple problem domains, would have to
 push this decision to the end-user with a dizzying array of color map
-choices.
+choices.  In our experience, the user, who seldom has the technical
+background to make an informed decision, usually chooses the rainbow color
+map.
 
 This paper is a concluding report on the quest for finding a good default
 color map for a general purpose scientific visualization application.  The
 color map derived here is an all-around good performer: it works well for
 low and high frequency data, orders the data, is perceptually linear,
 behaves well for observers with color-deficient vision, and has reasonably
-low impact on the shading of three dimensional surfaces.
+low impact on the shading of three-dimensional surfaces.
 
 
 \section{Previous Work}
@@ -146,13 +148,55 @@ which is used heavily in the subsequent discussions in this paper.
 \subsection{Color Maps}
 \label{sec:PreviousWork:ColorMaps}
 
+I assert, as have many before me, that the rainbow color map is an
+extremely poor choice.  Based on the colors of light at different
+wavelengths, the rainbow color map's design has nothing to do with how
+humans perceive color.  This results in multiple problems when humans try
+to do the reverse mapping from colors back to numbers.
+
+The first problem with the rainbow color map is that it is sensitive to
+deficiencies in vision.  A significant proportion of the population, most
+of which are males, cannot distinguish between the red and green colors.
+These unfortunate souls cannot distinguish many colors considered ``far
+apart'' in the rainbow color map\lcite{Light04}.
+
+The second problem is that the colors do not follow any natural perceived
+ordering.  Perceptual experiments show that although a test subject with
+no prior training will always order grayscale colors in order of luminance,
+the test subjects will order rainbow colors in numerous different
+ways\lcite{Ware04}.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=1.0in]{images/GrayscaleSpatialContrast}
+  \qquad
+  \includegraphics[width=1.0in]{images/RainbowSpatialContrast}
+  \caption{A spatial contrast sensitivity function.  The frequency of the
+    function increases from left to right, and the contrast increases from
+    top to bottom.  Notice that the grayscale mapping faithfully reproduces
+    the function.  The rainbow color mapping hides the variation in the low
+    contrast region and appears less smooth in the high-contrast,
+    low-frequency region.}
+  \label{fig:RainbowSpatialContrast}
+\end{figure}
+
+A third problem is that the perceptual changes in the colors are not
+uniform.  The colors appear to change faster in the cyan and yellow
+regions, which can cause Mach bands in those regions.  The colors appear to
+change more slowly in the blue, green, and red regions, which creates larger
+bands of color.  Within these bands it can hide important changes in the
+underlying data.  Thus, the nonuniform perceptual changes work to
+simultaneously introduce artifacts and obfuscate real
+data\lcite{Borland07} as demonstrated in
+Figure~\ref{fig:RainbowSpatialContrast}.
+
 \begin{figure}
   \centering
   \includegraphics[width=2.5in]{images/GrayscaleBar}
   \caption{The grayscale color map.}
   \label{fig:GrayscaleColorMap}
 \end{figure}
-Let us start with perhaps the simplest color map of all: the grayscale
+Better color maps exist.  A very simple one is the grayscale
 color map shown in Figure~\ref{fig:GrayscaleColorMap}.  Completely devoid
 of any chromaticity, this map relies entirely on luminance to demonstrate
 the numerical value.  Although a very simple map to create and use, this
@@ -228,48 +272,6 @@ than one in which the luminance is allowed to change.  Isoluminant color
 maps also tend to look dull and ugly, which means that a casual user will
 almost never choose one over a more vibrant color map like, say, the
 rainbow color map.
-
-However, as vibrant as the rainbow color map might be, it is actually an
-extremely poor choice.  Based on the colors of light at different
-wavelengths, the rainbow color map's design has nothing to do with how
-humans perceive color.  This results in multiple problems when humans try
-to do the reverse mapping from colors back to numbers.
-
-The first problem with the rainbow color map is that it is sensitive to
-deficiencies in vision.  A significant proportion of the population, most
-of which are males, cannot distinguish between the red and green colors.
-These unfortunate souls cannot distinguish many colors considered ``far
-apart'' in the rainbow color map\lcite{Light04}.
-
-The second problem is that the colors do not follow any natural perceived
-ordering.  Perceptual experiments show that although a test subject with
-no prior training will always order grayscale colors in order of luminance,
-the test subjects will order rainbow colors in numerous different
-ways\lcite{Ware04}.
-
-\begin{figure}
-  \centering
-  \includegraphics[width=1.0in]{images/GrayscaleSpatialContrast}
-  \qquad
-  \includegraphics[width=1.0in]{images/RainbowSpatialContrast}
-  \caption{A spatial contrast sensitivity function.  The frequency of the
-    function increases from left to right, and the contrast increases from
-    top to bottom.  Notice that the grayscale mapping faithfully reproduces
-    the function.  The rainbow color mapping hides the variation in the low
-    contrast region and appears less smooth in the high-contrast,
-    low-frequency region.}
-  \label{fig:RainbowSpatialContrast}
-\end{figure}
-
-A third problem is that the perceptual changes in the colors are not
-uniform.  The colors appear to change faster in the cyan and yellow
-regions, which can cause Mach bands in those regions.  The colors appear to
-change more slowly in the blue, green, and red regions, which creates larger
-bands of color.  Within these bands it can hide important changes in the
-underlying data.  Thus, the nonuniform perceptual changes work to
-simultaneously introduce artifacts and obfuscate real
-data\lcite{Borland07} as demonstrated in
-Figure~\ref{fig:RainbowSpatialContrast}.
 
 These color maps comprise those most commonly used in the literature and tools
 today.  Other color maps are proposed by Ware\scite{Ware04} as well as
