@@ -538,10 +538,21 @@ uniform throughout.  For a discrete color map, perceptual uniformity means
 that all pairs of adjacent colors will look equally different from each
 other.  That is, the \DeltaE for each adjacent pair is (roughly) the same.
 
-For a continuous color map, we want the rate of change for the color to be
-constant.  If we characterize our color map with function $\cvec{c}(x)$
+For a continuous color map, we want the perceptual distance between two
+colors to be proportional to the distance between the scalars associated
+with each.    If we characterize our color map with function $\cvec{c}(x)$
 that takes scalar value $x$ and returns a color vector, the color map is
 perceptually uniform if
+\begin{equation}
+  \frac{\DeltaE\{\cvec{c}(x),\cvec{c}(x+\Delta{x})}{\Delta{}x}
+  \label{eq:StrictContinuousDE}
+\end{equation}
+is constant for all valid $x$.
+
+Strictly speaking, we cannot satisfy Equation~\ref{eq:StrictContinuousDE}
+for diverging color maps because the map necessarily passes through three
+points in \Lab space that are not in a line.  However, it is possible to
+ensure that the rate of change is constant.  That is,
 \begin{equation}
   \lim_{\Delta{}x \rightarrow 0}{
     \frac{\DeltaE\{\cvec{c}(x),\cvec{c}(x+\Delta{x})}{\Delta{}x} }
@@ -549,7 +560,49 @@ perceptually uniform if
 \end{equation}
 is constant for all valid $x$.
 
-The easiest way to ensure that Equation~\ref{eq:ContinuousDE} is constant
+We can resolve Equation~\ref{eq:ContinuousDE} a bit by applying the \DeltaE
+operation and splitting up the $\cvec{c}$ function into its components.
+\begin{equation}
+  \begin{split}
+    { \lim_{\Delta x \rightarrow 0}
+      \frac{\left\lVert \cvec{c}(x+\Delta x) - \cvec{c}(x) \right\rVert}
+      {\Delta x}} \\
+    { \lim_{\Delta x \rightarrow 0}
+      \left\lVert \frac{\cvec{c}(x+\Delta x)- \cvec{c}(x)}
+	  {\Delta x} \right\rVert } \\
+    { \lim_{\Delta x \rightarrow 0}
+      \sqrtsign{ \sum_i \left( \frac
+	  {\operatorname{c}_i(x+\Delta x)
+	    - \operatorname{c}_i(x)}
+	  {\Delta x} \right)^2 } } \\
+    {\sqrtsign{ \sum_i \left( \lim_{\Delta x \rightarrow 0}
+       \frac
+	  {\operatorname{c}_i(x+\Delta x)
+	    - \operatorname{c}_i(x)}
+	  {\Delta x} \right)^2 } }
+  \end{split}
+  \label{eqn:dE_limit}
+\end{equation}
+
+In the final form of Equation~\ref{eqn:dE_limit}, we can clearly see that
+the limit is the definition of a derivative.  So replacing the limit with a
+derivative, we get the following.
+
+\begin{equation}
+  \sqrtsign{\sum_i (\operatorname{c}_{i}'(x))^2}
+  \label{eqn:dE_comp_dif}
+\end{equation}
+
+With some abuse of notation, let us declare $\cvec{c}'(x)$ as the piecewise
+derivative of $\cvec{c}(x)$.  Using this notation,
+Equation~\ref{eqn:dE_comp_dif} clearly resolves to the following.
+
+\begin{equation}
+  \left\lVert \cvec{c}'(x) \right\rVert
+  \label{eqn:dE}
+\end{equation}
+
+The easiest way to ensure that Equation~\ref{eqn:dE} is constant
 is to linearly interpolate colors in the \Lab color space.  However, that
 is not entirely possible to do for diverging color maps.  Lines from red to
 blue will not go through white.  A piecewise linear interpolation is mostly
@@ -619,7 +672,20 @@ being noticeable.
 An ideal way to build a diverging color map in \Msh space is to start at
 one color, linearly reduce $s$ to 0 (to get white), flip $h$ to the
 appropriate value for the last color, and then linearly increase $s$ to the
-desired value.  Unfortunately, this strategy tends to produce colors that
+desired value.  In fact, we can show that if $s$ changes linearly while $M$
+and $h$ are held constant, Equation~\ref{eqn:dE} is constant, which is our
+criteria for a uniform color map.  We can characterize a $\cvec{c}(x)$ that
+behaves in this way in \Lab space as
+\begin{multline}
+  \cvec{c}(x) = < M \cos(s_m x + s_b), M \sin(s_m x + s_b) \cos(h), \\
+  M \sin(s_m x + s_b) \cos(h) >
+  \label{eqn:s_linear}
+\end{multline}
+
+Now we can plug Equation~\ref{eqn:s_linear} into Equation~\ref{eqn:dE} and
+resolve.  HEREHERE and fix <> above.
+
+Unfortunately, this strategy tends to produce colors that
 are not reproducible by physical display systems.  We can correct for this
 problem by reducing $M$ at each end, but this adds the problem that colors
 will change faster near white when $M$ is larger.
@@ -666,16 +732,17 @@ unacceptable.  However we can get pretty close to constant by choosing
 $h_u$ so that Equation~\ref{eq:DeltaEforLinearMshMovement} is equal for
 $\cvec{c}_s$ and $\cvec{c}_u$.
 
-\begin{multline*}
+\begin{multline}
   \sqrt{(M_m \Delta x)^2 + (s_m \Delta x M_s)^2 + (h_m \Delta x M_s \sin s_s)^2}
   \\ =
   \sqrt{(M_m \Delta x)^2 + (s_m \Delta x M_u)^2}
-\end{multline*}
+  \label{eqn:hm_criteria}
+\end{multline}
 
-Note that the right side of the equation is missing a term because it
-evaluates to 0 for the unsaturated color.  We can safely get rid of the
-square roots because there is a sum of square real numbers inside them
-both.
+Note that the right side of Equation~\ref{eqn:hm_criteria} is missing a
+term because it evaluates to 0 for the unsaturated color.  We can safely
+get rid of the square roots because there is a sum of square real numbers
+inside them both.
 
 \begin{align}
     (M_m \Delta x)^2 + (s_m M_s)^2 \quad & \notag \\
