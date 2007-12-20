@@ -57,8 +57,9 @@ int main(int, char **)
 
   VTK_CREATE(vtkColorTransferFunction, green2red);
   green2red->SetColorSpaceToLab();
-  green2red->AddRGBPoint(0.0, 0.231, 0.675, 0.157);
-  green2red->AddRGBPoint(1.0, 0.988, 0.404, 0.2);
+  green2red->AddRGBPoint(0.0, 0.138, 0.539, 0.063);
+  green2red->AddRGBPoint(0.5, 0.466, 0.466, 0.466);
+  green2red->AddRGBPoint(1.0, 0.931, 0.052, 0.056);
   generate_bar("Green2RedBar.png", green2red);
 
   VTK_CREATE(vtkColorTransferFunction, cyan2mauve);
@@ -84,6 +85,12 @@ int main(int, char **)
   blue2tan->AddRGBPoint(0.0, 0.293, 0.562, 0.873);
   blue2tan->AddRGBPoint(1.0, 0.845, 0.643, 0.204);
   generate_bar("Blue2TanBar.png", blue2tan);
+
+  VTK_CREATE(vtkColorTransferFunction, green2redDiv);
+  green2redDiv->SetColorSpaceToDiverging();
+  green2redDiv->AddRGBPoint(0.0, 0.085, 0.532, 0.201);
+  green2redDiv->AddRGBPoint(1.0, 0.758, 0.214, 0.233);
+  generate_bar("Green2RedDivBar.png", green2redDiv);
 
   return 0;
 }
