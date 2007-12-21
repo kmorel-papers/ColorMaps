@@ -558,7 +558,9 @@ ensure that the rate of change is constant.  That is,
     \frac{\DeltaE\{\cvec{c}(x),\cvec{c}(x+\Delta{x})}{\Delta{}x} }
   \label{eq:ContinuousDE}
 \end{equation}
-is constant for all valid $x$.
+is constant for all valid $x$.  This relaxed property is sufficient for
+describing a perceptually linear color map so long as we make sure that the
+curve does not return to any set of colors.
 
 We can resolve Equation~\ref{eq:ContinuousDE} a bit by applying the \DeltaE
 operation and splitting up the $\cvec{c}$ function into its components.
@@ -676,14 +678,36 @@ desired value.  In fact, we can show that if $s$ changes linearly while $M$
 and $h$ are held constant, Equation~\ref{eqn:dE} is constant, which is our
 criteria for a uniform color map.  We can characterize a $\cvec{c}(x)$ that
 behaves in this way in \Lab space as
-\begin{multline}
-  \cvec{c}(x) = < M \cos(s_m x + s_b), M \sin(s_m x + s_b) \cos(h), \\
-  M \sin(s_m x + s_b) \cos(h) >
+\begin{equation}
+  \cvec{c}(x) = \langle M \cos(\operatorname{s}(x)),
+  M \sin(\operatorname{s}(x)) \cos(h),
+  M \sin(\operatorname{s}(x)) \sin(h) \rangle
   \label{eqn:s_linear}
-\end{multline}
+\end{equation}
+where $M$ and $h$ are constant and $\operatorname{s}(x)$ is a linear
+function of slope $s_m$.
 
 Now we can plug Equation~\ref{eqn:s_linear} into Equation~\ref{eqn:dE} and
-resolve.  HEREHERE and fix <> above.
+resolve.
+
+\begin{equation}
+  \begin{gathered}
+    \left\lVert \left\langle M s_m \sin(\operatorname{s}(x)),
+        M s_m \cos(\operatorname{s}(x)) \cos(h),
+        M s_m \cos(\operatorname{s}(x)) \sin(h) \right\rangle \right\rVert \\
+    \sqrtsign{ M^2 s_m^2 \left( \sin^2(\operatorname{s}(x))
+        + \cos^2(\operatorname{s}(x)) \cos^2(h)
+        + \cos^2(\operatorname{s}(x)) \sin^2(h) \right) } \\
+    \sqrtsign{ M^2 s_m^2 \left( \sin^2(\operatorname{s}(x))
+        + \cos^2(\operatorname{s}(x)) \left( \cos^2(h)
+          + \sin^2(h) \right) \right) } \\
+    \sqrtsign{ M^2 s_m^2 \left( \sin^2(\operatorname{s}(x))
+        + \cos^2(\operatorname{s}(x)) \right) } \\
+    M s_m
+  \end{gathered}
+\end{equation}
+
+HEREHERE.
 
 Unfortunately, this strategy tends to produce colors that
 are not reproducible by physical display systems.  We can correct for this
