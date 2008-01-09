@@ -1,52 +1,39 @@
 % -*- latex -*-
 
+\documentclass{acmsiggraph}               % final
+%\documentclass[review]{acmsiggraph}      % review
+%\documentclass[widereview]{acmsiggraph}  % wide-spaced review
+%\documentclass[preprint]{acmsiggraph}    % preprint
 
-\documentclass{vgtc}                          % final (conference style)
-%\documentclass[review]{vgtc}                 % review
-%\documentclass[widereview]{vgtc}             % wide-spaced review
-%\documentclass[preprint]{vgtc}               % preprint
-%\documentclass[electronic]{vgtc}             % electronic version
-
-%% Uncomment one of the lines above depending on where your paper is
+%% Uncomment one of the four lines above depending on where your paper is
 %% in the conference process. ``review'' and ``widereview'' are for review
-%% submission, ``preprint'' is for pre-publication, and the final version
-%% doesn't use a specific qualifier. Further, ``electronic'' includes
-%% hyperreferences for more convenient online viewing.
+%% submission, ``preprint'' is for pre-publication, and ``final'' is for
+%% the version to be printed.
 
-%% Please use one of the ``review'' options in combination with the
-%% assigned online id (see below) ONLY if your paper uses a double blind
-%% review process. Some conferences, like IEEE Vis and InfoVis, have NOT
-%% in the past.
+%% The 'helvet' and 'times' packages define the typefaces used for
+%% serif and sans serif type in this document. Computer Modern Roman 
+%% is used for mathematics typesetting. The scale factor is set to .92
+%% to bring the sans-serif type in line with the serif type.
 
-%% Figures should be in CMYK or Grey scale format, otherwise, colour 
-%% shifting may occur during the printing process.
-
-%% These three lines bring in essential packages: ``mathptmx'' for Type 1 
-%% typefaces, ``graphicx'' for inclusion of EPS figures. and ``times''
-%% for proper handling of the times font family.
-
-\usepackage{mathptmx}
-\usepackage{graphicx}
+\usepackage[scaled=.92]{helvet}
 \usepackage{times}
 
-%% We encourage the use of mathptmx for consistent usage of times font
-%% throughout the proceedings. However, if you encounter conflicts
-%% with other math-related packages, you may want to disable it.
+%% use this for zero \parindent and non-zero \parskip, intelligently.
 
-%% If you are submitting a paper to a conference for review with a double
-%% blind reviewing process, please replace the value ``0'' below with your
-%% OnlineID. Otherwise, you may safely leave it at ``0''.
+\usepackage{parskip}
+
+%% Optional: the 'caption' package provides a nicer-looking replacement
+%% for the standard caption environment. With 'labelfont=bf,'textfont=it',
+%% caption labels are bold and caption text is italic.
+
+\usepackage[labelfont=bf,textfont=it]{caption}
+
+%% If you are submitting a paper to the annual conference, please replace 
+%% the value ``0'' below with the numeric value of your OnlineID. 
+%% If you are not submitting this paper to the annual conference, 
+%% you may safely leave it at ``0'' -- it will not be included in the output.
+
 \onlineid{0}
-
-%% declare the category of your paper, only shown in review mode
-\vgtccategory{Research}
-
-%% allow for this line if you want the electronic option to work properly
-\vgtcinsertpkg
-
-%% In preprint mode you may define your own headline.
-%\preprinttext{To appear in an IEEE VGTC sponsored conference.}
-
 
 \usepackage{amsfonts}
 \usepackage{amssymb}
@@ -54,7 +41,7 @@
 \usepackage{graphicx}
 \usepackage{varioref}
 \usepackage{fancyvrb}
-\usepackage{cite}
+%\usepackage{cite}
 \usepackage{subfigure}
 \usepackage{xspace}
 \usepackage[pdfstartview=FitH]{hyperref}
@@ -75,19 +62,24 @@
 %%\affiliation{\scriptsize Martha Stewart Enterprises \\ Microsoft Research}
 
 %% Author and Affiliation (multiple authors with multiple affiliations)
-\author{Kenneth~Moreland\thanks{e-mail: kmorel@sandia.gov}}
-\affiliation{\scriptsize Sandia National Laboratories}
 
-%% A teaser figure can be included as follows, but is not recommended since
-%% the space is now taken up by a full width abstract.
-%\teaser{
-%  \includegraphics[width=1.5in]{sample.eps}
-%  \caption{Lookit! Lookit!}
-%}
+%% Author and Affiliation (single author).
+%%\author{Roy G. Biv\thanks{e-mail: roy.g.biv@aol.com}\\Allied Widgets Research}
+
+%% Author and Affiliation (multiple authors).
+%% \author{Roy G. Biv\thanks{e-mail: roy.g.biv@aol.com}\\ Starbucks Research %
+%% \and Ed Grimley\thanks{e-mail:ed.grimley@aol.com}\\Nigel Mansell\thanks{nigelf1@msn.com}\\ Grimley Widgets, Inc. %
+%% \and Martha Stewart\thanks{e-mail:martha.stewart@marthastewart.com}\\ Martha Stewart Enterprises \\ Microsoft Research}
+
+\author{Kenneth~Moreland\thanks{e-mail: kmorel@sandia.gov}\\Sandia National Laboratories}
+
+%% Keywords that describe your work.
+
+\keywords{color, scientific visualization}
 
 % Commands I use for citing.
 \newcommand{\lcite}[1]{~\cite{#1}}
-\newcommand{\scite}[1]{~\cite{#1}}
+\newcommand{\scite}[1]{~\shortcite{#1}}
 
 % Put figures inline with text when possible
 \usepackage{float}
@@ -115,7 +107,16 @@
 \newcommand*{\cvec}[1]{\mathbf{#1}}
 
 
-\abstract{
+\begin{document}
+
+%% \teaser{
+%%   \includegraphics[width=1.5in]{sample.eps}
+%%   \caption{Lookit! Lookit!}
+%% }
+
+\maketitle
+
+\begin{abstract}
   One of the most fundamental features of scientific visualization is the
   process of mapping scalar values to colors.  This process allows us to
   view scalar fields by coloring surfaces and volumes.  Despite the
@@ -135,26 +136,31 @@
   applications.  This color map is a clear replacement for the rainbow
   color map and can hopefully, once and for all, kill the use of the
   rainbow color map for serious scientific visualization applications.
-}
+\end{abstract}
 
 %% ACM Computing Classification System (CCS). 
 %% See <http://www.acm.org/class/1998/> for details.
 %% The ``\CCScat'' command takes four arguments.
 
-\CCScatlist{
-  \CCScat{I.3.m}{Computing Methodologies}{Computer Graphics}{Miscellaneous};
-  \CCScat{H.5.2}{Information Interfaces and Presentation}%
+\begin{CRcatlist}
+  \CRcat{I.3.m}{Computing Methodologies}{Computer Graphics}{Miscellaneous};
+  \CRcat{H.5.2}{Information Interfaces and Presentation}%
     {User Interfaces}{Screen design};
-  \CCScat{H.1.2}{Models and Principles}{User/Machine Systems}{Human factors}
-}
+  \CRcat{H.1.2}{Models and Principles}{User/Machine Systems}{Human factors}
+\end{CRcatlist}
 
-\begin{document}
+%% The ``\keywordlist'' command prints out the keywords.
+\keywordlist
 
-\firstsection{Introduction}
-
-\maketitle
-
+\section{Introduction}
 \label{sec:Introduction}
+
+%% The ``\copyrightspace'' command must be the first command after the 
+%% start of the first section of the body of your paper. It ensures the
+%% copyright space is left at the bottom of the first column on the first
+%% page of your paper.
+
+\copyrightspace
 
 At its core, visualization is the process of providing a visual
 representation of data.  One of the most fundamental and important aspects
@@ -364,7 +370,7 @@ changes in luminance, saturation, hue, or some combination thereof.
 
 All color spaces are based on the tristimulus theory, which states that any
 perceived color can be uniquely represented by a
-3-tuple\lcite{Feynman63,Stone05,Wyszecki82}.  This result is a side effect
+3-tuple\lcite{Feynman63}.  This result is a side effect
 of the fact that there are exactly 3 different types of color receptors in
 the human eye.  Limited space prevents more than a few applicable additive
 color spaces from being listed here.  Any textbook on color will provide
@@ -924,16 +930,15 @@ a clear improvement over what is commonly used today, and I hope that many
 will follow in adopting it as the new standard.
 
 
-\acknowledgements{
+\section*{Acknowledgments}
 
 This work was done at Sandia National Laboratories.  Sandia is a
 multiprogram laboratory operated by Sandia Corporation, a Lockheed Martin
 Company, for the United States Department of Energy's National Nuclear
 Security Administration under contract DE-AC04-94AL85000.
 
-}
 
-\bibliographystyle{abbrv}
+\bibliographystyle{acmsiggraph}
 \bibliography{ColorMaps}
 
 \end{document}
