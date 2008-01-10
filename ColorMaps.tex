@@ -44,6 +44,7 @@
 %\usepackage{cite}
 \usepackage{subfigure}
 \usepackage{xspace}
+\usepackage{clrscode}
 \usepackage[pdfstartview=FitH]{hyperref}
 
 \title{Diverging Color Maps for Scientific Visualization}
@@ -76,6 +77,9 @@
 %% Keywords that describe your work.
 
 \keywords{color, scientific visualization}
+
+% Make fonts slightly bigger for equations to make them easier to read.
+\DeclareMathSizes{9}{9}{7}{6}
 
 % Commands I use for citing.
 \newcommand{\lcite}[1]{~\cite{#1}}
@@ -814,9 +818,68 @@ different value for each of the saturated colors used in the diverging
 color map.  The direction in which the hue is ``spun'' is unimportant with
 regard to perception.  I usually adjust the hue to be away from 0 (except
 in the purple hues) because it provides slightly more aesthetically
-pleasing results.
+pleasing results.  Figure~\ref{fig:AdjustHue} gives a simple algorithm for
+adjusting the hue.
+
+\begin{figure}
+  \begin{codebox}
+    \Procname{$\proc{AdjustHue}(\{M_\mathrm{sat},s_\mathrm{sat},
+                                h_\mathrm{sat}\},M_\mathrm{unsat})$}
+    \li \If $M_\mathrm{sat} \geq M_\mathrm{unsat}$
+    \li \Then \Return $h_\mathrm{sat}$ \RComment Best we can do
+    \li \Else $\id{hSpin} \leftarrow
+                 \frac{s_\mathrm{sat}\sqrt{M_\mathrm{unsat}^2-M_\mathrm{sat}^2}}
+		      {M_\mathrm{sat} \sin(s_\mathrm{sat})}$
+    \li       \If $h_\mathrm{sat} > -\frac{\pi}{3}$ \RComment Spin away from purple
+    \li       \Then \Return $h_\mathrm{sat} + \id{hSpin}$
+    \li       \Else \Return $h_\mathrm{sat} - \id{hSpin}$
+              \End
+        \End
+  \end{codebox}
+  \caption{Function to provide an adjusted hue when interpolating to an
+    unsaturated color in \Msh space.}
+  \label{fig:AdjustHue}
+\end{figure}
+
+\subsection{Interpolating Control Points}
+\label{sec:InterpolatingControlPoints}
+
+Figure~\ref{fig:InterpolateColor}
+
+\begin{figure}
+  \begin{codebox}
+    \Procname{$\proc{InterpolateColor}(\{r_1,g_1,b_1\},\{r_2,g_2,b_2\},
+                                       \id{interp})$}
+    \li $\{M_1,s_1,h_1\} \leftarrow \proc{RGB2Msh}(\{r_1,g_1,b_1\})$
+    \li $\{M_2,s_2,h_2\} \leftarrow \proc{RGB2Msh}(\{r_2,g_2,b_2\})$
+    \zi \Comment If points saturated and distinct, place white in middle
+    \li \If $(s_1 > 0.05) \cap (s_2 > 0.05)
+             \cap (\proc{RadDiff}(h_1,h_2) > \frac{\pi}{3})$
+    \li \Then \If $\id{interp} < \frac{1}{2}$
+    \li       \Then $M_2 \leftarrow 95, s_2 \leftarrow 0, h_2 \leftarrow 0$
+    \li             $\id{interp} \leftarrow 2\id{interp}$
+    \li       \Else $M_1 \leftarrow 95, s_1 \leftarrow 0, h_1 \leftarrow 0$
+    \li             $\id{interp} \leftarrow 2\id{interp} - 1$
+              \End
+        \End
+    \zi \Comment Adjust hue of unsaturated colors
+    \li \If $(s_1 < 0.05) \cap (s_2 > 0.05)$
+    \li \Then $h_1 \leftarrow \proc{AdjustHue}(\{M_2,s_2,h_2\},M_1)$
+    \li \ElseIf $(s_2 < 0.05) \cap (s_1 > 0.05)$
+    \li \Then $h_2 \leftarrow \proc{AdjustHue}(\{M_1,s_1,h_1\},M_2)$
+        \End
+    \zi \Comment Linear interpolation on adjusted control points
+    \li $\{M_\mathrm{mid},s_\mathrm{mid},h_\mathrm{mid}\}$
+    \zi \>$\leftarrow (1-\id{interp})\{M_1,s_1,h_1\}+\id{interp}\{M_2,s_2,h_2\}$
+    \li \Return $\proc{Msh2RGB}(\{M_\mathrm{mid},s_\mathrm{mid},h_\mathrm{mid}\})$
+  \end{codebox}
+  \caption{Interpolation algorithm to automatically create continuous
+    diverging color maps.}
+  \label{fig:InterpolateColor}
+\end{figure}
 
 
+				     
 \section{Results}
 \label{sec:Results}
 
