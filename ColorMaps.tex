@@ -963,9 +963,9 @@ demonstrated in Figure~\ref{fig:ColorMapInteraction}
 Applying the design described in Section~\ref{sec:ColorMapDesign}, we can
 build the cool to warm color map shown in Figure~\ref{fig:Cool2WarmBar}.
 The control points, to be interpolated in \Msh space, are given in
-Table~\ref{table:Cool2Warm}.  \sticky{It would be nice to provide a large
-table containing the full range of colors.  How can I best do that?  A web
-link?  Where?}
+Table~\ref{table:Cool2Warm}.  Table~\ref{table:Cool2WarmRGB} gives example
+interpolated \RGB values for this color map.  \RGB values are computed from
+\Lab values using a D65 white point and a gamma correction of 2.4.
 
 \begin{table}
   \centering
@@ -983,13 +983,42 @@ link?  Where?}
 \begin{table}
   \centering
   \caption{Cool to warm color map RGB values.}
-  \begin{tabular}{c}
-    00000\\1\\2\\3\\4\\5\\6\\7\\8\\9\\
-    00000\\1\\2\\3\\4\\5\\6\\7\\8\\9\\
-    00000\\1\\2\\3\\4\\5\\6\\7\\8\\9\\
-    00000\\1\\2\\3\\4\\5\\6\\7\\8\\9\\
-    00000\\1\\2\\3\\4\\5\\6\\7\\8\\9\\
-    00000\\1\\2\\3\\4\\5\\6\\7\\8\\9\\
+  \begin{tabular}{r@{.}l@{\qquad}rrr}
+    \multicolumn{2}{c}{Scalar\qquad\qquad} & Red & Green & Blue \\
+    \hline
+    0&0 & 47 & 100 & 191 \\
+    0&03125 & 47 & 112 & 201 \\
+    0&0625 & 49 & 124 & 211 \\
+    0&09375 & 53 & 136 & 220 \\
+    0&125 & 61 & 148 & 227 \\
+    0&15625 & 71 & 159 & 233 \\
+    0&1875 & 83 & 170 & 239 \\
+    0&21875 & 97 & 181 & 243 \\
+    0&25 & 111 & 191 & 246 \\
+    0&28125 & 127 & 200 & 248 \\
+    0&3125 & 143 & 209 & 249 \\
+    0&34375 & 159 & 217 & 249 \\
+    0&375 & 175 & 224 & 248 \\
+    0&40625 & 192 & 229 & 247 \\
+    0&4375 & 208 & 234 & 245 \\
+    0&46875 & 225 & 238 & 243 \\
+    0&5 & 241 & 241 & 241 \\
+    0&53125 & 245 & 236 & 227 \\
+    0&5625 & 248 & 229 & 213 \\
+    0&59375 & 250 & 222 & 199 \\
+    0&625 & 252 & 214 & 185 \\
+    0&65625 & 252 & 204 & 171 \\
+    0&6875 & 252 & 194 & 157 \\
+    0&71875 & 250 & 183 & 144 \\
+    0&75 & 248 & 171 & 132 \\
+    0&78125 & 244 & 158 & 120 \\
+    0&8125 & 240 & 145 & 109 \\
+    0&84375 & 234 & 132 & 99 \\
+    0&875 & 228 & 118 & 90 \\
+    0&90625 & 220 & 103 & 81 \\
+    0&9375 & 212 & 88 & 73 \\
+    0&96875 & 203 & 72 & 66 \\
+    1&0 & 193 & 55 & 59
   \end{tabular}
   \label{table:Cool2WarmRGB}
 \end{table}
