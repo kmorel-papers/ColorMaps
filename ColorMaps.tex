@@ -729,7 +729,7 @@ throughout the entire color map, as evidenced in Figure~\ref{fig:s_plot}.
 
 \begin{figure}
   \centering
-  \sticky{The plot.}
+  \includegraphics{images/LinearMshPlot}
   \caption{Plot of $L*$, $a*$, and $b*$ coordinates when interpolating $s$
     linearly in \Msh space.}
   \label{fig:s_plot}
@@ -739,9 +739,10 @@ Although the color map shape shown in Figure~\ref{fig:s_plot} has good
 visual properties, it does not conform well to the gamut of colors
 displayable by a video monitor.  When trying to display many of these
 colors, you must ``clip'' to what can be represented (demonstrated by the
-dashed lines).  We can correct for this problem by reducing $M$ at each
-end, but this adds the problem that colors will change faster near white
-when $M$ is larger.
+dashed lines).  Notice the harsh bends of the intensity ($L*$) that occur
+near the middle.  These bends can lead to Mach banding.  We can correct for
+this problem by reducing $M$ at each end, but this adds the problem that
+colors will change faster near white when $M$ is larger.
 
 We can restore the uniformity of the color map again by adding some
 ``spin'' to the hue.  Even though $h$ is interpolated linearly, the changes
@@ -920,7 +921,29 @@ demonstrated in Figure~\ref{fig:ColorMapInteraction}
 
 \begin{figure}
   \centering
-  \sticky{Fill me in.}
+  \begin{tabular}{c}
+    \subfigure[Simply pick two endpoint colors to create a diverging color
+      map in between them.]%
+	      {%
+		\includegraphics[width=.45\linewidth]{images/tfOriginal} \quad
+		\includegraphics[width=.45\linewidth]{images/tfColorChange}
+	      } \\
+    \subfigure[Creating a white or gray control point allows you to define
+      the intensity and location of the ``middle'' of the diverging color
+      map.]%
+	      {%
+		\includegraphics[width=.45\linewidth]{images/tfWhiteMiddle}
+		\quad
+		\includegraphics[width=.45\linewidth]{images/tfWhiteShifted}
+	      } \\
+    \subfigure[Adding a control point in a colored area allows you to
+      stretch and compress regions.]%
+	      {%
+		\includegraphics[width=.45\linewidth]{images/tfColorPoint}
+		\quad
+		\includegraphics[width=.45\linewidth]{images/tfColorShifted}
+	      }
+  \end{tabular}
   \caption{Interacting with color maps in the \Msh color space.}
   \label{fig:ColorMapInteraction}
 \end{figure}
@@ -937,12 +960,12 @@ demonstrated in Figure~\ref{fig:ColorMapInteraction}
   \label{fig:Cool2WarmBar}
 \end{figure}
 
-Applying the design described in Section~\ref{sec:ColorMapDesign} results
-in the color map shown in Figure~\ref{fig:Cool2WarmBar}.  The control
-points, to be interpolated in \Msh space, are given in
+Applying the design described in Section~\ref{sec:ColorMapDesign}, we can
+build the cool to warm color map shown in Figure~\ref{fig:Cool2WarmBar}.
+The control points, to be interpolated in \Msh space, are given in
 Table~\ref{table:Cool2Warm}.  \sticky{It would be nice to provide a large
-  table containing the full range of colors.  How can I best do that?  A
-  web link?  Where?}
+table containing the full range of colors.  How can I best do that?  A web
+link?  Where?}
 
 \begin{table}
   \centering
