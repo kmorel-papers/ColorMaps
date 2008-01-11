@@ -525,7 +525,7 @@ First, the more colorful nature of the diverging color map can be more
 aesthetically pleasing.  Second, the diverging color map can have up to
 twice the perceptual resolution of the sequential color map without
 sacrificing the requirements of surface shading or losing viewers
-with dichromatic vision.
+with dichromatic vision.  \sticky{low, middle, high}
 
 What diverging color maps lack in general is a natural ordering of colors.
 To impose a color ordering, we carefully chose two colors that most
@@ -664,6 +664,7 @@ color spaces is straightforward.
     a* &= M \sin\left(s\right) \cos\left(h\right) \\
     b* &= M \sin\left(s\right) \sin\left(h\right)
   \end{split}
+  \label{eqn:MshToLab}
 \end{equation}
 
 Note that \Msh, like all polar coordinates, has a pole in which one of the
@@ -844,7 +845,13 @@ adjusting the hue.
 \subsection{Interpolating Control Points}
 \label{sec:InterpolatingControlPoints}
 
-Figure~\ref{fig:InterpolateColor}
+The \proc{InterpolateColor} algorithm in Figure~\ref{fig:InterpolateColor}
+combines the techniques described previously in this section.  The
+algorithm simplifies the process of building a continuous diverging color
+map by allowing a user to define colors at control points.
+\proc{InterpolateColor} accepts two colors and an interpolation factor
+between $0$ and $1$.  \proc{InterpolateColor} takes colors in \RGB space to
+make it easier for users to define.
 
 \begin{figure}
   \begin{codebox}
@@ -855,6 +862,7 @@ Figure~\ref{fig:InterpolateColor}
     \zi \Comment If points saturated and distinct, place white in middle
     \li \If $(s_1 > 0.05) \cap (s_2 > 0.05)
              \cap (\proc{RadDiff}(h_1,h_2) > \frac{\pi}{3})$
+	\label{code:InterpolateColor:AddWhiteBegin}
     \li \Then \If $\id{interp} < \frac{1}{2}$
     \li       \Then $M_2 \leftarrow 95, s_2 \leftarrow 0, h_2 \leftarrow 0$
     \li             $\id{interp} \leftarrow 2\id{interp}$
@@ -862,15 +870,19 @@ Figure~\ref{fig:InterpolateColor}
     \li             $\id{interp} \leftarrow 2\id{interp} - 1$
               \End
         \End
+	\label{code:InterpolateColor:AddWhiteEnd}
     \zi \Comment Adjust hue of unsaturated colors
     \li \If $(s_1 < 0.05) \cap (s_2 > 0.05)$
+        \label{code:InterpolateColor:AdjustHueBegin}
     \li \Then $h_1 \leftarrow \proc{AdjustHue}(\{M_2,s_2,h_2\},M_1)$
     \li \ElseIf $(s_2 < 0.05) \cap (s_1 > 0.05)$
     \li \Then $h_2 \leftarrow \proc{AdjustHue}(\{M_1,s_1,h_1\},M_2)$
         \End
+	\label{code:InterpolateColor:AdjustHueEnd}
     \zi \Comment Linear interpolation on adjusted control points
     \li $\{M_\mathrm{mid},s_\mathrm{mid},h_\mathrm{mid}\}$
     \zi \>$\leftarrow (1-\id{interp})\{M_1,s_1,h_1\}+\id{interp}\{M_2,s_2,h_2\}$
+        \label{code:InterpolateColor:LinearInterpolate}
     \li \Return $\proc{Msh2RGB}(\{M_\mathrm{mid},s_\mathrm{mid},h_\mathrm{mid}\})$
   \end{codebox}
   \caption{Interpolation algorithm to automatically create continuous
@@ -878,8 +890,42 @@ Figure~\ref{fig:InterpolateColor}
   \label{fig:InterpolateColor}
 \end{figure}
 
+The \proc{InterpolateColor} algorithm works as follows.  The colors are
+first converted to \Msh.\footnote{I do not provide the implementation of
+\proc{RGB2Msh} or \proc{Msh2RGB}.  However, the conversion between \Msh and
+\Lab is a straightforward implementation of Equations \ref{eqn:LabToMsh}
+and \ref{eqn:MshToLab}.  Conversions between \RGB and \Lab can be found in
+many books on color or web resources like
+\href{http://www.easyrgb.com/}{EasyRGB.com}.}  To enforce a diverging color
+map, white is added between the two control points
+(lines~\ref{code:InterpolateColor:AddWhiteBegin}--\ref{code:InterpolateColor:AddWhiteEnd}).
+The middle white points is not added if either color is already unsaturated
+(indicating that there is already a control point for the white part of the
+diverging color map) or if the angular difference between the two hue
+orientations (computed by \proc{RadDiff}) is small (which would mean that
+both sides of the diverging color map would be roughly the same
+color).\footnote{The parameters for specifying a low saturation (less than
+$0.05$ radians) and similar hue angles (less than $\frac{\pi}{3}$ radians)
+is somewhat arbitrary, but the values provided here work well in practice.}
+If either control point is unsaturated, its hue is adjusted
+(lines~\ref{code:InterpolateColor:AdjustHueBegin}--\ref{code:InterpolateColor:AdjustHueEnd})
+using the \proc{AdjustHue} function in Figure~\ref{fig:AdjustHue}.
+Finally, the two \Msh colors are linearly interpolated
+(line~\ref{code:InterpolateColor:LinearInterpolate}).  The result is
+converted back to \RGB and returned.
 
-				     
+The \proc{InterpolateColor} algorithm makes it easy for users to build and
+modify continuous diverging color maps using \RGB control points as
+demonstrated in Figure~\ref{fig:ColorMapInteraction}
+
+\begin{figure}
+  \centering
+  \sticky{Fill me in.}
+  \caption{Interacting with color maps in the \Msh color space.}
+  \label{fig:ColorMapInteraction}
+\end{figure}
+
+
 \section{Results}
 \label{sec:Results}
 
