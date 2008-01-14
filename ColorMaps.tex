@@ -850,16 +850,22 @@ adjusting the hue.
   \label{fig:AdjustHue}
 \end{figure}
 
+\begin{figure}
+  \centering
+  \includegraphics{images/HueSpinPlot}
+  \caption{Plot of $L*$, $a*$, and $b*$ coordinates when interpolating
+    piecewise linearly in \Msh space and applying a hue spin.}
+  \label{fig:hue_spin_plot}
+\end{figure}
+
+Figure~\ref{fig:hue_spin_plot} shows the effects of applying a hue spin.
+The plot is smooth, perceptually uniform, and comparable to the plot given
+in Figure~\ref{fig:s_plot}.  In addition, the hue spin allows the entire
+curve to remain in the gamut of displayable colors.
+
+
 \subsection{Interpolating Control Points}
 \label{sec:InterpolatingControlPoints}
-
-The \proc{InterpolateColor} algorithm in Figure~\ref{fig:InterpolateColor}
-combines the techniques described previously in this section.  The
-algorithm simplifies the process of building a continuous diverging color
-map by allowing a user to define colors at control points.
-\proc{InterpolateColor} accepts two colors and an interpolation factor
-between $0$ and $1$.  \proc{InterpolateColor} takes colors in \RGB space to
-make it easier for users to define.
 
 \begin{figure}
   \begin{codebox}
@@ -898,6 +904,14 @@ make it easier for users to define.
   \label{fig:InterpolateColor}
 \end{figure}
 
+The \proc{InterpolateColor} algorithm in Figure~\ref{fig:InterpolateColor}
+combines the techniques described previously in this section.  The
+algorithm simplifies the process of building a continuous diverging color
+map by allowing a user to define colors at control points.
+\proc{InterpolateColor} accepts two colors and an interpolation factor
+between $0$ and $1$.  \proc{InterpolateColor} takes colors in \RGB space to
+make it easier for users to define.
+
 The \proc{InterpolateColor} algorithm works as follows.  The colors are
 first converted to \Msh.\footnote{I do not provide the implementation of
 \proc{RGB2Msh} or \proc{Msh2RGB}.  However, the conversion between \Msh and
@@ -924,7 +938,7 @@ converted back to \RGB and returned.
 
 The \proc{InterpolateColor} algorithm makes it easy for users to build and
 modify continuous diverging color maps using \RGB control points as
-demonstrated in Figure~\ref{fig:ColorMapInteraction}
+demonstrated in Figure~\ref{fig:ColorMapInteraction}.
 
 \begin{figure}
   \centering
