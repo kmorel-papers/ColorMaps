@@ -135,11 +135,13 @@
   been adopted by the visualization community as a good default in
   scientific visualization.  In this paper, we explore the use of diverging
   color maps (sometimes also called ratio, bipolar, or double-ended color
-  maps) for use in scientific visualization.  We conclude with a diverging
+  maps) for use in scientific visualization.  I provide a diverging
   color map that generally performs well in scientific visualization
   applications.  This color map is a clear replacement for the rainbow
   color map and can hopefully, once and for all, kill the use of the
-  rainbow color map for serious scientific visualization applications.
+  rainbow color map for serious scientific visualization applications.  I
+  also present an algorithm that allows users to easily generate their own
+  customized color maps.
 \end{abstract}
 
 %% ACM Computing Classification System (CCS). 
@@ -208,9 +210,9 @@ their dubious scientific value.
 A second major contributor to the dominance of the rainbow color map is the
 lack of a clear alternative, especially in terms of scientific
 visualization.  There are certainly many publications that recommend some
-very good choices for color maps\lcite{Levkowitz92,Rheingans99,Ware04,Brewer05}.
+very good choices for color maps\lcite{Brewer05,Levkowitz92,Rheingans99,Ware04}.
 However, each candidate has its sets of features and flaws, and the choice of
-the ``right'' one is difficult.  The conclusion of these publications of
+the ``right'' one is difficult.  The conclusion of
 all these publications is to pick from a variety of color maps for the best
 choice for a domain-specific visualization.  Although perhaps a reasonable
 request for the designer of a targeted visualization application, a general
@@ -257,20 +259,6 @@ no prior training will always order grayscale colors in order of luminance,
 the test subjects will order rainbow colors in numerous different
 ways\lcite{Ware04}.
 
-\begin{figure}
-  \centering
-  \includegraphics[width=1.0in]{images/GrayscaleSpatialContrast}
-  \qquad
-  \includegraphics[width=1.0in]{images/RainbowSpatialContrast}
-  \caption{A spatial contrast sensitivity function.  The frequency of the
-    function increases from left to right, and the contrast increases from
-    top to bottom.  Notice that the grayscale mapping faithfully reproduces
-    the function.  The rainbow color mapping hides the variation in the low
-    contrast region and appears less smooth in the high-contrast,
-    low-frequency region.}
-  \label{fig:RainbowSpatialContrast}
-\end{figure}
-
 A third problem is that the perceptual changes in the colors are not
 uniform.  The colors appear to change faster in the cyan and yellow
 regions, which can cause Mach bands in those regions.  The colors appear to
@@ -283,6 +271,20 @@ Figure~\ref{fig:RainbowSpatialContrast}.
 
 \begin{figure}
   \centering
+  \includegraphics[width=1.0in]{images/GrayscaleSpatialContrast}
+  \qquad
+  \includegraphics[width=1.0in]{images/RainbowSpatialContrast}
+  \caption{A spatial contrast sensitivity function.  The frequency of the
+    function increases from left to right, and the contrast increases from
+    top to bottom.  Notice that the grayscale mapping (on the left)
+    faithfully reproduces the function.  The rainbow color mapping (on the
+    right) hides the variation in the low contrast region and appears less
+    smooth in the high-contrast, low-frequency region.}
+  \label{fig:RainbowSpatialContrast}
+\end{figure}
+
+\begin{figure}
+  \centering
   \includegraphics[width=2.5in]{images/GrayscaleBar}
   \caption{The grayscale color map.}
   \label{fig:GrayscaleColorMap}
@@ -292,7 +294,7 @@ color map shown in Figure~\ref{fig:GrayscaleColorMap}.  Completely devoid
 of any chromaticity, this map relies entirely on luminance to demonstrate
 the numerical value.  Although a very simple map to create and use, this
 map is surprisingly effective as the human visual system is most sensitive
-to changes in luminance\lcite{Ware04,Mullen85}.  The grayscale color map is
+to changes in luminance\lcite{Mullen85,Ware04}.  The grayscale color map is
 used heavily in the image processing and medical visualization fields.
 
 \begin{figure}
@@ -418,7 +420,7 @@ Our ultimate goal is to design a color map that works well for
 general-purpose scientific visualization.  It should work well for a wide
 breadth of tasks and users.  As such we have the following requirements.
 These criteria conform to many of those proposed
-previously\lcite{Levkowitz92,Fortner97,Light04}.
+previously\lcite{Fortner97,Levkowitz92,Light04}.
 
 \begin{itemize}
 \item The map yields images that are aesthetically pleasing.
@@ -496,13 +498,14 @@ saturation\lcite{Rheingans99} color maps) are (nearly) monochromatic.  They
 range from a heavily saturated color to various levels of unsaturation.
 Luminance is also often increased as saturation is decreased so that the
 color map terminates in a color at or close to white.  The monotonic nature
-of the saturation level maps well to a scalar value.  Sequential maps are
-usually oriented such that the most saturated color represents the lowest
-scalar value whereas the more luminant white represents the highest scalar
-value.  However, the color map, which has a limited range of luminance, can
-sometimes be flipped.  For example, if a red or orange sequential color map
-represented temperature, it would be more natural to represent the highest
-temperature with the most saturated color.
+of the saturation level maps well to a scalar value.
+% Sequential maps are
+% usually oriented such that the most saturated color represents the lowest
+% scalar value whereas the more luminant white represents the highest scalar
+% value.  However, the color map, which has a limited range of luminance, can
+% sometimes be flipped.  For example, if a red or orange sequential color map
+% represented temperature, it would be more natural to represent the highest
+% temperature with the most saturated color.
 
 The diverging color maps (also known as ratio\lcite{Ware04},
 bipolar\lcite{Spence01}, or double-ended\lcite{Rheingans99}) have two major
@@ -525,7 +528,10 @@ First, the more colorful nature of the diverging color map can be more
 aesthetically pleasing.  Second, the diverging color map can have up to
 twice the perceptual resolution of the sequential color map without
 sacrificing the requirements of surface shading or losing viewers
-with dichromatic vision.  \sticky{low, middle, high}
+with dichromatic vision.  Furthermore, the diverging color map visually
+divides scalar values into three logical regions: low, midrange, and high
+values.  These regions provide more visual cues that are helpful for
+understanding data.
 
 What diverging color maps lack in general is a natural ordering of colors.
 To impose a color ordering, we carefully chose two colors that most
@@ -624,9 +630,9 @@ in Figure~\ref{fig:LinearMachBands}.
 
 \begin{figure}
   \centering
-  \includegraphics[width=1in]{images/Cool2WarmLabRadial}
+  \includegraphics[width=.75in]{images/Cool2WarmLabRadial}
   \qquad
-  \includegraphics[width=1in]{images/Cool2WarmRadial}
+  \includegraphics[width=.75in]{images/Cool2WarmRadial}
   \caption{Using piecewise linear interpolations in \Lab color space causes
     Mach bands in the white part of diverging color maps (left image).  The
     problem can be corrected by interpolating in \Msh space (right image).}
@@ -652,17 +658,17 @@ color spaces is straightforward.
 \begin{equation}
   \begin{split}
     M &= \sqrt{{L*}^2 + a*^2 + b*^2} \\
-    s &= \arccos\left(\frac{L*}{M}\right) \\
-    h &= \arctan\left(\frac{b*}{a*}\right)
+    s &= \arccos \frac{L*}{M} \\
+    h &= \arctan \frac{b*}{a*}
   \end{split}
   \label{eqn:LabToMsh}
 \end{equation}
 
 \begin{equation}
   \begin{split}
-    L* &= M \cos\left(s\right) \\
-    a* &= M \sin\left(s\right) \cos\left(h\right) \\
-    b* &= M \sin\left(s\right) \sin\left(h\right)
+    L* &= M \cos s \\
+    a* &= M \sin s \cos h \\
+    b* &= M \sin s \sin h
   \end{split}
   \label{eqn:MshToLab}
 \end{equation}
@@ -676,11 +682,12 @@ in the hue while still maintaining perceptual continuance.
 
 Piecewise linear interpolations in \Msh space behave very well for
 diverging color maps.  As $s$ linearly approaches zero, the luminance
-naturally levels out while the chromaticity changes faster.  Although this
-will lead to a more significant rate of change in the chromaticity, it will
-not be noticeable as it coincides with a singularity in perception.  In
-fact, we can make a jump in the value of the hue at that point without it
-being noticeable.
+naturally levels out while the chromaticity changes faster.
+% Although this
+% will lead to a more significant rate of change in the chromaticity, it will
+% not be noticeable as it coincides with a singularity in perception.  In
+% fact, we can make a jump in the value of the hue at that point without it
+% being noticeable.
 
 An ideal way to build a diverging color map in \Msh space is to start at
 one color, linearly reduce $s$ to 0 (to get white), flip $h$ to the
@@ -690,9 +697,9 @@ and $h$ are held constant, Equation~\ref{eqn:dE} is constant, which is our
 criteria for a uniform color map.  We can characterize a $\cvec{c}(x)$ that
 behaves in this way in \Lab space as
 \begin{equation}
-  \cvec{c}(x) = \langle M \cos(\operatorname{s}(x)),
-  M \sin(\operatorname{s}(x)) \cos(h),
-  M \sin(\operatorname{s}(x)) \sin(h) \rangle
+  \cvec{c}(x) = \langle M \cos \operatorname{s}(x),
+  M \sin \operatorname{s}(x) \cos h,
+  M \sin \operatorname{s}(x) \sin h \rangle
   \label{eqn:s_linear}
 \end{equation}
 where $M$ and $h$ are constant and $\operatorname{s}(x)$ is a linear
@@ -703,23 +710,23 @@ resolve.
 
 \begin{equation}
   \begin{gathered}
-    \left\lVert \left\langle M s_m \sin(\operatorname{s}(x)),
-        M s_m \cos(\operatorname{s}(x)) \cos(h),
-        M s_m \cos(\operatorname{s}(x)) \sin(h) \right\rangle \right\rVert \\
-    \sqrtsign{ M^2 s_m^2 \left( \sin^2(\operatorname{s}(x))
-        + \cos^2(\operatorname{s}(x)) \cos^2(h)
-        + \cos^2(\operatorname{s}(x)) \sin^2(h) \right) } \\
-    \sqrtsign{ M^2 s_m^2 \left( \sin^2(\operatorname{s}(x))
-        + \cos^2(\operatorname{s}(x)) \left( \cos^2(h)
-          + \sin^2(h) \right) \right) } \\
-    \sqrtsign{ M^2 s_m^2 \left( \sin^2(\operatorname{s}(x))
-        + \cos^2(\operatorname{s}(x)) \right) } \\
+    \left\lVert \left\langle M s_m \sin\operatorname{s}(x),
+        M s_m \cos\operatorname{s}(x) \cos h,
+        M s_m \cos\operatorname{s}(x) \sin(h) \right\rangle \right\rVert \\
+    \sqrtsign{ M^2 s_m^2 \left( \sin^2 \operatorname{s}(x)
+        + \cos^2 \operatorname{s}(x) \cos^2 h
+        + \cos^2 \operatorname{s}(x) \sin^2 h \right) } \\
+    \sqrtsign{ M^2 s_m^2 \left( \sin^2 \operatorname{s}(x)
+        + \cos^2 \operatorname{s}(x) \left( \cos^2 h
+          + \sin^2 h \right) \right) } \\
+    \sqrtsign{ M^2 s_m^2 \left( \sin^2 \operatorname{s}(x)
+        + \cos^2 \operatorname{s}(x) \right) } \\
     M s_m
     \label{eqn:s_linear_uniform}
   \end{gathered}
 \end{equation}
 
-Clearly Equation~\ref{eqn:s_linear_uniform} resolve to a constant and
+Clearly Equation~\ref{eqn:s_linear_uniform} resolves to a constant and
 therefor meets our criteria for a ``uniform'' color space.  There is still
 a discontinuity when we flip $h$.  However, because this discontinuous
 change of hue occurs when there is no saturation, it is not noticeable.
@@ -781,7 +788,7 @@ the magnitude of change in \Lab space, is
 \end{equation}
 
 Equation~\ref{eq:DeltaEforLinearMshMovement} will not be constant unless
-$M$ and $h_m$ are zero, which, as described in the previous section, is
+$M_m$ and $h_m$ are zero, which, as described in the previous section, is
 unacceptable.  However we can get pretty close to constant by choosing
 $h_u$ so that Equation~\ref{eq:DeltaEforLinearMshMovement} is equal for
 $\cvec{c}_s$ and $\cvec{c}_u$.
@@ -925,22 +932,20 @@ demonstrated in Figure~\ref{fig:ColorMapInteraction}
     \subfigure[Simply pick two endpoint colors to create a diverging color
       map in between them.]%
 	      {%
-		\includegraphics[width=.45\linewidth]{images/tfOriginal} \quad
+		\includegraphics[width=.45\linewidth]{images/tfOriginal}~%
 		\includegraphics[width=.45\linewidth]{images/tfColorChange}
 	      } \\
     \subfigure[Creating a white or gray control point allows you to define
       the intensity and location of the ``middle'' of the diverging color
       map.]%
 	      {%
-		\includegraphics[width=.45\linewidth]{images/tfWhiteMiddle}
-		\quad
+		\includegraphics[width=.45\linewidth]{images/tfWhiteMiddle}~%
 		\includegraphics[width=.45\linewidth]{images/tfWhiteShifted}
 	      } \\
     \subfigure[Adding a control point in a colored area allows you to
       stretch and compress regions.]%
 	      {%
-		\includegraphics[width=.45\linewidth]{images/tfColorPoint}
-		\quad
+		\includegraphics[width=.45\linewidth]{images/tfColorPoint}~%
 		\includegraphics[width=.45\linewidth]{images/tfColorShifted}
 	      }
   \end{tabular}
@@ -1072,8 +1077,16 @@ Figure~\ref{fig:OtherColorMaps}.
   \label{fig:OtherColorMaps}
 \end{figure}
 
-\sticky{Is there anything else I can put in the results section?  Is there
-  some less qualitative evidence that this is a good color map?}
+An implementation of the \proc{InterpolateColor} algorithm in
+Figure~\ref{fig:InterpolateColor} has been add to the
+\texttt{vtkColorTransferFunction} class in the Visualization Toolkit (VTK),
+a free, open-source scientific visualization
+library.\footnote{\href{http://www.vtk.org}{www.vtk.org}} This diverging
+color map interpolation has also been add to ParaView, a free, open-source
+end-user scientific visualization
+application.\footnote{\href{http://www.paraview.org}{www.paraview.org}}.
+Any developers or users of scientific visualization software are encouraged
+to use these color map building tools for their own needs.
 
 
 \section{Discussion}
@@ -1084,6 +1097,10 @@ scientific visualization.  The map is an effective way to communicate data
 through colors.  Because its endpoints match those of the horrible rainbow
 color map most often currently used, it can be used as a drop-in
 replacement.
+
+This paper also provides an algorithm to generate new continuous diverging
+color maps.  This interaction is useful for applying colors with domain
+specific meaning or for modifying the scaling of the colors.
 
 Although we have not been able to do user studies, the design of this color
 map is based on well established theories on color perception.  This map is
