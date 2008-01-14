@@ -1049,14 +1049,23 @@ without degrading one or more of the requirements.
 \end{figure}
 
 In addition, despite having a relatively large perceptual response, the
-color map still allows for a significant amount of annotation to be added, as
-shown in Figure~\ref{fig:ColorMapWithAnnotation}.
+color map still allows for a significant amount of annotation or visual
+components to be added, as shown in Figures
+\ref{fig:ColorMapWithAnnotation} and \ref{fig:ColorMapOnShuttle}.
 
 \begin{figure}
   \centering
-  \includegraphics[width=3in]{images/AnnotationExample}
-  \caption{Terrain with the color map applied and heavily annotated. \sticky{An example involving sci vis would probably be better.  Do we have anything?}}
+  \includegraphics[width=\linewidth]{images/AnnotationExample}
+  \caption{Terrain with the color map applied and heavily annotated.}
   \label{fig:ColorMapWithAnnotation}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=\linewidth]{images/ShuttleExample}
+  \caption{Shuttle body with color map applied coupled with annotation and
+    streamlines.}
+  \label{fig:ColorMapOnShuttle}
 \end{figure}
 
 Using the techniques described in Section~\ref{sec:ColorMapDesign}, we can
@@ -1084,7 +1093,7 @@ a free, open-source scientific visualization
 library.\footnote{\href{http://www.vtk.org}{www.vtk.org}} This diverging
 color map interpolation has also been add to ParaView, a free, open-source
 end-user scientific visualization
-application.\footnote{\href{http://www.paraview.org}{www.paraview.org}}.
+application.\footnote{\href{http://www.paraview.org}{www.paraview.org}}
 Any developers or users of scientific visualization software are encouraged
 to use these color map building tools for their own needs.
 
