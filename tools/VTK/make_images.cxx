@@ -21,7 +21,7 @@ int main(int, char **)
   generate_spatial_contrast_sensitivity("RainbowSpatialContrast.png", rainbow);
 
   VTK_CREATE(vtkColorTransferFunction, grayscale);
-  grayscale->SetColorSpaceToLab();
+  grayscale->SetColorSpaceToRGB();
   grayscale->AddRGBPoint(0.0, 0.0, 0.0, 0.0);
   grayscale->AddRGBPoint(1.0, 1.0, 1.0, 1.0);
   generate_bar("GrayscaleBar.png", grayscale);
@@ -31,7 +31,7 @@ int main(int, char **)
                                         grayscale);
 
   VTK_CREATE(vtkColorTransferFunction, blackbody);
-  blackbody->SetColorSpaceToLab();
+  blackbody->SetColorSpaceToRGB();
   blackbody->AddRGBPoint(0.0, 0.0, 0.0, 0.0);
   blackbody->AddRGBPoint(0.4, 0.9, 0.0, 0.0);
   blackbody->AddRGBPoint(0.8, 0.9, 0.9, 0.0);
