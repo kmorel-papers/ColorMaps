@@ -123,25 +123,24 @@
 \begin{abstract}
   One of the most fundamental features of scientific visualization is the
   process of mapping scalar values to colors.  This process allows us to
-  view scalar fields by coloring surfaces and volumes.  Despite the
-  importance of this mapping operation, the majority of scientific
-  visualization tools and research are still using a color map that is
-  famous for its ineffectiveness: the rainbow color map.  The rainbow color
-  map, which na\"{i}vely sweeps through the most saturated colors that a
-  display can reproduce in rainbow color order, is well known for its
-  abilities to obscure data, introduce artifacts, and confuse users.
+  view scalar fields by coloring surfaces and volumes.  Unfortunatly, the
+  majority of scientific visualization tools and research are still using a
+  color map that is famous for its ineffectiveness: the rainbow color map.
+  The rainbow color map, which na\"{i}vely sweeps through the most
+  saturated colors that a display can reproduce in rainbow color order, is
+  well known for its abilities to obscure data, introduce artifacts, and
+  confuse users.
 
   Although many other color maps have been proposed and used, none have
-  been adopted by the visualization community as a good default in
-  scientific visualization.  In this paper, we explore the use of diverging
-  color maps (sometimes also called ratio, bipolar, or double-ended color
-  maps) for use in scientific visualization.  I provide a diverging
-  color map that generally performs well in scientific visualization
-  applications.  This color map is a clear replacement for the rainbow
-  color map and can hopefully, once and for all, kill the use of the
-  rainbow color map for serious scientific visualization applications.  I
-  also present an algorithm that allows users to easily generate their own
-  customized color maps.
+  been adopted by the visualization community as a default in scientific
+  visualization.  In this paper, we explore the use of diverging color maps
+  (sometimes also called ratio, bipolar, or double-ended color maps) for
+  use in scientific visualization.  I provide a diverging color map that
+  generally performs well in scientific visualization applications and that
+  is a clear replacement for the rainbow color map.  I also present an
+  algorithm that allows users to easily generate their own customized color
+  maps.  Hopefully, once and for all, we can kill the use of the rainbow
+  color map for serious scientific visualization applications.
 \end{abstract}
 
 %% ACM Computing Classification System (CCS). 
@@ -976,20 +975,22 @@ demonstrated in Figure~\ref{fig:ColorMapInteraction}.
     \subfigure[Simply pick two endpoint colors to create a diverging color
       map in between them.]%
 	      {%
-		\includegraphics[width=.45\linewidth]{images/tfOriginal}~%
+		\includegraphics[width=.45\linewidth]{images/tfOriginal}\qquad%
 		\includegraphics[width=.45\linewidth]{images/tfColorChange}
 	      } \\
     \subfigure[Creating a white or gray control point allows you to define
       the intensity and location of the ``middle'' of the diverging color
       map.]%
 	      {%
-		\includegraphics[width=.45\linewidth]{images/tfWhiteMiddle}~%
+		\includegraphics[width=.45\linewidth]{images/tfWhiteMiddle}%
+		\qquad%
 		\includegraphics[width=.45\linewidth]{images/tfWhiteShifted}
 	      } \\
     \subfigure[Adding a control point in a colored area allows you to
       stretch and compress regions.]%
 	      {%
-		\includegraphics[width=.45\linewidth]{images/tfColorPoint}~%
+		\includegraphics[width=.45\linewidth]{images/tfColorPoint}%
+		\qquad%
 		\includegraphics[width=.45\linewidth]{images/tfColorShifted}
 	      }
   \end{tabular}
@@ -1031,7 +1032,7 @@ interpolated \RGB values for this color map.  \RGB values are computed from
 
 \begin{table}
   \centering
-  \caption{Cool to warm color map RGB values.}
+  \caption{Cool to warm color map \RGB values.}
   \begin{tabular}{r@{.}l@{\qquad}rrr}
     \multicolumn{2}{c}{Scalar\qquad\qquad} & Red & Green & Blue \\
     \hline
@@ -1100,7 +1101,8 @@ components to be added, as shown in Figures
 \begin{figure}
   \centering
   \includegraphics[width=\linewidth]{images/AnnotationExample}
-  \caption{Terrain with the color map applied and heavily annotated.}
+  \caption{A terrain with the color map applied can still be annotated in
+    multiple different ways.}
   \label{fig:ColorMapWithAnnotation}
 \end{figure}
 
