@@ -62,7 +62,7 @@ void generate_radial(const char *filename, vtkColorTransferFunction *map)
       {
       double x = 2.0*i/width - 1.0;
       double r = sqrt(x*x+y*y);
-      double *color = map->GetColor(r);
+      double *color = map->GetColor(0.7*r);
       data[0] = (unsigned char)(color[0]*255);
       data[1] = (unsigned char)(color[1]*255);
       data[2] = (unsigned char)(color[2]*255);

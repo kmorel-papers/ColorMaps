@@ -40,8 +40,8 @@ int main(int, char **)
 
   VTK_CREATE(vtkColorTransferFunction, cool2warm);
   cool2warm->SetColorSpaceToDiverging();
-  cool2warm->AddRGBPoint(0.0, 0.186, 0.392, 0.749);
-  cool2warm->AddRGBPoint(1.0, 0.758, 0.214, 0.233);
+  cool2warm->AddRGBPoint(0.0, 0.138, 0.241, 0.709);
+  cool2warm->AddRGBPoint(1.0, 0.673, 0.141, 0.127);
   generate_bar("Cool2WarmBar.png", cool2warm);
 //   generate_discontinuity("Cool2WarmDiscontinuity.png", cool2warm);
   generate_spatial_contrast_sensitivity("Cool2WarmSpatialContrast.png",
@@ -50,9 +50,9 @@ int main(int, char **)
 
   VTK_CREATE(vtkColorTransferFunction, cool2warmLab);
   cool2warmLab->SetColorSpaceToLab();
-  cool2warmLab->AddRGBPoint(0.0, 0.186, 0.392, 0.749);
-  cool2warmLab->AddRGBPoint(0.5, 0.943, 0.943, 0.943);
-  cool2warmLab->AddRGBPoint(1.0, 0.758, 0.214, 0.233);
+  cool2warmLab->AddRGBPoint(0.0, 0.138, 0.241, 0.709);
+  cool2warmLab->AddRGBPoint(0.5, 0.876, 0.876, 0.876);
+  cool2warmLab->AddRGBPoint(1.0, 0.673, 0.141, 0.127);
   generate_radial("Cool2WarmLabRadial.png", cool2warmLab);
 
   VTK_CREATE(vtkColorTransferFunction, green2red);
