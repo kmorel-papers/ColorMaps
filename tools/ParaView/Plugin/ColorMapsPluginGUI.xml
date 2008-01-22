@@ -1,0 +1,6 @@
+<ParaViewSources>
+  <Source name="CIELABAxis" />
+  <Source name="CIELABGamut" />
+  <Source name="ColorVector" />
+  <Source name="ColorMapPlot" />
+</ParaViewSources>

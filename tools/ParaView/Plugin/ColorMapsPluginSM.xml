@@ -1,0 +1,64 @@
+<ServerManagerConfiguration>
+  <ProxyGroup name="sources">
+    <SourceProxy name="CIELABAxis"
+                 class="vtkCIELABAxisSource"
+                 label="Axis for CIELAB plots">
+      <DoubleVectorProperty name="ScaleFactor"
+                            command="SetScaleFactor"
+                            number_of_elements="1"
+                            default_values="100">
+      </DoubleVectorProperty>
+    </SourceProxy>
+
+    <SourceProxy name="CIELABGamut"
+                 class="vtkCIELABGamutSource"
+                 label="RGB Gamut in CIELAB Space">
+      <IntVectorProperty name="Divisions"
+                         command="SetDivisions"
+                         number_of_elements="1"
+                         default_values="10">
+      </IntVectorProperty>
+    </SourceProxy>
+
+    <SourceProxy name="ColorVector"
+                 class="vtkColorVectorSource"
+                 label="Color Vector">
+      <DoubleVectorProperty name="StartColor"
+                         command="SetStartColor"
+                         number_of_elements="3"
+                         default_values="0.1381 0.2411 0.7091">
+      </DoubleVectorProperty>
+      <DoubleVectorProperty name="EndColor"
+                         command="SetEndColor"
+                         number_of_elements="3"
+                         default_values="0.6728 0.1409 0.1266">
+      </DoubleVectorProperty>
+      <DoubleVectorProperty name="TimeRange" information_only="1">
+        <TimeRangeInformationHelper/>
+      </DoubleVectorProperty>
+    </SourceProxy>
+
+    <SourceProxy name="ColorMapPlot"
+                 class="vtkColorMapPlot"
+                 label="Color Map Plot">
+      <DoubleVectorProperty name="StartColor"
+                         command="SetStartColor"
+                         number_of_elements="3"
+                         default_values="0.1381 0.2411 0.7091">
+      </DoubleVectorProperty>
+      <DoubleVectorProperty name="EndColor"
+                         command="SetEndColor"
+                         number_of_elements="3"
+                         default_values="0.6728 0.1409 0.1266">
+      </DoubleVectorProperty>
+      <IntVectorProperty name="Resolution"
+                         command="SetResolution"
+                         number_of_elements="1"
+                         default_values="100">
+      </IntVectorProperty>
+      <DoubleVectorProperty name="TimeRange" information_only="1">
+        <TimeRangeInformationHelper/>
+      </DoubleVectorProperty>
+    </SourceProxy>
+  </ProxyGroup>
+</ServerManagerConfiguration>
