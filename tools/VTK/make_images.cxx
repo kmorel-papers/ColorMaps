@@ -67,9 +67,8 @@ int main(int, char **)
 
   VTK_CREATE(vtkColorTransferFunction, green2red);
   green2red->SetColorSpaceToLab();
-  green2red->AddRGBPoint(0.0, 0.138, 0.539, 0.063);
-//   green2red->AddRGBPoint(0.5, 0.466, 0.466, 0.466);
-  green2red->AddRGBPoint(1.0, 0.931, 0.052, 0.056);
+  green2red->AddRGBPoint(0.0, 0.288, 0.558, 0.223);
+  green2red->AddRGBPoint(1.0, 0.966, 0.354, 0.250);
   generate_bar("Green2RedBar.png", green2red);
   generate_spatial_contrast_sensitivity("Green2RedSpatialContrast.png",
                                         green2red);

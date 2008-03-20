@@ -1,4 +1,4 @@
 <ColorMap name="Green-Red Isoluminant" space="Lab">
-  <Point x="0" r="0.138" g="0.539" b="0.063" />
-  <Point x="1" r="0.931" g="0.052" b="0.056" />
+  <Point x="0" r="0.288" g="0.558" b="0.223"/>
+  <Point x="1" r="0.966" g="0.354" b="0.250"/>
 </ColorMap>
