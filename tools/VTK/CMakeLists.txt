@@ -8,6 +8,8 @@ TARGET_LINK_LIBRARIES(make_images
   vtkCommon
   vtkFiltering
   vtkIO
+  vtkImaging
+  vtkGraphics
   )
 
 GET_TARGET_PROPERTY(MAKE_IMAGES_EXE make_images LOCATION)

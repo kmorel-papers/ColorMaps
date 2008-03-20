@@ -19,6 +19,8 @@ int main(int, char **)
 //   generate_radial("RainbowRadial.png", rainbow);
 //   generate_discontinuity("RainbowDiscontinuity.png", rainbow);
   generate_spatial_contrast_sensitivity("RainbowSpatialContrast.png", rainbow);
+  generate_hf_noise("RainbowHfNoise.png", rainbow);
+  generate_lf_sensitivity("RainbowLfSensitivity.png", rainbow);
 
   VTK_CREATE(vtkColorTransferFunction, grayscale);
   grayscale->SetColorSpaceToRGB();
@@ -29,6 +31,8 @@ int main(int, char **)
   generate_locality("GrayscaleLocality.png", grayscale);
   generate_spatial_contrast_sensitivity("GrayscaleSpatialContrast.png",
                                         grayscale);
+  generate_hf_noise("GrayscaleHfNoise.png", grayscale);
+  generate_lf_sensitivity("GrayscaleLfSensitivity.png", grayscale);
 
   VTK_CREATE(vtkColorTransferFunction, blackbody);
   blackbody->SetColorSpaceToRGB();
@@ -37,6 +41,10 @@ int main(int, char **)
   blackbody->AddRGBPoint(0.8, 0.9, 0.9, 0.0);
   blackbody->AddRGBPoint(1.0, 1.0, 1.0, 1.0);
   generate_locality("BlackBodyLocality.png", blackbody);
+  generate_spatial_contrast_sensitivity("BlackBodySpatialContrast.png",
+                                        blackbody);
+  generate_hf_noise("BlackBodyHfNoise.png", blackbody);
+  generate_lf_sensitivity("BlackBodyLfSensitivity.png", blackbody);
 
   VTK_CREATE(vtkColorTransferFunction, cool2warm);
   cool2warm->SetColorSpaceToDiverging();
@@ -47,6 +55,8 @@ int main(int, char **)
   generate_spatial_contrast_sensitivity("Cool2WarmSpatialContrast.png",
                                         cool2warm);
   generate_radial("Cool2WarmRadial.png", cool2warm);
+  generate_hf_noise("Cool2WarmHfNoise.png", cool2warm);
+  generate_lf_sensitivity("Cool2WarmLfSensitivity.png", cool2warm);
 
   VTK_CREATE(vtkColorTransferFunction, cool2warmLab);
   cool2warmLab->SetColorSpaceToLab();
@@ -58,15 +68,28 @@ int main(int, char **)
   VTK_CREATE(vtkColorTransferFunction, green2red);
   green2red->SetColorSpaceToLab();
   green2red->AddRGBPoint(0.0, 0.138, 0.539, 0.063);
-  green2red->AddRGBPoint(0.5, 0.466, 0.466, 0.466);
+//   green2red->AddRGBPoint(0.5, 0.466, 0.466, 0.466);
   green2red->AddRGBPoint(1.0, 0.931, 0.052, 0.056);
   generate_bar("Green2RedBar.png", green2red);
+  generate_spatial_contrast_sensitivity("Green2RedSpatialContrast.png",
+                                        green2red);
+  generate_hf_noise("Green2RedHfNoise.png", green2red);
+  generate_lf_sensitivity("Green2RedLfSensitivity.png", green2red);
 
   VTK_CREATE(vtkColorTransferFunction, cyan2mauve);
   cyan2mauve->SetColorSpaceToLab();
   cyan2mauve->AddRGBPoint(0.0, 0.0, 0.6, 0.75);
   cyan2mauve->AddRGBPoint(1.0, 0.768, 0.467, 0.341);
   generate_bar("Cyan2MauveBar.png", cyan2mauve);
+
+  VTK_CREATE(vtkColorTransferFunction, blue2yellow);
+  blue2yellow->SetColorSpaceToRGB();
+  blue2yellow->AddRGBPoint(0.0, 0.040, 0.040, 0.950);
+  blue2yellow->AddRGBPoint(1.0, 0.950, 0.950, 0.040);
+  generate_spatial_contrast_sensitivity("Blue2YellowSpatialContrast.png",
+                                        blue2yellow);
+  generate_hf_noise("Blue2YellowHfNoise.png", blue2yellow);
+  generate_lf_sensitivity("Blue2YellowLfSensitivity.png", blue2yellow);
 
   VTK_CREATE(vtkColorTransferFunction, purple2orange);
   purple2orange->SetColorSpaceToDiverging();

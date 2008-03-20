@@ -1,0 +1,4 @@
+<ColorMap name="Blue-Yellow" space="RGB">
+  <Point x="0" r="0.04" g="0.04" b="0.95" />
+  <Point x="1" r="0.95" g="0.95" b="0.04" />
+</ColorMap>
