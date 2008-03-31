@@ -141,7 +141,7 @@
   generally performs well in scientific visualization applications and that
   is a clear replacement for the rainbow color map.  I also present an
   algorithm that allows users to easily generate their own customized color
-  maps.  Hopefully, once and for all, we can kill the use of the rainbow
+  maps.  I hope, once and for all, we can kill the use of the rainbow
   color map for serious scientific visualization applications.
 \end{abstract}
 
@@ -191,13 +191,13 @@ toolkits they examined.  Borland and Taylor also find that in IEEE
 Visualization papers from 2001 to 2005 the rainbow color map is used 51
 percent of the time.
 
-Despite its popularity, the rainbow color map has been shown to be a
-poor choice for a color map in nearly all problem domains.  This
-well-studied field of perception shows that the rainbow color map obfuscates,
-rather than clarifies, the display of data in a variety of ways.  The
-choice of a color map can be a complicated decision that depends on
-the visualization type and problem domain, but the rainbow color map is a
-poor choice for almost all of them.
+Despite its popularity, the rainbow color map has been shown to be a poor
+choice for a color map in nearly all problem domains.  This well-studied
+field of perception shows that the rainbow color map obfuscates, rather
+than clarifies, the display of data in a variety of ways\lcite{Boreland07}.
+The choice of a color map can be a complicated decision that depends on the
+visualization type and problem domain, but the rainbow color map is a poor
+choice for almost all of them.
 
 Why are so many visualization scientists and developers, experts who
 should know better, still using the rainbow color map?
@@ -241,25 +241,19 @@ which is relied upon in subsequent discussions.
 \subsection{Color Maps}
 \label{sec:PreviousWork:ColorMaps}
 
-I assert, as have many before me, that the rainbow color map is an
+The rainbow color map is an
 extremely poor choice.  Based on the colors of light at different
 wavelengths, the rainbow color map's design has nothing to do with how
 humans perceive color.  This results in multiple problems when humans try
 to do the reverse mapping from colors back to numbers.
 
-The first problem with the rainbow color map is that it is sensitive to
-deficiencies in vision.  A significant proportion of the population, most
-of which are males, cannot distinguish between the red and green colors.
-These unfortunate souls cannot distinguish many colors considered ``far
-apart'' in the rainbow color map\lcite{Light04}.
+The first problem is that the colors do not follow any natural perceived
+ordering.  Perceptual experiments show that although a test subject with no
+prior training will always order grayscale colors in order of luminance (in
+one direction or the other), the test subjects will order rainbow colors in
+numerous different ways\lcite{Ware04}.
 
-The second problem is that the colors do not follow any natural perceived
-ordering.  Perceptual experiments show that although a test subject with
-no prior training will always order grayscale colors in order of luminance,
-the test subjects will order rainbow colors in numerous different
-ways\lcite{Ware04}.
-
-A third problem is that the perceptual changes in the colors are not
+The second problem is that the perceptual changes in the colors are not
 uniform.  The colors appear to change faster in the cyan and yellow
 regions, which can cause Mach bands in those regions.  The colors appear to
 change more slowly in the blue, green, and red regions, which creates larger
@@ -282,6 +276,12 @@ Figure~\ref{fig:RainbowSpatialContrast}.
     smooth in the high-contrast, low-frequency region.}
   \label{fig:RainbowSpatialContrast}
 \end{figure}
+
+A third problem with the rainbow color map is that it is sensitive to
+deficiencies in vision.  Roughly 5\% of the population cannot distinguish
+between the red and green colors.  These unfortunate souls cannot
+distinguish many colors considered ``far apart'' in the rainbow color
+map\lcite{Light04}.
 
 \begin{figure}
   \centering
@@ -313,7 +313,13 @@ surrounding area.  Thus, when asked to compare the luminance of two objects
 separated by distance and background, human subjects err up to 20\%.
 This effect, demonstrated in Figure~\ref{fig:SimultaneousContrast}, is
 called simultaneous contrast\lcite{Stone05}.  Adding a chromaticity shift
-helps, but does not fix the problem entirely.
+helps, but does not fix the problem entirely.  A chromatic shift also has
+the possitive side effect of increasing the dynamic range of the color
+map.
+
+%% Simultaneous contrast still occurs, but the shift in chromaticity can help
+%% resolve that.  Simultaneous color contrast can also occur, but can be
+%% managed by changes in color opponent channels.
 
 Another problem with grayscale color maps that is of greater concern for
 general purpose scientific visualization is its interference with surface
@@ -375,7 +381,7 @@ changes in luminance, saturation, hue, or some combination thereof.
 
 All color spaces are based on the tristimulus theory, which states that any
 perceived color can be uniquely represented by a
-3-tuple\lcite{Feynman63}.  This result is a side effect
+3-tuple\lcite{Stone03}.  This result is a side effect
 of the fact that there are exactly 3 different types of color receptors in
 the human eye.  Limited space prevents more than a few applicable additive
 color spaces from being listed here.  Any textbook on color will provide
@@ -398,7 +404,8 @@ best to use a color space defined by the physical properties of light.
 spectra.  Assuming that the \RGB space is linear, conversion between \RGB
 and \XYZ is a simple linear transformation.  The transformation is
 dependent on the characteristics of the display for which the \RGB space is
-defined, but the one in Equation~\ref{eqn:rgb2xyz} is common.
+defined, but the one in Equation~\ref{eqn:rgb2xyz}, which is based on a
+canonical CRT monitor, is common.
 
 \begin{equation}
   [X \quad Y \quad Z] = [R \quad G \quad B]
@@ -440,7 +447,7 @@ in Equation~\ref{eqn:xyz2lab}.
 \Lab is an approximation of how humans perceive light.  The Euclidean
 distance between two points is the approximate perceived difference between
 the two colors.  This Euclidean distance in \Lab space is known as \DeltaE
-and makes a good metric for comparing color differences\lcite{Wyszecki82}.
+and makes a reasonable metric for comparing color differences\lcite{Wyszecki82}.
 This paper uses the notation $\DeltaE\{\cvec{c_1},\cvec{c_2}\}$ to denote
 the \DeltaE for the pair of colors $\cvec{c_1}$ and $\cvec{c_2}$.
 
@@ -469,8 +476,8 @@ The reasoning behind most of these requirements is self explanatory.  The
 requirement that the color map be ``pretty,'' however, is not one often
 found in the scientific literature.  After all, the attractiveness of the
 color map, which is difficult to quantify in the first place, has little to
-do its effectiveness in conveying information.  Nevertheless, aesthetic
-appeal is important as users will use that as a criteria in selecting
+do with its effectiveness in conveying information.  Nevertheless, aesthetic
+appeal is important as users will use that as a criterion in selecting
 visualization products and generating images.
 
 % \begin{itemize}
@@ -709,7 +716,7 @@ Note that \Msh, like all polar coordinates, has a pole in which one of the
 coordinates is ill defined.  Specifically, when $s = 0$ (the color is on
 the $L*$ axis), $h$ has no effect.  This pole was chosen because it
 coincides with a singularity in human vision.  When saturation is low, the
-color has no hue.  It is therefor possible to make a discontinuous jump
+color has no hue.  It is therefore possible to make a discontinuous jump
 in the hue while still maintaining perceptual continuance.
 
 Piecewise linear interpolations in \Msh space behave very well for
@@ -726,7 +733,7 @@ one color, linearly reduce $s$ to 0 (to get white), flip $h$ to the
 appropriate value for the last color, and then linearly increase $s$ to the
 desired value.  In fact, we can show that if $s$ changes linearly while $M$
 and $h$ are held constant, Equation~\ref{eqn:dE} is constant, which is our
-criteria for a uniform color map.  We can characterize a $\cvec{c}(x)$ that
+criterion for a uniform color map.  We can characterize a $\cvec{c}(x)$ that
 behaves in this way in \Lab space as
 \begin{equation}
   \cvec{c}(x) = [ M \cos \operatorname{s}(x) \quad
@@ -759,7 +766,7 @@ resolve.
 \end{equation}
 
 Clearly Equation~\ref{eqn:s_linear_uniform} resolves to a constant and
-therefor meets our criteria for a ``uniform'' color space.  There is still
+therefore meets our criterion for a ``uniform'' color space.  There is still
 a discontinuity when we flip $h$.  However, because this discontinuous
 change of hue occurs when there is no saturation, it is not noticeable.
 And unlike the piecewise linear interpolation in \Lab space, this piecewise
@@ -770,7 +777,8 @@ throughout the entire color map, as evidenced in Figure~\ref{fig:s_plot}.
   \centering
   \includegraphics{images/LinearMshPlot}
   \caption{Plot of $L*$, $a*$, and $b*$ coordinates when interpolating $s$
-    linearly in \Msh space.}
+    linearly in \Msh space.  Dashed lines show effect when colors are
+    ``clipped'' to the gamut of a typical monitor.}
   \label{fig:s_plot}
 \end{figure}
 
@@ -829,10 +837,10 @@ $\cvec{c}_s$ and $\cvec{c}_u$.
   \sqrt{(M_m \Delta x)^2 + (s_m \Delta x M_s)^2 + (h_m \Delta x M_s \sin s_s)^2}
   \\ =
   \sqrt{(M_m \Delta x)^2 + (s_m \Delta x M_u)^2}
-  \label{eqn:hm_criteria}
+  \label{eqn:hm_criterion}
 \end{multline}
 
-Note that the right side of Equation~\ref{eqn:hm_criteria} is missing a
+Note that the right side of Equation~\ref{eqn:hm_criterion} is missing a
 term because it evaluates to 0 for the unsaturated color.  We can safely
 get rid of the square roots because there is a sum of square real numbers
 inside them both.
@@ -1115,13 +1123,14 @@ Table~\ref{table:Cool2Warm}.
 %% \end{table}
 
 This diverging color map works admirably for all of our scientific
-visualization requirements.  The colors are aesthetically pleasing, the
-order of the colors is natural, the rate of change is perceptually linear,
-and the colors are still easily distinguished by those with dichromatic
-vision.  The map also has a good perceptual range and minimally interferes
-with shading.  Figure~\ref{fig:MapComparison} compares the cool-warm color
-map to some common alternatives as well as some recommended by
-Rheingans\scite{Rheingans99} and Ware\scite{Ware04}.
+visualization requirements outlined in
+Section~\ref{sec:ColorMapRequriements}.  The colors are aesthetically
+pleasing, the order of the colors is natural, the rate of change is
+perceptually linear, and the colors are still easily distinguished by those
+with dichromatic vision.  The map also has a good perceptual range and
+minimally interferes with shading.  Figure~\ref{fig:MapComparison} compares
+the cool-warm color map to some common alternatives as well as some
+recommended by Rheingans\scite{Rheingans99} and Ware\scite{Ware04}.
 
 %% , as demonstrated in Figure~\ref{fig:Cool2WarmResponse}.
 %% Using our initial criteria, we can think of a diverging color map as
@@ -1197,6 +1206,15 @@ scientific visualization.  The map is an effective way to communicate data
 through colors.  Because its endpoints match those of the rainbow
 color map most often currently used, it can be used as a drop-in
 replacement.
+
+Diverging color maps have not traditionally been considered for most
+scientific computing due to their design of a ``central'' point, which was
+originally intended to have some significance.  However, with the addition
+of the \Msh color space, the central point becomes a smooth neutral color
+between two other colors.  The middle point serves as much to highlight the
+two extremes as it does to highlight itself.  In effect, the divergent
+color map allows us to quickly identify whether values are near extrema and
+which extrema they are near.
 
 This paper also provides an algorithm to generate new continuous diverging
 color maps.  This interaction is useful for applying colors with domain
