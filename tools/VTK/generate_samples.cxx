@@ -208,12 +208,12 @@ static vtkSmartPointer<vtkImageData> HighFrequencyNoise;
 void generate_hf_noise(const char *filename, vtkColorTransferFunction *map)
 {
   const int width = (int)(1.0*DPI);
-  const int height = (int)(1.0*DPI);
+  const int height = (int)(0.75*DPI);
 
   if (!HighFrequencyNoise)
     {
     VTK_CREATE(vtkPerlinNoise, noiseFunction);
-    noiseFunction->SetFrequency(30.0, 30.0, 1.0);
+    noiseFunction->SetFrequency(30.0, 22.5, 1.0);
     noiseFunction->SetPhase(0.0, 0.0, 0.0);
     noiseFunction->SetAmplitude(0.5);
 
@@ -255,7 +255,7 @@ void generate_lf_sensitivity(const char *filename,
                              vtkColorTransferFunction *map)
 {
   const int width = (int)(1.0*DPI);
-  const int height = (int)(1.0*DPI);
+  const int height = (int)(0.75*DPI);
   VTK_CREATE(vtkImageData, imageData);
   imageData->SetDimensions(width+1, height+1, 1);
   imageData->SetScalarTypeToUnsignedChar();
@@ -271,7 +271,7 @@ void generate_lf_sensitivity(const char *filename,
       double x = (double)i/width;
       double v = (  0.8*(x - 0.5)
                   + 0.3*sin(8.0*2.0*vtkMath::DoublePi()*x)
-                  + 0.3*sin(4.0*2.0*vtkMath::DoublePi()*y) );
+                  + 0.3*sin(3.0*2.0*vtkMath::DoublePi()*y) );
       double *color = map->GetColor(0.5*v+0.5);
       data[0] = (unsigned char)(color[0]*255);
       data[1] = (unsigned char)(color[1]*255);

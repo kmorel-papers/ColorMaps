@@ -1042,6 +1042,13 @@ demonstrated in Figure~\ref{fig:ColorMapInteraction}.
     \includegraphics[width=1.1in]{images/Green2RedHfNoise} &
     \includegraphics[width=1.1in]{images/Blue2YellowHfNoise} \\
 
+    \includegraphics[width=1.1in]{images/Cool2WarmDeuteranope} &
+    \includegraphics[width=1.1in]{images/RainbowDeuteranope} &
+    \includegraphics[width=1.1in]{images/GrayscaleDeuteranope} &
+    \includegraphics[width=1.1in]{images/BlackBodyDeuteranope} &
+    \includegraphics[width=1.1in]{images/Green2RedDeuteranope} &
+    \includegraphics[width=1.1in]{images/Blue2YellowDeuteranope} \\
+
     \includegraphics[width=1.1in]{images/Cool2WarmShading} &
     \includegraphics[width=1.1in]{images/RainbowShading} &
     \includegraphics[width=1.1in]{images/GrayscaleShading} &
@@ -1053,7 +1060,9 @@ demonstrated in Figure~\ref{fig:ColorMapInteraction}.
     left to right, cool-warm, rainbow, grayscale, heated body, isoluminant,
     and blue-yellow.  The demonstrations are, from top to bottom, a spatial
     contrast sensitivity function, a low-frequency sensitivity function,
-    high-frequency noise, and 3D shading.}
+    high-frequency noise, an approximation of the color map viewed by
+    someone with deuteranope color-deficient vision (computed with
+    Vischeck), and 3D shading.}
   \label{fig:MapComparison}
 \end{figure*}
 
@@ -1122,15 +1131,26 @@ Table~\ref{table:Cool2Warm}.
 %%   \label{table:Cool2WarmRGB}
 %% \end{table}
 
-This diverging color map works admirably for all of our scientific
-visualization requirements outlined in
-Section~\ref{sec:ColorMapRequriements}.  The colors are aesthetically
+This diverging color map works admirably for all of our
+requirements outlined in
+Section~\ref{sec:ColorMapRequirements}.  The colors are aesthetically
 pleasing, the order of the colors is natural, the rate of change is
 perceptually linear, and the colors are still easily distinguished by those
 with dichromatic vision.  The map also has a good perceptual range and
-minimally interferes with shading.  Figure~\ref{fig:MapComparison} compares
-the cool-warm color map to some common alternatives as well as some
-recommended by Rheingans\scite{Rheingans99} and Ware\scite{Ware04}.
+minimally interferes with shading.
+
+Figure~\ref{fig:MapComparison} compares the cool-warm color map to some
+common alternatives as well as some recommended by
+Rheingans\scite{Rheingans99} and Ware\scite{Ware04}.  The cool-warm color
+map works well in all the cases demonstrated here.  The rainbow color map
+exhibits problems with irregular perception and sensitivity to color
+deficiencies.  The grayscale and heated-body color maps work poorly in
+conjunction with 3D shaded surfaces.  The isoluminant color map has a low
+dynamic range and performs particularly poorly with high frequency data.
+The common choice of greed-red isoluminant color maps is also useless to
+most people with color-deficient vision.  The blue-yellow map works
+reasonably well in all these cases, but has a lower resolution than the
+cool-warm map, which yields poorer results with low contrast.
 
 %% , as demonstrated in Figure~\ref{fig:Cool2WarmResponse}.
 %% Using our initial criteria, we can think of a diverging color map as

@@ -40,6 +40,7 @@ int main(int, char **)
   blackbody->AddRGBPoint(0.4, 0.9, 0.0, 0.0);
   blackbody->AddRGBPoint(0.8, 0.9, 0.9, 0.0);
   blackbody->AddRGBPoint(1.0, 1.0, 1.0, 1.0);
+//   generate_bar("BlackBodyBar.png", blackbody);
   generate_locality("BlackBodyLocality.png", blackbody);
   generate_spatial_contrast_sensitivity("BlackBodySpatialContrast.png",
                                         blackbody);
@@ -85,6 +86,7 @@ int main(int, char **)
   blue2yellow->SetColorSpaceToRGB();
   blue2yellow->AddRGBPoint(0.0, 0.040, 0.040, 0.950);
   blue2yellow->AddRGBPoint(1.0, 0.950, 0.950, 0.040);
+//   generate_bar("Blue2YellowBar.png", blue2yellow);
   generate_spatial_contrast_sensitivity("Blue2YellowSpatialContrast.png",
                                         blue2yellow);
   generate_hf_noise("Blue2YellowHfNoise.png", blue2yellow);
