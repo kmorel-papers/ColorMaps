@@ -112,16 +112,16 @@
 }
 
 %% the following code has partly been adapted from egpubl.cls
-\newif\ifpdf  % determine if we are running PDFLaTeX or not
-\ifx\pdfoutput\undefined \pdffalse % we are not running PDFLaTeX 
+\newif\ifpdfvgtc  % determine if we are running PDFLaTeX or not
+\ifx\pdfoutput\undefined \pdfvgtcfalse % we are not running PDFLaTeX 
 \else 
   %\pdfoutput=1 % we are running PDFLaTeX 
-  \pdftrue 
+  \pdfvgtctrue 
 \fi 
 
 \newcommand{\vgtcinsertpkg}{}
 \DeclareOption{electronic}{%
- \ifpdf 
+ \ifpdfvgtc 
   \renewcommand{\vgtcinsertpkg}{%
    \usepackage[pdftex,
     pagebackref=true,
@@ -594,7 +594,7 @@ to: tvcg@computer.org.}
 %%              \endgroup\par%
 %%          \fi%
          }%
-	\begin{center}\includegraphics{diamondrule.eps}\end{center}
+	\begin{center}\includegraphics{diamondrule}\end{center}
         %\vspace{\abstxtspace}%
 	\ifx\firstsectiontxt\vgtc@empty \else
 	  \section{\firstsectiontxt}
