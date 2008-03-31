@@ -92,12 +92,14 @@
 % Avoid putting figures on their own page.
 \renewcommand{\textfraction}{0.05}
 \renewcommand{\topfraction}{0.95}
+\renewcommand{\dbltopfraction}{0.95}
 
 % Make sure this is big enough so that only big figures end up on their own
 % page but small enough so that if a figure does have to be on its own
 % page, it won't push everything to the bottom because it's not big enough
 % to have its own page.
 \renewcommand{\floatpagefraction}{.75}
+\renewcommand{\dblfloatpagefraction}{.75}
 
 \newcommand{\sticky}[1]{\textsc{[#1]}}
 
@@ -1000,6 +1002,14 @@ demonstrated in Figure~\ref{fig:ColorMapInteraction}.
 \section{Results}
 \label{sec:Results}
 
+\begin{figure}
+  \centering
+  \includegraphics[width=2.5in]{images/Cool2WarmBar}
+  \caption{A continuous diverging color map that is well suited to scientific
+    visualization.}
+  \label{fig:Cool2WarmBar}
+\end{figure}
+
 \begin{figure*}
   \centering
   \begin{tabular}{c@{\;}c@{\;}c@{\;}c@{\;}c@{\;}c}
@@ -1031,22 +1041,22 @@ demonstrated in Figure~\ref{fig:ColorMapInteraction}.
     \includegraphics[width=1.1in]{images/Green2RedShading} &
     \includegraphics[width=1.1in]{images/Blue2YellowShading}
   \end{tabular}
+  \caption{Comparison of color map effectiveness.  The color maps are, from
+    left to right, cool-warm, rainbow, grayscale, heated body, isoluminant,
+    and blue-yellow.  The demonstrations are, from top to bottom, a spatial
+    contrast sensitivity function, a low-frequency sensitivity function,
+    high-frequency noise, and 3D shading.}
+  \label{fig:MapComparison}
 \end{figure*}
-
-\begin{figure}
-  \centering
-  \includegraphics[width=2.5in]{images/Cool2WarmBar}
-  \caption{A continuous diverging color map that is well suited to scientific
-    visualization.}
-  \label{fig:Cool2WarmBar}
-\end{figure}
 
 Applying the design described in Section~\ref{sec:ColorMapDesign}, we can
 build the cool to warm color map shown in Figure~\ref{fig:Cool2WarmBar}.
 The control points, to be interpolated in \Msh space, are given in
-Table~\ref{table:Cool2Warm}.  Table~\ref{table:Cool2WarmRGB} gives example
-interpolated \RGB values for this color map.  \RGB values are computed from
-\Lab values using a D65 white point.
+Table~\ref{table:Cool2Warm}.
+
+%% Table~\ref{table:Cool2WarmRGB} gives example
+%% interpolated \RGB values for this color map.  \RGB values are computed from
+%% \Lab values using a D65 white point.
 
 \begin{table}
   \centering
@@ -1061,68 +1071,72 @@ interpolated \RGB values for this color map.  \RGB values are computed from
   \label{table:Cool2Warm}
 \end{table}
 
-\begin{table}
-  \centering
-  \caption{Cool to warm color map \RGB values.}
-  \begin{tabular}{r@{.}l@{\qquad}rrr}
-    \multicolumn{2}{c}{Scalar\qquad\qquad} & Red & Green & Blue \\
-    \hline
-    0&0 & 35 & 61 & 181 \\
-    0&03125 & 37 & 71 & 193 \\
-    0&0625 & 40 & 82 & 205 \\
-    0&09375 & 44 & 93 & 215 \\
-    0&125 & 49 & 104 & 225 \\
-    0&15625 & 55 & 116 & 232 \\
-    0&1875 & 62 & 128 & 239 \\
-    0&21875 & 71 & 140 & 243 \\
-    0&25 & 81 & 152 & 246 \\
-    0&28125 & 93 & 164 & 248 \\
-    0&3125 & 107 & 175 & 248 \\
-    0&34375 & 122 & 186 & 246 \\
-    0&375 & 139 & 196 & 244 \\
-    0&40625 & 158 & 205 & 240 \\
-    0&4375 & 178 & 212 & 235 \\
-    0&46875 & 200 & 219 & 230 \\
-    0&5 & 223 & 223 & 223 \\
-    0&53125 & 227 & 213 & 200 \\
-    0&5625 & 231 & 202 & 179 \\
-    0&59375 & 233 & 190 & 159 \\
-    0&625 & 235 & 178 & 141 \\
-    0&65625 & 236 & 164 & 124 \\
-    0&6875 & 236 & 151 & 109 \\
-    0&71875 & 234 & 137 & 96 \\
-    0&75 & 231 & 124 & 84 \\
-    0&78125 & 228 & 111 & 74 \\
-    0&8125 & 223 & 98 & 65 \\
-    0&84375 & 217 & 86 & 57 \\
-    0&875 & 209 & 74 & 51 \\
-    0&90625 & 201 & 63 & 45 \\
-    0&9375 & 192 & 53 & 40 \\
-    0&96875 & 182 & 44 & 36 \\
-    1&0 & 172 & 36 & 32
-  \end{tabular}
-  \label{table:Cool2WarmRGB}
-\end{table}
+%% \begin{table}
+%%   \centering
+%%   \caption{Cool to warm color map \RGB values.}
+%%   \begin{tabular}{r@{.}l@{\qquad}rrr}
+%%     \multicolumn{2}{c}{Scalar\qquad\qquad} & Red & Green & Blue \\
+%%     \hline
+%%     0&0 & 35 & 61 & 181 \\
+%%     0&03125 & 37 & 71 & 193 \\
+%%     0&0625 & 40 & 82 & 205 \\
+%%     0&09375 & 44 & 93 & 215 \\
+%%     0&125 & 49 & 104 & 225 \\
+%%     0&15625 & 55 & 116 & 232 \\
+%%     0&1875 & 62 & 128 & 239 \\
+%%     0&21875 & 71 & 140 & 243 \\
+%%     0&25 & 81 & 152 & 246 \\
+%%     0&28125 & 93 & 164 & 248 \\
+%%     0&3125 & 107 & 175 & 248 \\
+%%     0&34375 & 122 & 186 & 246 \\
+%%     0&375 & 139 & 196 & 244 \\
+%%     0&40625 & 158 & 205 & 240 \\
+%%     0&4375 & 178 & 212 & 235 \\
+%%     0&46875 & 200 & 219 & 230 \\
+%%     0&5 & 223 & 223 & 223 \\
+%%     0&53125 & 227 & 213 & 200 \\
+%%     0&5625 & 231 & 202 & 179 \\
+%%     0&59375 & 233 & 190 & 159 \\
+%%     0&625 & 235 & 178 & 141 \\
+%%     0&65625 & 236 & 164 & 124 \\
+%%     0&6875 & 236 & 151 & 109 \\
+%%     0&71875 & 234 & 137 & 96 \\
+%%     0&75 & 231 & 124 & 84 \\
+%%     0&78125 & 228 & 111 & 74 \\
+%%     0&8125 & 223 & 98 & 65 \\
+%%     0&84375 & 217 & 86 & 57 \\
+%%     0&875 & 209 & 74 & 51 \\
+%%     0&90625 & 201 & 63 & 45 \\
+%%     0&9375 & 192 & 53 & 40 \\
+%%     0&96875 & 182 & 44 & 36 \\
+%%     1&0 & 172 & 36 & 32
+%%   \end{tabular}
+%%   \label{table:Cool2WarmRGB}
+%% \end{table}
 
 This diverging color map works admirably for all of our scientific
 visualization requirements.  The colors are aesthetically pleasing, the
 order of the colors is natural, the rate of change is perceptually linear,
 and the colors are still easily distinguished by those with dichromatic
 vision.  The map also has a good perceptual range and minimally interferes
-with shading, as demonstrated in Figure~\ref{fig:Cool2WarmResponse}.
-Using our initial criteria, we can think of a diverging color map as
-``locally'' optimal.  We cannot add or modify any color anywhere in the map
-without degrading one or more of the requirements.
+with shading.  Figure~\ref{fig:MapComparison} compares the cool-warm color
+map to some common alternatives as well as some recommended by
+Rheingans\scite{Rheingans99} and Ware\scite{Ware04}.
 
-\begin{figure}
-  \centering
-  \includegraphics[height=1in]{images/Cool2WarmSpatialContrast}
-  \quad
-  \includegraphics[height=1in]{images/Cool2WarmShading}
-  \caption{The spatial contrast response (left) and effect on shading
-    (right) of the diverging color map.}
-  \label{fig:Cool2WarmResponse}
-\end{figure}
+%% , as demonstrated in Figure~\ref{fig:Cool2WarmResponse}.
+%% Using our initial criteria, we can think of a diverging color map as
+%% ``locally'' optimal.  We cannot add or modify any color anywhere in the map
+%% without degrading one or more of the requirements.
+
+%% \begin{figure}
+%%   \centering
+%%   \includegraphics[height=1in]{images/Cool2WarmSpatialContrast}
+%%   \quad
+%%   \includegraphics[height=1in]{images/Cool2WarmShading}
+%%   \caption{The spatial contrast response (left) and effect on shading
+%%     (right) of the diverging color map.}
+%%   \label{fig:Cool2WarmResponse}
+%% \end{figure}
 
 In addition, despite having a relatively large perceptual response, the
 color map still allows for a significant amount of annotation or visual
