@@ -4,6 +4,7 @@ INCLUDE(UseLATEX.cmake)
 ADD_LATEX_DOCUMENT(ColorMaps.tex
   BIBFILES ColorMaps.bib
   IMAGE_DIRS images
+  IMAGES diamondrule.eps
   )
 
 OPTION(BUILD_CODE "Build the VTK based code." OFF)

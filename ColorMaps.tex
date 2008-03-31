@@ -1,39 +1,53 @@
 % -*- latex -*-
 
-\documentclass{acmsiggraph}               % final
-%\documentclass[review]{acmsiggraph}      % review
-%\documentclass[widereview]{acmsiggraph}  % wide-spaced review
-%\documentclass[preprint]{acmsiggraph}    % preprint
+\documentclass[journal]{vgtc}                % final (journal style)
+%\documentclass[review,journal]{vgtc}         % review (journal style)
+%\documentclass[widereview]{vgtc}             % wide-spaced review
+%\documentclass[preprint,journal]{vgtc}       % preprint (journal style)
+%\documentclass[electronic,journal]{vgtc}     % electronic version, journal
 
-%% Uncomment one of the four lines above depending on where your paper is
+%% Uncomment one of the lines above depending on where your paper is
 %% in the conference process. ``review'' and ``widereview'' are for review
-%% submission, ``preprint'' is for pre-publication, and ``final'' is for
-%% the version to be printed.
+%% submission, ``preprint'' is for pre-publication, and the final version
+%% doesn't use a specific qualifier. Further, ``electronic'' includes
+%% hyperreferences for more convenient online viewing.
 
-%% The 'helvet' and 'times' packages define the typefaces used for
-%% serif and sans serif type in this document. Computer Modern Roman 
-%% is used for mathematics typesetting. The scale factor is set to .92
-%% to bring the sans-serif type in line with the serif type.
+%% Please use one of the ``review'' options in combination with the
+%% assigned online id (see below) ONLY if your paper uses a double blind
+%% review process. Some conferences, like IEEE Vis and InfoVis, have NOT
+%% in the past.
 
-\usepackage[scaled=.92]{helvet}
+%% Please note that the use of figures is not permitted on the first page
+%% of the journal version.  Figures should begin on the second page and be
+%% in CMYK or Grey scale format, otherwise, colour shifting may occur
+%% during the printing process.  Papers submitted with figures on the
+%% first page will be refused.
+
+%% These three lines bring in essential packages: ``mathptmx'' for Type 1
+%% typefaces, ``graphicx'' for inclusion of EPS figures. and ``times''
+%% for proper handling of the times font family.
+
+\usepackage{mathptmx}
+\usepackage{graphicx}
 \usepackage{times}
 
-%% use this for zero \parindent and non-zero \parskip, intelligently.
+%% We encourage the use of mathptmx for consistent usage of times font
+%% throughout the proceedings. However, if you encounter conflicts
+%% with other math-related packages, you may want to disable it.
 
-\usepackage{parskip}
+%% If you are submitting a paper to a conference for review with a double
+%% blind reviewing process, please replace the value ``0'' below with your
+%% OnlineID. Otherwise, you may safely leave it at ``0''.
+\onlineid{vis-1146}
 
-%% Optional: the 'caption' package provides a nicer-looking replacement
-%% for the standard caption environment. With 'labelfont=bf,'textfont=it',
-%% caption labels are bold and caption text is italic.
+%% declare the category of your paper, only shown in review mode
+\vgtccategory{Research}
 
-\usepackage[labelfont=bf,textfont=it]{caption}
+%% allow for this line if you want the electronic option to work properly
+\vgtcinsertpkg
 
-%% If you are submitting a paper to the annual conference, please replace 
-%% the value ``0'' below with the numeric value of your OnlineID. 
-%% If you are not submitting this paper to the annual conference, 
-%% you may safely leave it at ``0'' -- it will not be included in the output.
-
-\onlineid{0681}
+%% In preprint mode you may define your own headline.
+%\preprinttext{To appear in an IEEE VGTC sponsored conference.}
 
 \usepackage{amsfonts}
 \usepackage{amssymb}
@@ -50,40 +64,73 @@
 \title{Diverging Color Maps for Scientific Visualization}
 
 
-%% This is how authors are specified in the conference style
+%% This is how authors are specified in the journal style
 
-%% Author and Affiliation (single author).
-%%\author{Roy G. Biv\thanks{e-mail: roy.g.biv@aol.com}}
-%%\affiliation{\scriptsize Allied Widgets Research}
+%% %% indicate IEEE Member or Student Member in form indicated below
+%% \author{Roy G. Biv, Ed Grimley, \textit{Member, IEEE}, and Martha Stewart}
+%% \authorfooter{
+%% %% insert punctuation at end of each item
+%% \item
+%%   Roy G. Biv is with Starbucks Research, E-mail: roy.g.biv@aol.com.
+%% \item
+%%   Ed Grimley is with Grimley Widgets, Inc., E-mail: ed.grimley@aol.com.
+%% \item
+%%   Martha Stewart is with Martha Stewart Enterprises at Microsoft
+%%   Research, E-mail: martha.stewart@marthastewart.com.
+%% }
 
-%% Author and Affiliation (multiple authors with single affiliations).
-%%\author{Roy G. Biv\thanks{e-mail: roy.g.biv@aol.com} %
-%%\and Ed Grimley\thanks{e-mail:ed.grimley@aol.com} %
-%%\and Martha Stewart\thanks{e-mail:martha.stewart@marthastewart.com}}
-%%\affiliation{\scriptsize Martha Stewart Enterprises \\ Microsoft Research}
+\author{Kenneth~Moreland, \textit{Member, IEEE}}
+\authorfooter{
+\item
+  Kenneth Moreland is with Sandia National Laboratories, E-mail: kmorel@sandia.gov
+}
 
-%% Author and Affiliation (multiple authors with multiple affiliations)
+\shortauthortitle{Moreland: Diverging Color Maps for Scientific
+  Visualization}
 
-%% Author and Affiliation (single author).
-%%\author{Roy G. Biv\thanks{e-mail: roy.g.biv@aol.com}\\Allied Widgets Research}
+%% Abstract section
+\abstract{One of the most fundamental features of scientific visualization
+  is the process of mapping scalar values to colors.  This process allows
+  us to view scalar fields by coloring surfaces and volumes.
+  Unfortunately, the majority of scientific visualization tools and
+  research are still using a color map that is famous for its
+  ineffectiveness: the rainbow color map.  This color map, which
+  na\"{i}vely sweeps through the most saturated colors that a display can
+  reproduce in rainbow color order, is well known for its ability to
+  obscure data, introduce artifacts, and confuse users.
 
-%% Author and Affiliation (multiple authors).
-%% \author{Roy G. Biv\thanks{e-mail: roy.g.biv@aol.com}\\ Starbucks Research %
-%% \and Ed Grimley\thanks{e-mail:ed.grimley@aol.com}\\Nigel Mansell\thanks{nigelf1@msn.com}\\ Grimley Widgets, Inc. %
-%% \and Martha Stewart\thanks{e-mail:martha.stewart@marthastewart.com}\\ Martha Stewart Enterprises \\ Microsoft Research}
-
-\author{Kenneth~Moreland\thanks{e-mail: kmorel@sandia.gov}\\Sandia National Laboratories}
+  Although many alternate color maps have been proposed, none have achieved
+  widespread adoption by the visualization community for scientific
+  visualization.  In this paper, I explore the use of diverging color maps
+  (sometimes also called ratio, bipolar, or double-ended color maps) for
+  use in scientific visualization.  I provide a diverging color map that
+  generally performs well in scientific visualization applications and that
+  is a clear replacement for the rainbow color map.  I also present an
+  algorithm that allows users to easily generate their own customized color
+  maps.  I hope, once and for all, we can kill the use of the rainbow color
+  map for serious scientific visualization applications.
+} % End of abstract
 
 %% Keywords that describe your work.
-
 \keywords{color, scientific visualization}
+
+%% ACM Computing Classification System (CCS). 
+%% See <http://www.acm.org/class/1998/> for details.
+%% The ``\CCScat'' command takes four arguments.
+
+\CCScatlist{ % not used in journal version
+  \CCScat{I.3.m}{Computing Methodologies}{Computer Graphics}{Miscellaneous};
+  \CCScat{H.5.2}{Information Interfaces and Presentation}%
+    {User Interfaces}{Screen design};
+  \CCScat{H.1.2}{Models and Principles}{User/Machine Systems}{Human factors}
+}
 
 % Make fonts slightly bigger for equations to make them easier to read.
 \DeclareMathSizes{9}{9}{7}{6}
 
 % Commands I use for citing.
 \newcommand{\lcite}[1]{~\cite{#1}}
-\newcommand{\scite}[1]{~\shortcite{#1}}
+\newcommand{\scite}[1]{~\cite{#1}}
 
 % Put figures inline with text when possible
 \usepackage{float}
@@ -115,59 +162,14 @@
 
 \begin{document}
 
-%% \teaser{
-%%   \includegraphics[width=1.5in]{sample.eps}
-%%   \caption{Lookit! Lookit!}
-%% }
+%% The ``\maketitle'' command must be the first command after the
+%% ``\begin{document}'' command. It prepares and prints the title block.
 
-\maketitle
-
-\begin{abstract}
-  One of the most fundamental features of scientific visualization is the
-  process of mapping scalar values to colors.  This process allows us to
-  view scalar fields by coloring surfaces and volumes.  Unfortunately, the
-  majority of scientific visualization tools and research are still using a
-  color map that is famous for its ineffectiveness: the rainbow color map.
-  This color map, which na\"{i}vely sweeps through the most
-  saturated colors that a display can reproduce in rainbow color order, is
-  well known for its ability to obscure data, introduce artifacts, and
-  confuse users.
-
-  Although many alternate color maps have been proposed, none have achieved
-  widespread adoption by the visualization community for scientific
-  visualization.  In this paper, I explore the use of diverging color maps
-  (sometimes also called ratio, bipolar, or double-ended color maps) for
-  use in scientific visualization.  I provide a diverging color map that
-  generally performs well in scientific visualization applications and that
-  is a clear replacement for the rainbow color map.  I also present an
-  algorithm that allows users to easily generate their own customized color
-  maps.  I hope, once and for all, we can kill the use of the rainbow
-  color map for serious scientific visualization applications.
-\end{abstract}
-
-%% ACM Computing Classification System (CCS). 
-%% See <http://www.acm.org/class/1998/> for details.
-%% The ``\CCScat'' command takes four arguments.
-
-\begin{CRcatlist}
-  \CRcat{I.3.m}{Computing Methodologies}{Computer Graphics}{Miscellaneous};
-  \CRcat{H.5.2}{Information Interfaces and Presentation}%
-    {User Interfaces}{Screen design};
-  \CRcat{H.1.2}{Models and Principles}{User/Machine Systems}{Human factors}
-\end{CRcatlist}
-
-%% The ``\keywordlist'' command prints out the keywords.
-\keywordlist
-
-\section{Introduction}
+%% the only exception to this rule is the \firstsection command
+\firstsection{Introduction}
 \label{sec:Introduction}
 
-%% The ``\copyrightspace'' command must be the first command after the 
-%% start of the first section of the body of your paper. It ensures the
-%% copyright space is left at the bottom of the first column on the first
-%% page of your paper.
-
-\copyrightspace
+\maketitle
 
 At its core, visualization is the process of providing a visual
 representation of data.  One of the most fundamental and important aspects
@@ -185,7 +187,7 @@ easily perform the reverse mapping back to scalar values.
 
 By far, the most common color map used in scientific visualization is the
 rainbow color map, shown in Figure~\ref{fig:RainbowColorMap}.  In a recent
-review on the use of color maps, Borland and Taylor\scite{Borland07} find
+review on the use of color maps, Borland and Taylor\cite{Borland07} find
 that the rainbow color map was used as the default in 8 out of the 9
 toolkits they examined.  Borland and Taylor also find that in IEEE
 Visualization papers from 2001 to 2005 the rainbow color map is used 51
@@ -1069,11 +1071,9 @@ demonstrated in Figure~\ref{fig:ColorMapInteraction}.
 Applying the design described in Section~\ref{sec:ColorMapDesign}, we can
 build the cool to warm color map shown in Figure~\ref{fig:Cool2WarmBar}.
 The control points, to be interpolated in \Msh space, are given in
-Table~\ref{table:Cool2Warm}.
-
-%% Table~\ref{table:Cool2WarmRGB} gives example
-%% interpolated \RGB values for this color map.  \RGB values are computed from
-%% \Lab values using a D65 white point.
+Table~\ref{table:Cool2Warm}.  Table~\ref{table:Cool2WarmRGB} gives example
+interpolated \RGB values for this color map.  \RGB values are computed from
+\Lab values using a D65 white point.
 
 \begin{table}
   \centering
@@ -1088,48 +1088,48 @@ Table~\ref{table:Cool2Warm}.
   \label{table:Cool2Warm}
 \end{table}
 
-%% \begin{table}
-%%   \centering
-%%   \caption{Cool to warm color map \RGB values.}
-%%   \begin{tabular}{r@{.}l@{\qquad}rrr}
-%%     \multicolumn{2}{c}{Scalar\qquad\qquad} & Red & Green & Blue \\
-%%     \hline
-%%     0&0 & 35 & 61 & 181 \\
-%%     0&03125 & 37 & 71 & 193 \\
-%%     0&0625 & 40 & 82 & 205 \\
-%%     0&09375 & 44 & 93 & 215 \\
-%%     0&125 & 49 & 104 & 225 \\
-%%     0&15625 & 55 & 116 & 232 \\
-%%     0&1875 & 62 & 128 & 239 \\
-%%     0&21875 & 71 & 140 & 243 \\
-%%     0&25 & 81 & 152 & 246 \\
-%%     0&28125 & 93 & 164 & 248 \\
-%%     0&3125 & 107 & 175 & 248 \\
-%%     0&34375 & 122 & 186 & 246 \\
-%%     0&375 & 139 & 196 & 244 \\
-%%     0&40625 & 158 & 205 & 240 \\
-%%     0&4375 & 178 & 212 & 235 \\
-%%     0&46875 & 200 & 219 & 230 \\
-%%     0&5 & 223 & 223 & 223 \\
-%%     0&53125 & 227 & 213 & 200 \\
-%%     0&5625 & 231 & 202 & 179 \\
-%%     0&59375 & 233 & 190 & 159 \\
-%%     0&625 & 235 & 178 & 141 \\
-%%     0&65625 & 236 & 164 & 124 \\
-%%     0&6875 & 236 & 151 & 109 \\
-%%     0&71875 & 234 & 137 & 96 \\
-%%     0&75 & 231 & 124 & 84 \\
-%%     0&78125 & 228 & 111 & 74 \\
-%%     0&8125 & 223 & 98 & 65 \\
-%%     0&84375 & 217 & 86 & 57 \\
-%%     0&875 & 209 & 74 & 51 \\
-%%     0&90625 & 201 & 63 & 45 \\
-%%     0&9375 & 192 & 53 & 40 \\
-%%     0&96875 & 182 & 44 & 36 \\
-%%     1&0 & 172 & 36 & 32
-%%   \end{tabular}
-%%   \label{table:Cool2WarmRGB}
-%% \end{table}
+\begin{table}
+  \centering
+  \caption{Cool to warm color map \RGB values.}
+  \begin{tabular}{r@{.}l@{\qquad}rrr}
+    \multicolumn{2}{c}{Scalar\qquad\qquad} & Red & Green & Blue \\
+    \hline
+    0&0 & 35 & 61 & 181 \\
+    0&03125 & 37 & 71 & 193 \\
+    0&0625 & 40 & 82 & 205 \\
+    0&09375 & 44 & 93 & 215 \\
+    0&125 & 49 & 104 & 225 \\
+    0&15625 & 55 & 116 & 232 \\
+    0&1875 & 62 & 128 & 239 \\
+    0&21875 & 71 & 140 & 243 \\
+    0&25 & 81 & 152 & 246 \\
+    0&28125 & 93 & 164 & 248 \\
+    0&3125 & 107 & 175 & 248 \\
+    0&34375 & 122 & 186 & 246 \\
+    0&375 & 139 & 196 & 244 \\
+    0&40625 & 158 & 205 & 240 \\
+    0&4375 & 178 & 212 & 235 \\
+    0&46875 & 200 & 219 & 230 \\
+    0&5 & 223 & 223 & 223 \\
+    0&53125 & 227 & 213 & 200 \\
+    0&5625 & 231 & 202 & 179 \\
+    0&59375 & 233 & 190 & 159 \\
+    0&625 & 235 & 178 & 141 \\
+    0&65625 & 236 & 164 & 124 \\
+    0&6875 & 236 & 151 & 109 \\
+    0&71875 & 234 & 137 & 96 \\
+    0&75 & 231 & 124 & 84 \\
+    0&78125 & 228 & 111 & 74 \\
+    0&8125 & 223 & 98 & 65 \\
+    0&84375 & 217 & 86 & 57 \\
+    0&875 & 209 & 74 & 51 \\
+    0&90625 & 201 & 63 & 45 \\
+    0&9375 & 192 & 53 & 40 \\
+    0&96875 & 182 & 44 & 36 \\
+    1&0 & 172 & 36 & 32
+  \end{tabular}
+  \label{table:Cool2WarmRGB}
+\end{table}
 
 This diverging color map works admirably for all of our
 requirements outlined in
@@ -1246,8 +1246,7 @@ a clear improvement over what is commonly used today, and I hope that many
 will follow in adopting it as the new standard.
 
 
-\section*{Acknowledgments}
-
+\acknowledgements{
 Thanks to Russell M. Taylor II for his help on color space and color map
 design.  Thanks to Patricia Crossno, Brian Wylie, Timothy Shead, and the
 ParaView development team for their critical comments and general
@@ -1257,9 +1256,10 @@ This work was done at Sandia National Laboratories.  Sandia is a
 multiprogram laboratory operated by Sandia Corporation, a Lockheed Martin
 Company, for the United States Department of Energy's National Nuclear
 Security Administration under contract DE-AC04-94AL85000.
+}
 
 
-\bibliographystyle{acmsiggraph}
+\bibliographystyle{abbrv}
 \bibliography{ColorMaps}
 
 \end{document}
