@@ -340,7 +340,7 @@ map.
   \includegraphics[width=1.25in]{images/Green2RedShading}
   \caption{Maps with big changes in luminance hide shading cues important
     for determining 3D structure (left image), whereas isoluminant maps
-    minimize shading interference (right image).}
+    minimize shading interference (right image). \sticky{Fix isolulminant colors.}}
   \label{fig:LuminanceVsShading}
 \end{figure}
 
@@ -353,7 +353,7 @@ map.
   \caption{Isoluminant color maps.  The green to red color map is popular
     because it uses a pair of opponent colors, but the cyan to mauve color
     map is much easier to see by individuals with deuteranope or protanopic
-    vision.}
+    vision. \sticky{Fix Isoluminant colors.}}
   \label{fig:IsoluminantColorMap}
 \end{figure}
 Another type of color map that is often suggested for use with 3D surfaces
@@ -398,16 +398,47 @@ used in a monitor, television, or projector.
 
 Although it is often convenient to use \RGB to specify colors in terms of
 the output medium, the display may have nonlinearities that interfere with
-the blending and interpolation of colors\lcite{Stone03}.  Differences
-between displays also make the color definition somewhat
-ambiguous\lcite{Fortner97}.  When computing physical light effects, it is
-best to use a color space defined by the physical properties of light.
-\XYZ is a widely used color space defined by physical light
-spectra.  Assuming that the \RGB space is linear, conversion between \RGB
-and \XYZ is a simple linear transformation.  The transformation is
-dependent on the characteristics of the display for which the \RGB space is
-defined, but the one in Equation~\ref{eqn:rgb2xyz}, which is based on a
-canonical CRT monitor, is common.
+the blending and interpolation of colors\lcite{Stone03}.  When computing
+physical light effects, it is best to use a color space defined by the
+physical properties of light.  \XYZ is a widely used color space defined by
+physical light spectra.  This conversion can be particularly difficult due
+to differences between displays that make the color definition somewhat
+ambiguous\lcite{Fortner97}.  For the purposes of this paper, we will assume
+the \RGB space conforms to the canonical monitor defined by the sRGB
+specification, a standard of the International Electrotechnical Commission
+(IEC 61966-2-1) that is widely used by many color management
+programs\lcite{Stone03}.  The conversion from the sRGB components to \RGB
+components with physically linear properties is given in Equation~\ref{eqn:sRGB2linearRGB}.
+
+\begin{equation}
+  \begin{split}
+    R_\mathrm{Linear} &=
+    \begin{cases}
+      \left((R_\mathrm{sRGB}+0.055)/1.055\right)^{2.4}
+      & \text{if $R_\mathrm{Linear} > 0.04045$} \\
+      R_{\mathrm{sRGB}}/12.92 & \text{otherwise}
+    \end{cases} \\
+    G_\mathrm{Linear} &=
+    \begin{cases}
+      \left((G_\mathrm{sRGB}+0.055)/1.055\right)^{2.4}
+      & \text{if $G_\mathrm{Linear} > 0.04045$} \\
+      G_{\mathrm{sRGB}}/12.92 & \text{otherwise}
+    \end{cases} \\
+    B_\mathrm{Linear} &=
+    \begin{cases}
+      \left((B_\mathrm{sRGB}+0.055)/1.055\right)^{2.4}
+      & \text{if $B_\mathrm{Linear} > 0.04045$} \\
+      B_{\mathrm{sRGB}}/12.92 & \text{otherwise}
+    \end{cases} 
+  \end{split}
+  \label{eqn:sRGB2linearRGB}
+\end{equation}
+
+Given \RGB values that are linear with respect to physical light intensity,
+conversion to \XYZ space is a simple linear transformation.  The
+transformation is dependent on the characteristics of the display for which
+the \RGB space is defined, but the sRGB specification yeilds the one in
+Equation~\ref{eqn:rgb2xyz}.
 
 \begin{equation}
   [X \quad Y \quad Z] = [R \quad G \quad B]
@@ -676,7 +707,8 @@ in Figure~\ref{fig:LinearMachBands}.
   \includegraphics[width=1in]{images/Cool2WarmRadial}
   \caption{Using piecewise linear interpolations in \Lab color space causes
     Mach bands in the white part of diverging color maps (left image).  The
-    transition can be softened by interpolating in \Msh space (right image).}
+    transition can be softened by interpolating in \Msh space (right
+    image).\sticky{Fix to new colors.}}
   \label{fig:LinearMachBands}
 \end{figure}
 
@@ -780,7 +812,7 @@ throughout the entire color map, as evidenced in Figure~\ref{fig:s_plot}.
   \includegraphics{images/LinearMshPlot}
   \caption{Plot of $L*$, $a*$, and $b*$ coordinates when interpolating $s$
     linearly in \Msh space.  Dashed lines show effect when colors are
-    ``clipped'' to the gamut of a typical monitor.}
+    ``clipped'' to the gamut of a typical monitor. \sticky{Fix color conversion.}}
   \label{fig:s_plot}
 \end{figure}
 
@@ -896,7 +928,8 @@ adjusting the hue.
   \centering
   \includegraphics{images/HueSpinPlot}
   \caption{Plot of $L*$, $a*$, and $b*$ coordinates when interpolating
-    piecewise linearly in \Msh space and applying a hue spin.}
+    piecewise linearly in \Msh space and applying a hue spin. \sticky{Fix
+      to new colors.}}
   \label{fig:hue_spin_plot}
 \end{figure}
 
@@ -919,10 +952,11 @@ curve to remain in the gamut of displayable colors.
     \li \If $(s_1 > 0.05) \cap (s_2 > 0.05)
              \cap (\proc{RadDiff}(h_1,h_2) > \frac{\pi}{3})$
 	\label{code:InterpolateColor:AddWhiteBegin}
-    \li \Then \If $\id{interp} < \frac{1}{2}$
-    \li       \Then $M_2 \leftarrow 95, s_2 \leftarrow 0, h_2 \leftarrow 0$
+    \li \Then $M_{\mathrm{mid}} \leftarrow \max(M_1,M_2,88)$
+    \li       \If $\id{interp} < \frac{1}{2}$
+    \li       \Then $M_2 \leftarrow M_{\mathrm{mid}}, s_2 \leftarrow 0, h_2 \leftarrow 0$
     \li             $\id{interp} \leftarrow 2\id{interp}$
-    \li       \Else $M_1 \leftarrow 95, s_1 \leftarrow 0, h_1 \leftarrow 0$
+    \li       \Else $M_1 \leftarrow M_{\mathrm{mid}}, s_1 \leftarrow 0, h_1 \leftarrow 0$
     \li             $\id{interp} \leftarrow 2\id{interp} - 1$
               \End
         \End
@@ -1004,7 +1038,8 @@ demonstrated in Figure~\ref{fig:ColorMapInteraction}.
 		\includegraphics[width=.45\linewidth]{images/tfColorShifted}
 	      }
   \end{tabular}
-  \caption{Interacting with color maps in the \Msh color space.}
+  \caption{Interacting with color maps in the \Msh color space. \sticky{fix
+    colors.}}
   \label{fig:ColorMapInteraction}
 \end{figure}
 
@@ -1016,7 +1051,7 @@ demonstrated in Figure~\ref{fig:ColorMapInteraction}.
   \centering
   \includegraphics[width=2.5in]{images/Cool2WarmBar}
   \caption{A continuous diverging color map that is well suited to scientific
-    visualization.}
+    visualization. \sticky{Set to new color map.}}
   \label{fig:Cool2WarmBar}
 \end{figure}
 
@@ -1064,7 +1099,7 @@ demonstrated in Figure~\ref{fig:ColorMapInteraction}.
     contrast sensitivity function, a low-frequency sensitivity function,
     high-frequency noise, an approximation of the color map viewed by
     someone with deuteranope color-deficient vision (computed with
-    Vischeck), and 3D shading.}
+    Vischeck), and 3D shading.  \sticky{Fix everything.}}
   \label{fig:MapComparison}
 \end{figure*}
 
@@ -1081,9 +1116,9 @@ interpolated \RGB values for this color map.  \RGB values are computed from
   \begin{tabular}{c@{\qquad}ccc}
     Color & M & s & h \\
     \hline
-    Red & 75 & 0.7 & 0.5 \\
-    White & 95 & 0 & 1.345/-2.145 \\
-    Blue & 75 & 0.7 & -1.3
+    Red & 80 & 1.08 & 0.5 \\
+    White & 88 & 0 & 1.061/-1.661 \\
+    Blue & 80 & 1.08 & -1.1
   \end{tabular}
   \label{table:Cool2Warm}
 \end{table}
@@ -1092,41 +1127,42 @@ interpolated \RGB values for this color map.  \RGB values are computed from
   \centering
   \caption{Cool to warm color map \RGB values.}
   \begin{tabular}{r@{.}l@{\qquad}rrr}
-    \multicolumn{2}{c}{Scalar\qquad\qquad} & Red & Green & Blue \\
+    \multicolumn{2}{c}{Scalar\qquad\qquad}
+    		&	Red	&	Green	&	Blue	\\
     \hline
-    0&0 & 35 & 61 & 181 \\
-    0&03125 & 37 & 71 & 193 \\
-    0&0625 & 40 & 82 & 205 \\
-    0&09375 & 44 & 93 & 215 \\
-    0&125 & 49 & 104 & 225 \\
-    0&15625 & 55 & 116 & 232 \\
-    0&1875 & 62 & 128 & 239 \\
-    0&21875 & 71 & 140 & 243 \\
-    0&25 & 81 & 152 & 246 \\
-    0&28125 & 93 & 164 & 248 \\
-    0&3125 & 107 & 175 & 248 \\
-    0&34375 & 122 & 186 & 246 \\
-    0&375 & 139 & 196 & 244 \\
-    0&40625 & 158 & 205 & 240 \\
-    0&4375 & 178 & 212 & 235 \\
-    0&46875 & 200 & 219 & 230 \\
-    0&5 & 223 & 223 & 223 \\
-    0&53125 & 227 & 213 & 200 \\
-    0&5625 & 231 & 202 & 179 \\
-    0&59375 & 233 & 190 & 159 \\
-    0&625 & 235 & 178 & 141 \\
-    0&65625 & 236 & 164 & 124 \\
-    0&6875 & 236 & 151 & 109 \\
-    0&71875 & 234 & 137 & 96 \\
-    0&75 & 231 & 124 & 84 \\
-    0&78125 & 228 & 111 & 74 \\
-    0&8125 & 223 & 98 & 65 \\
-    0&84375 & 217 & 86 & 57 \\
-    0&875 & 209 & 74 & 51 \\
-    0&90625 & 201 & 63 & 45 \\
-    0&9375 & 192 & 53 & 40 \\
-    0&96875 & 182 & 44 & 36 \\
-    1&0 & 172 & 36 & 32
+    0&0		&	59	&	76	&	192	\\
+    0&03125	&	68	&	90	&	204	\\
+    0&0625	&	77	&	104	&	215	\\
+    0&09375	&	87	&	117	&	225	\\
+    0&125	&	98	&	130	&	234	\\
+    0&15625	&	108	&	142	&	241	\\
+    0&1875	&	119	&	154	&	247	\\
+    0&21875	&	130	&	165	&	251	\\
+    0&25	&	141	&	176	&	254	\\
+    0&28125	&	152	&	185	&	255	\\
+    0&3125	&	163	&	194	&	255	\\
+    0&34375	&	174	&	201	&	253	\\
+    0&375	&	184	&	208	&	249	\\
+    0&40625	&	194	&	213	&	244	\\
+    0&4375	&	204	&	217	&	238	\\
+    0&46875	&	213	&	219	&	230	\\
+    0&5		&	221	&	221	&	221	\\
+    0&53125	&	229	&	216	&	209	\\
+    0&5625	&	236	&	211	&	197	\\
+    0&59375	&	241	&	204	&	185	\\
+    0&625	&	245	&	196	&	173	\\
+    0&65625	&	247	&	187	&	160	\\
+    0&6875	&	247	&	177	&	148	\\
+    0&71875	&	247	&	166	&	135	\\
+    0&75	&	244	&	154	&	123	\\
+    0&78125	&	241	&	141	&	111	\\
+    0&8125	&	236	&	127	&	99	\\
+    0&84375	&	229	&	112	&	88	\\
+    0&875	&	222	&	96	&	77	\\
+    0&90625	&	213	&	80	&	66	\\
+    0&9375	&	203	&	62	&	56	\\
+    0&96875	&	192	&	40	&	47	\\
+    1&0		&	180	&	4	&	38
   \end{tabular}
   \label{table:Cool2WarmRGB}
 \end{table}
@@ -1176,7 +1212,7 @@ components to be added, as shown in Figures
   \centering
   \includegraphics[width=\linewidth]{images/AnnotationExample}
   \caption{A terrain with the color map applied can still be annotated in
-    multiple different ways.}
+    multiple different ways. \sticky{Update with new colors.}}
   \label{fig:ColorMapWithAnnotation}
 \end{figure}
 
@@ -1184,7 +1220,7 @@ components to be added, as shown in Figures
   \centering
   \includegraphics[width=\linewidth]{images/ShuttleExample}
   \caption{Shuttle body with color map applied coupled with annotation and
-    streamlines.}
+    streamlines. \sticky{Update with new colors.}}
   \label{fig:ColorMapOnShuttle}
 \end{figure}
 
@@ -1202,7 +1238,7 @@ Figure~\ref{fig:OtherColorMaps}.
     \includegraphics[width=2.5in]{images/Blue2TanBar} \\
     \includegraphics[width=2.5in]{images/Green2RedDivBar}
   \end{tabular}
-  \caption{Further examples of color maps defined in \Msh space.}
+  \caption{Further examples of color maps defined in \Msh space. \sticky{update}}
   \label{fig:OtherColorMaps}
 \end{figure}
 
