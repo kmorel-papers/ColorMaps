@@ -811,7 +811,7 @@ throughout the entire color map, as evidenced in Figure~\ref{fig:s_plot}.
   \includegraphics{images/LinearMshPlot}
   \caption{Plot of $L*$, $a*$, and $b*$ coordinates when interpolating $s$
     linearly in \Msh space.  Dashed lines show effect when colors are
-    ``clipped'' to the gamut of a typical monitor. \sticky{Fix color conversion.}}
+    ``clipped'' to the gamut of a typical monitor.}
   \label{fig:s_plot}
 \end{figure}
 
@@ -822,13 +822,24 @@ colors, you must ``clip'' to what can be represented (demonstrated by the
 dashed lines).  Notice the harsh bends of the intensity ($L*$) that occur
 near the middle.  These bends can lead to Mach banding.  We can correct for
 this problem by reducing $M$ at each end, but this adds the problem that
-colors will change faster near white when $M$ is larger.
+colors will change faster near white when $M$ is larger.  Dropping the $M$
+for the middle white value to be consistent will make the color changes
+consistent again, but at the expense of the brightness of the color map.
+In practice it is difficult to choose a single value for $M$ that yields
+colors all within a typical display gamut and still provides pleasingly
+bright colors.
+
+\sticky{The usefulness of the spin is somewhat diminished by the fact that
+  I am also lowering the luminance of white from that shown in
+  Figure~\ref{fig:s_plot}.  However, I had to do that to make the effects
+  of the gamut clipping noticeable.}
 
 We can restore the uniformity of the color map again by adding some
 ``spin'' to the hue.  Even though $h$ is interpolated linearly, the changes
 have a greater effect on the color when $s$ is larger, which can
-counterbalance the growing $M$.  The next section describes how to chose an
-appropriate hue change.
+counterbalance the growing $M$ (although a large change can still cause a
+noticeable pointing of the luminance).  The next section describes how to
+choose an appropriate hue change.
 
 \subsection{Choosing a Hue Spin}
 \label{sec:ChoosingAHueSpin}
@@ -927,8 +938,8 @@ adjusting the hue.
   \centering
   \includegraphics{images/HueSpinPlot}
   \caption{Plot of $L*$, $a*$, and $b*$ coordinates when interpolating
-    piecewise linearly in \Msh space and applying a hue spin. \sticky{Fix
-      to new colors.}}
+    piecewise linearly in \Msh space and applying a hue spin.  Notice the
+    amplified bend in the $a*$ and $b*$ curves, which determine hue.}
   \label{fig:hue_spin_plot}
 \end{figure}
 
