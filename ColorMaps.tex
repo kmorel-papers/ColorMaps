@@ -1,53 +1,6 @@
 % -*- latex -*-
 
-%\documentclass[journal]{vgtc}                % final (journal style)
-\documentclass[review,journal]{vgtc}         % review (journal style)
-%\documentclass[widereview]{vgtc}             % wide-spaced review
-%\documentclass[preprint,journal]{vgtc}       % preprint (journal style)
-%\documentclass[electronic,journal]{vgtc}     % electronic version, journal
-
-%% Uncomment one of the lines above depending on where your paper is
-%% in the conference process. ``review'' and ``widereview'' are for review
-%% submission, ``preprint'' is for pre-publication, and the final version
-%% doesn't use a specific qualifier. Further, ``electronic'' includes
-%% hyperreferences for more convenient online viewing.
-
-%% Please use one of the ``review'' options in combination with the
-%% assigned online id (see below) ONLY if your paper uses a double blind
-%% review process. Some conferences, like IEEE Vis and InfoVis, have NOT
-%% in the past.
-
-%% Please note that the use of figures is not permitted on the first page
-%% of the journal version.  Figures should begin on the second page and be
-%% in CMYK or Grey scale format, otherwise, colour shifting may occur
-%% during the printing process.  Papers submitted with figures on the
-%% first page will be refused.
-
-%% These three lines bring in essential packages: ``mathptmx'' for Type 1
-%% typefaces, ``graphicx'' for inclusion of EPS figures. and ``times''
-%% for proper handling of the times font family.
-
-\usepackage{mathptmx}
-\usepackage{graphicx}
-\usepackage{times}
-
-%% We encourage the use of mathptmx for consistent usage of times font
-%% throughout the proceedings. However, if you encounter conflicts
-%% with other math-related packages, you may want to disable it.
-
-%% If you are submitting a paper to a conference for review with a double
-%% blind reviewing process, please replace the value ``0'' below with your
-%% OnlineID. Otherwise, you may safely leave it at ``0''.
-\onlineid{vis-1146}
-
-%% declare the category of your paper, only shown in review mode
-\vgtccategory{Research}
-
-%% allow for this line if you want the electronic option to work properly
-\vgtcinsertpkg
-
-%% In preprint mode you may define your own headline.
-%\preprinttext{To appear in an IEEE VGTC sponsored conference.}
+\documentclass{llncs}
 
 \usepackage{amsfonts}
 \usepackage{amssymb}
@@ -55,74 +8,34 @@
 \usepackage{graphicx}
 \usepackage{varioref}
 \usepackage{fancyvrb}
-%\usepackage{cite}
+\usepackage{ifthen}
+\usepackage{cite}
 \usepackage{subfigure}
 \usepackage{xspace}
 \usepackage{clrscode}
 \usepackage[pdfstartview=FitH]{hyperref}
 
-\title{Diverging Color Maps for Scientific Visualization}
+% Booleans to control different ways to build this document.
+\newboolean{anonymous}
+\setboolean{anonymous}{true}
+
+\newboolean{expanded}
+\setboolean{expanded}{false}
 
 
-%% This is how authors are specified in the journal style
-
-%% %% indicate IEEE Member or Student Member in form indicated below
-%% \author{Roy G. Biv, Ed Grimley, \textit{Member, IEEE}, and Martha Stewart}
-%% \authorfooter{
-%% %% insert punctuation at end of each item
-%% \item
-%%   Roy G. Biv is with Starbucks Research, E-mail: roy.g.biv@aol.com.
-%% \item
-%%   Ed Grimley is with Grimley Widgets, Inc., E-mail: ed.grimley@aol.com.
-%% \item
-%%   Martha Stewart is with Martha Stewart Enterprises at Microsoft
-%%   Research, E-mail: martha.stewart@marthastewart.com.
-%% }
-
-\author{Kenneth~Moreland, \textit{Member, IEEE}}
-\authorfooter{
-\item
-  Kenneth Moreland is with Sandia National Laboratories, E-mail: kmorel@sandia.gov
+\ifthenelse{\boolean{expanded}}{
+  \title{Diverging Color Maps for Scientific Visualization (Expanded)}
+}{
+  \title{Diverging Color Maps for Scientific Visualization}
 }
 
-\shortauthortitle{Moreland: Diverging Color Maps for Scientific
-  Visualization}
 
-%% Abstract section
-\abstract{One of the most fundamental features of scientific visualization
-  is the process of mapping scalar values to colors.  This process allows
-  us to view scalar fields by coloring surfaces and volumes.
-  Unfortunately, the majority of scientific visualization tools and
-  research are still using a color map that is famous for its
-  ineffectiveness: the rainbow color map.  This color map, which
-  na\"{i}vely sweeps through the most saturated colors that a display can
-  reproduce in rainbow color order, is well known for its ability to
-  obscure data, introduce artifacts, and confuse users.
-
-  Although many alternate color maps have been proposed, none have achieved
-  widespread adoption by the visualization community for scientific
-  visualization.  In this paper, I explore the use of diverging color maps
-  (sometimes also called ratio, bipolar, or double-ended color maps) for
-  use in scientific visualization.  I provide a diverging color map that
-  generally performs well in scientific visualization applications and that
-  is a clear replacement for the rainbow color map.  I also present an
-  algorithm that allows users to easily generate their own customized color
-  maps.  I hope, once and for all, we can kill the use of the rainbow color
-  map for serious scientific visualization applications.
-} % End of abstract
-
-%% Keywords that describe your work.
-\keywords{color, scientific visualization}
-
-%% ACM Computing Classification System (CCS). 
-%% See <http://www.acm.org/class/1998/> for details.
-%% The ``\CCScat'' command takes four arguments.
-
-\CCScatlist{ % not used in journal version
-  \CCScat{I.3.m}{Computing Methodologies}{Computer Graphics}{Miscellaneous};
-  \CCScat{H.5.2}{Information Interfaces and Presentation}%
-    {User Interfaces}{Screen design};
-  \CCScat{H.1.2}{Models and Principles}{User/Machine Systems}{Human factors}
+%% I'm not sure if this is ``correct.''  The template is missing author
+%% information.
+\ifthenelse{\boolean{anonymous}}{
+}{
+  \author{Kenneth~Moreland}
+  \institute{Sandia National Laboratories}
 }
 
 % Make fonts slightly bigger for equations to make them easier to read.
@@ -159,17 +72,32 @@
 \newcommand{\DeltaE}{\ensuremath{\Delta{}E}\xspace}
 \newcommand*{\cvec}[1]{\mathbf{#1}}
 
-
 \begin{document}
 
-%% The ``\maketitle'' command must be the first command after the
-%% ``\begin{document}'' command. It prepares and prints the title block.
-
-%% the only exception to this rule is the \firstsection command
-\firstsection{Introduction}
-\label{sec:Introduction}
+\sloppy
 
 \maketitle
+
+\begin{abstract}
+  One of the most fundamental features of scientific visualization is the
+  process of mapping scalar values to colors.  This process allows us to
+  view scalar fields by coloring surfaces and volumes.  Unfortunately, the
+  majority of scientific visualization tools still use a color map that is
+  famous for its ineffectiveness: the rainbow color map.  This color map,
+  which na\"{i}vely sweeps through the most saturated colors, is well known
+  for its ability to obscure data, introduce artifacts, and confuse users.
+  Although many alternate color maps have been proposed, none have achieved
+  widespread adoption by the visualization community for scientific
+  visualization.  This paper explores the use of diverging color maps
+  (sometimes also called ratio, bipolar, or double-ended color maps) for
+  use in scientific visualization, provides a diverging color map that
+  generally performs well in scientific visualization applications, and
+  presents an algorithm that allows users to easily generate their own
+  customized color maps.
+\end{abstract}
+
+\section{Introduction}
+\label{sec:Introduction}
 
 At its core, visualization is the process of providing a visual
 representation of data.  One of the most fundamental and important aspects
@@ -201,16 +129,7 @@ The choice of a color map can be a complicated decision that depends on the
 visualization type and problem domain, but the rainbow color map is a poor
 choice for almost all of them.
 
-Why are so many visualization scientists and developers, experts who
-should know better, still using the rainbow color map?
-There are many contributing factors, two of which are clearly significant.
-First is the ease with which rainbow color maps
-can be created.  I was guilty of creating rainbow color maps
-long before learning anything about color spaces and human perception.  It
-was my first choice and I was pleased with the colorful images, ignorant of
-their dubious scientific value.
-
-A second major contributor to the dominance of the rainbow color map is the
+One of the major contributors to the dominance of the rainbow color map is the
 lack of a clear alternative, especially in terms of scientific
 visualization.  There are many publications that recommend
 very good choices for color maps\lcite{Brewer05,Levkowitz92,Rheingans99,Ware04}.
@@ -243,96 +162,138 @@ which is relied upon in subsequent discussions.
 \subsection{Color Maps}
 \label{sec:PreviousWork:ColorMaps}
 
-The rainbow color map is an
-extremely poor choice.  Based on the colors of light at different
+As stated previously, the rainbow color map is the most dominate in
+scientific visualization tools.  Based on the colors of light at different
 wavelengths, the rainbow color map's design has nothing to do with how
 humans perceive color.  This results in multiple problems when humans try
 to do the reverse mapping from colors back to numbers.
 
-The first problem is that the colors do not follow any natural perceived
-ordering.  Perceptual experiments show that although a test subject with no
-prior training will always order grayscale colors in order of luminance (in
-one direction or the other), the test subjects will order rainbow colors in
-numerous different ways\lcite{Ware04}.
+\ifthenelse{\boolean{expanded}}{
 
-The second problem is that the perceptual changes in the colors are not
-uniform.  The colors appear to change faster in the cyan and yellow
-regions, which can cause Mach bands in those regions.  The colors appear to
-change more slowly in the blue, green, and red regions, which creates larger
-bands of color.  These bands can hide important changes in the
-underlying data.  Thus, nonuniform perceptual changes
-simultaneously introduce artifacts and obfuscate real
-data\lcite{Borland07} as demonstrated in
-Figure~\ref{fig:RainbowSpatialContrast}.
+  The first problem is that the colors do not follow any natural perceived
+  ordering.  Perceptual experiments show that although a test subject with
+  no prior training will always order grayscale colors in order of
+  luminance (in one direction or the other), the test subjects will order
+  rainbow colors in numerous different ways\lcite{Ware04}.
 
-\begin{figure}
-  \centering
-  \includegraphics[width=1.0in]{images/GrayscaleSpatialContrast}
-  \qquad
-  \includegraphics[width=1.0in]{images/RainbowSpatialContrast}
-  \caption{A spatial contrast sensitivity function.  The frequency of the
-    function increases from left to right, and the contrast increases from
-    top to bottom.  Notice that the grayscale mapping (on the left)
-    faithfully reproduces the function.  The rainbow color mapping (on the
-    right) hides the variation in the low contrast region and appears less
-    smooth in the high-contrast, low-frequency region.}
-  \label{fig:RainbowSpatialContrast}
-\end{figure}
+  The second problem is that the perceptual changes in the colors are not
+  uniform.  The colors appear to change faster in the cyan and yellow
+  regions, which can cause Mach bands in those regions.  The colors appear
+  to change more slowly in the blue, green, and red regions, which creates
+  larger bands of color.  These bands can hide important changes in the
+  underlying data.  Thus, nonuniform perceptual changes simultaneously
+  introduce artifacts and obfuscate real data\lcite{Borland07}.  This is
+  demonstrated in Figure~\ref{fig:RainbowSpatialContrast}.
 
-A third problem with the rainbow color map is that it is sensitive to
-deficiencies in vision.  Roughly 5\% of the population cannot distinguish
-between the red and green colors.  These unfortunate souls cannot
-distinguish many colors considered ``far apart'' in the rainbow color
-map\lcite{Light04}.
+  \begin{figure}
+    \centering
+    \includegraphics[width=1.0in]{images/GrayscaleSpatialContrast}
+    \qquad
+    \includegraphics[width=1.0in]{images/RainbowSpatialContrast}
+    \caption{A spatial contrast sensitivity function.  The frequency of the
+      function increases from left to right, and the contrast increases from
+      top to bottom.  Notice that the grayscale mapping (on the left)
+      faithfully reproduces the function.  The rainbow color mapping (on the
+      right) hides the variation in the low contrast region and appears less
+      smooth in the high-contrast, low-frequency region.}
+    \label{fig:RainbowSpatialContrast}
+  \end{figure}
 
-\begin{figure}
-  \centering
-  \includegraphics[width=2.5in]{images/GrayscaleBar}
-  \caption{The grayscale color map.}
-  \label{fig:GrayscaleColorMap}
-\end{figure}
-Better color maps exist.  A very simple one is the grayscale
-color map shown in Figure~\ref{fig:GrayscaleColorMap}.  Completely devoid
-of any chromaticity, this map relies entirely on luminance to demonstrate
-the numerical value.  Although a very simple map to create and use, this
-map is surprisingly effective as the human visual system is most sensitive
-to changes in luminance\lcite{Mullen85,Ware04}.  The grayscale color map is
-used heavily in the image processing and medical visualization fields.
+  A third problem with the rainbow color map is that it is sensitive to
+  deficiencies in vision.  Roughly 5\% of the population cannot distinguish
+  between the red and green colors.  Viewers with color deficiencies cannot
+  distinguish many colors considered ``far apart'' in the rainbow color
+  map\lcite{Light04}.
 
-\begin{figure}
-  \centering
-  \begin{tabular}{c}
-    \includegraphics[width=2.5in]{images/GrayscaleLocality} \\
-    \includegraphics[width=2.5in]{images/BlackBodyLocality}
-  \end{tabular}
-  \caption{Pixels of the same luminance may look different depending on the
-    surrounding pixels.}
-  \label{fig:SimultaneousContrast}
-\end{figure}
-The grayscale color map also has disadvantages.  One problem is
-that a human's perception of brightness is subject to the brightness of the
-surrounding area.  Thus, when asked to compare the luminance of two objects
-separated by distance and background, human subjects err up to 20\%.
-This effect, demonstrated in Figure~\ref{fig:SimultaneousContrast}, is
-called simultaneous contrast\lcite{Stone05}.  Adding a chromaticity shift
-helps, but does not fix the problem entirely.  A chromatic shift also has
-the possitive side effect of increasing the dynamic range of the color
-map.
+}{
 
-%% Simultaneous contrast still occurs, but the shift in chromaticity can help
-%% resolve that.  Simultaneous color contrast can also occur, but can be
-%% managed by changes in color opponent channels.
+  First, the colors do not follow any natural
+  perceived ordering.  Perceptual experiments show that test subjects will
+  order rainbow colors in numerous different ways\lcite{Ware04}.  Second,
+  perceptual changes in the colors are not uniform.  The colors appear to
+  change faster in the cyan and yellow regions than in the blue, green, and
+  red regions.  These nonuniform perceptual changes simultaneously
+  introduce artifacts and obfuscate real data\lcite{Borland07}.  Third, the
+  colors are sensitive to deficiencies in vision.  Roughly 5\% of the
+  population cannot distinguish between the red and green colors.  Viewers
+  with color deficiencies cannot distinguish many colors considered ``far
+  apart'' in the rainbow color map\lcite{Light04}.
 
-Another problem with grayscale color maps that is of greater concern for
-general purpose scientific visualization is its interference with surface
-shading.  The shading of 3D surfaces based on light sources is of utmost
-importance for perceiving surface shape.  These shading cues are
-composed almost entirely of luminance shifts.  Thus the luminance shift of
-the grayscale color map masks the surface luminance shifts, especially in
-the darker part of the spectrum, as demonstrated in
-Figure~\ref{fig:LuminanceVsShading}.  The problem cannot be corrected
-without a major reduction in the range that the luminance shifts in the color
-map.
+}
+
+\ifthenelse{\boolean{expanded}}{
+  \begin{figure}
+    \centering
+    \includegraphics[width=2.5in]{images/GrayscaleBar}
+    \caption{The grayscale color map.}
+    \label{fig:GrayscaleColorMap}
+  \end{figure}
+
+  Better color maps exist.  A very simple one is the grayscale color map
+  shown in Figure~\ref{fig:GrayscaleColorMap}.  Completely devoid of any
+  chromaticity, this map relies entirely on luminance to demonstrate the
+  numerical value.  Although a very simple map to create and use, this map
+  is surprisingly effective as the human visual system is most sensitive to
+  changes in luminance\lcite{Mullen85,Ware04}.  The grayscale color map is
+  used heavily in the image processing and medical visualization fields.
+
+  \begin{figure}
+    \centering
+    \begin{tabular}{c}
+      \includegraphics[width=2.5in]{images/GrayscaleLocality}
+      \ifthenelse{\boolean{expanded}}{
+        \\
+        \includegraphics[width=2.5in]{images/BlackBodyLocality}
+      }{}
+    \end{tabular}
+    \caption{Pixels of the same luminance may look different depending on the
+      surrounding pixels.}
+    \label{fig:SimultaneousContrast}
+  \end{figure}
+
+  The grayscale color map also has disadvantages.  One problem is that a
+  human's perception of brightness is subject to the brightness of the
+  surrounding area.  Thus, when asked to compare the luminance of two
+  objects separated by distance and background, human subjects err up to
+  20\%\lcite{Ware88}.  This effect, demonstrated in
+  Figure~\ref{fig:SimultaneousContrast}, is called simultaneous
+  contrast\lcite{Stone05}. Adding a chromaticity shift helps, but does not
+  fix the problem entirely.  A chromatic shift also has the possitive side
+  effect of increasing the dynamic range of the color map.
+
+  Another problem with grayscale color maps that is of greater concern for
+  general purpose scientific visualization is its interference with surface
+  shading.  The shading of 3D surfaces based on light sources is of utmost
+  importance for perceiving surface shape.  These shading cues are composed
+  almost entirely of luminance shifts.  Thus the luminance shift of the
+  grayscale color map masks the surface luminance shifts, especially in the
+  darker part of the map, as demonstrated in
+  Figure~\ref{fig:LuminanceVsShading}.  The problem cannot be corrected
+  without a major reduction in the range that the luminance shifts in the
+  color map.
+
+}{
+
+  A very simple color map that is in many ways more effective than the
+  rainbow is the grayscale color map.  This map features all the shades of
+  gray between black and white.  The grayscale color map is used heavily in
+  the image processing and medical visualization fields.  Although a very
+  simple map to create and use, this map is surprisingly effective as the
+  human visual system is most sensitive to changes in
+  luminance\lcite{Mullen85,Ware04}.  However, a problem with using only
+  luminance is that a human's perception of brightness is subject to the
+  brightness of the surrounding area (an effected called simultaneous
+  contrast\lcite{Stone05}).  Consequently, when asked to compare the
+  luminance of two objects separated by distance and background, human
+  subjects err up to 20\%\lcite{Ware88}.  Another problem with grayscale
+  maps and others that rely on large luminance changes is that the
+  luminance shifts interfear with the interpretation of shading on 3D
+  surfaces.  This effect is particularly predominant in the dark regions of
+  the color map.
+
+}
+
+\ifthenelse{\boolean{expanded}}{
 
 \begin{figure}
   \centering
@@ -356,26 +317,43 @@ map.
     vision.}
   \label{fig:IsoluminantColorMap}
 \end{figure}
-Another type of color map that is often suggested for use with 3D surfaces
-is an isoluminant color map such as those demonstrated in
-Figure~\ref{fig:IsoluminantColorMap}.  Somewhat opposite to the grayscale
-map, an isoluminant map maintains a constant (perceptual) luminance and
-relies entirely on chromatic shifts.  An isoluminant color map is
-theoretically ideal for mapping onto shaded surfaces, as is demonstrated in
-Figure~\ref{fig:LuminanceVsShading}.
 
-Isoluminant color maps are not without their flaws, however.  Human
-perception is less sensitive to changes in saturation or hue than changes
-in luminance, especially for high frequency data\lcite{Rogowitz96}.
-Holding the luminance constant also restricts the colors that can be
-represented.  Thus, the isoluminant color map will have a lower fidelity
-than one in which the luminance is allowed to change.  Isoluminant color
-maps also tend to look dull and ugly, so casual users rarely
-choose one over a more vibrant color map such as the rainbow color map.
+}{}
 
-These color maps comprise those most commonly used in the literature and tools
-today.  Other color maps are proposed by Ware\scite{Ware04} as well as
-several others.  Most are similar in spirit to those here with uniform
+\ifthenelse{\boolean{expanded}}{
+
+  A type of color map that is often suggested for use with 3D surfaces is
+  an isoluminant color map such as those demonstrated in
+  Figure~\ref{fig:IsoluminantColorMap}.  Somewhat opposite to the grayscale
+  map, an isoluminant map maintains a constant (perceptual) luminance and
+  relies entirely on chromatic shifts.  An isoluminant color map is
+  theoretically ideal for mapping onto shaded surfaces, as is demonstrated
+  in Figure~\ref{fig:LuminanceVsShading}.
+
+  Isoluminant color maps are not without their flaws, however.  Human
+  perception is less sensitive to changes in saturation or hue than changes
+  in luminance, especially for high frequency data\lcite{Rogowitz96}.
+  Holding the luminance constant also restricts the colors that can be
+  represented.  Thus, the isoluminant color map will have a lower fidelity
+  than one in which the luminance is allowed to change.  Isoluminant color
+  maps also tend to look dull and ugly, so casual users rarely choose one
+  over a more vibrant color map such as the rainbow color map.
+
+}{
+
+  A type of color map often suggested for use with 3D surfaces is an
+  isoluminant color map.  Opposite to the grayscale map, an isoluminant map
+  maintains a constant luminance and relies on chromatic shifts.  An
+  isoluminant color map is theoretically ideal for mapping onto shaded
+  surfaces.  However, human perception is less sensitive to changes in
+  saturation or hue than changes in luminance, espeically for high
+  frequency data\lcite{Rogowitz96}.
+
+}
+
+These color maps comprise those most commonly used in the literature and
+tools today.  Other color maps are proposed by Ware\scite{Ware04} as well
+as several others.  Most are similar in spirit to those here with uniform
 changes in luminance, saturation, hue, or some combination thereof.
 
 \subsection{Color Spaces}
@@ -387,7 +365,8 @@ perceived color can be uniquely represented by a
 of the fact that there are exactly 3 different types of color receptors in
 the human eye.  Limited space prevents more than a few applicable additive
 color spaces from being listed here.  Any textbook on color will provide
-more spaces in more detail\lcite{Stone03,Wyszecki82}.
+more spaces in more detail\ifthenelse{\boolean{expanded}}{}{ with
+  conversions between them}\lcite{Stone03,Wyszecki82}.
 
 The color space most frequently used in computer applications is the \RGB
 color space.  This color space is adopted by many graphics packages such as
@@ -401,81 +380,88 @@ the output medium, the display may have nonlinearities that interfere with
 the blending and interpolation of colors\lcite{Stone03}.  When computing
 physical light effects, it is best to use a color space defined by the
 physical properties of light.  \XYZ is a widely used color space defined by
-physical light spectra.  This conversion can be particularly difficult due
-to differences between displays that make the color definition somewhat
-ambiguous\lcite{Fortner97}.  For the purposes of this paper, we will assume
-the \RGB space conforms to the canonical monitor defined by the sRGB
-specification, a standard of the International Electrotechnical Commission
-(IEC 61966-2-1) that is widely used by many color management
-programs\lcite{Stone03}.  The conversion from the sRGB components to \RGB
-components with physically linear properties is given in Equation~\ref{eqn:sRGB2linearRGB}.
+physical light spectra.
+\ifthenelse{\boolean{expanded}}{
+  This conversion can be particularly difficult due to differences between
+  displays that make the color definition somewhat
+  ambiguous\lcite{Fortner97}.  For the purposes of this paper, we will
+  assume the \RGB space conforms to the canonical monitor defined by the
+  sRGB specification, a standard of the International Electrotechnical
+  Commission (IEC 61966-2-1) that is widely used by many color management
+  programs\lcite{Stone03}.  The conversion from the sRGB components to \RGB
+  components with physically linear properties is given in
+  Equation~\ref{eqn:sRGB2linearRGB}.
 
-\begin{equation}
-  \begin{split}
-    R_\mathrm{Linear} &=
-    \begin{cases}
-      \left((R_\mathrm{sRGB}+0.055)/1.055\right)^{2.4}
-      & \text{if $R_\mathrm{Linear} > 0.04045$} \\
-      R_{\mathrm{sRGB}}/12.92 & \text{otherwise}
-    \end{cases} \\
-    G_\mathrm{Linear} &=
-    \begin{cases}
-      \left((G_\mathrm{sRGB}+0.055)/1.055\right)^{2.4}
-      & \text{if $G_\mathrm{Linear} > 0.04045$} \\
-      G_{\mathrm{sRGB}}/12.92 & \text{otherwise}
-    \end{cases} \\
-    B_\mathrm{Linear} &=
-    \begin{cases}
-      \left((B_\mathrm{sRGB}+0.055)/1.055\right)^{2.4}
-      & \text{if $B_\mathrm{Linear} > 0.04045$} \\
-      B_{\mathrm{sRGB}}/12.92 & \text{otherwise}
-    \end{cases} 
-  \end{split}
-  \label{eqn:sRGB2linearRGB}
-\end{equation}
+  \begin{equation}
+    \begin{split}
+      R_\mathrm{Linear} &=
+      \begin{cases}
+        \left((R_\mathrm{sRGB}+0.055)/1.055\right)^{2.4}
+        & \text{if $R_\mathrm{Linear} > 0.04045$} \\
+        R_{\mathrm{sRGB}}/12.92 & \text{otherwise}
+      \end{cases} \\
+      G_\mathrm{Linear} &=
+      \begin{cases}
+        \left((G_\mathrm{sRGB}+0.055)/1.055\right)^{2.4}
+        & \text{if $G_\mathrm{Linear} > 0.04045$} \\
+        G_{\mathrm{sRGB}}/12.92 & \text{otherwise}
+      \end{cases} \\
+      B_\mathrm{Linear} &=
+      \begin{cases}
+        \left((B_\mathrm{sRGB}+0.055)/1.055\right)^{2.4}
+        & \text{if $B_\mathrm{Linear} > 0.04045$} \\
+        B_{\mathrm{sRGB}}/12.92 & \text{otherwise}
+      \end{cases} 
+    \end{split}
+    \label{eqn:sRGB2linearRGB}
+  \end{equation}
 
-Given \RGB values that are linear with respect to physical light intensity,
-conversion to \XYZ space is a simple linear transformation.  The
-transformation is dependent on the characteristics of the display for which
-the \RGB space is defined, but the sRGB specification yeilds the one in
-Equation~\ref{eqn:rgb2xyz}.
+  Given \RGB values that are linear with respect to physical light intensity,
+  conversion to \XYZ space is a simple linear transformation.  The
+  transformation is dependent on the characteristics of the display for which
+  the \RGB space is defined, but the sRGB specification yeilds the one in
+  Equation~\ref{eqn:rgb2xyz}.
 
-\begin{equation}
-  [X \quad Y \quad Z] = [R \quad G \quad B]
-  \begin{bmatrix}
-    0.4124 & 0.2126 & 0.0193 \\
-    0.3576 & 0.7152 & 0.1192 \\
-    0.1805 & 0.0722 & 0.9505
-  \end{bmatrix}
-  \label{eqn:rgb2xyz}
-\end{equation}
+  \begin{equation}
+    [X \quad Y \quad Z] = [R \quad G \quad B]
+    \begin{bmatrix}
+      0.4124 & 0.2126 & 0.0193 \\
+      0.3576 & 0.7152 & 0.1192 \\
+      0.1805 & 0.0722 & 0.9505
+    \end{bmatrix}
+    \label{eqn:rgb2xyz}
+  \end{equation}
+}{}
 
 There is a nonlinear relationship between light intensity and color
 perception.  When defining a color map, we are more
 interested in how a color is perceived than how it is formed.  In these
 cases, it is better to use a color map based on how humans perceive color.
 \Lab and \Luv are two common spaces.  The choice between the two is fairly
-arbitrary; this paper uses \Lab.  The conversion from \XYZ to \Lab is given
-in Equation~\ref{eqn:xyz2lab}.
+arbitrary; this paper uses \Lab.
+\ifthenelse{\boolean{expanded}}{
+  The conversion from \XYZ to \Lab is given
+  in Equation~\ref{eqn:xyz2lab}.
 
-\begin{equation}
-  \begin{gathered}
-    \begin{aligned}
-      L* &= 116 \left[ \operatorname{f}(Y/Y_n) - 16/116 \right] \\
-      a* &=
-        500 \left[ \operatorname{f}(X/X_n) - \operatorname{f}(Y/Y_n) \right] \\
-      b* &=
-        200 \left[ \operatorname{f}(X/X_n) - \operatorname{f}(Y/Y_n) \right] \\
-    \end{aligned} \\
-    \operatorname{f}(x) \equiv
-    \begin{cases}
-      x^{1/3}          & \text{if $x > 0.008856$} \\
-      7.787 x + 16/116 & \text{if $x \leq 0.008856$}
-    \end{cases} \\
-    [X_n \quad Y_n \quad Z_n] \text{ is a reference white value}
-  \end{gathered}
-  \label{eqn:xyz2lab}
-\end{equation}
+  \begin{equation}
+    \begin{gathered}
+      \begin{aligned}
+        L* &= 116 \left[ \operatorname{f}(Y/Y_n) - 16/116 \right] \\
+        a* &=
+          500 \left[ \operatorname{f}(X/X_n) - \operatorname{f}(Y/Y_n) \right] \\
+        b* &=
+          200 \left[ \operatorname{f}(X/X_n) - \operatorname{f}(Y/Y_n) \right] \\
+      \end{aligned} \\
+      \operatorname{f}(x) \equiv
+      \begin{cases}
+        x^{1/3}           & \text{if $x > 0.008856$} \\
+        7.787 x + 16/116 & \text{if $x \leq 0.008856$}
+      \end{cases} \\
+      [X_n \quad Y_n \quad Z_n] \text{ is a reference white value}
+    \end{gathered}
+    \label{eqn:xyz2lab}
+  \end{equation}
+}{}
 
 \Lab is an approximation of how humans perceive light.  The Euclidean
 distance between two points is the approximate perceived difference between
@@ -499,10 +485,9 @@ previously\lcite{Fortner97,Levkowitz92,Light04}.
 \item The map has a maximal perceptual resolution.
 \item Interference with the shading of 3D surfaces is minimal.
 \item The map is not sensitive to vision deficiencies.
-\item The order of the colors should be natural and intuitively the same
-  for all people.
-\item The perceptual interpolation matches the underlying scalars the map
-  represents.
+\item The order of the colors should be intuitively the same for all
+  people.
+\item The perceptual interpolation matches the underlying scalars of the map.
 \end{itemize}
 
 The reasoning behind most of these requirements is self explanatory.  The
@@ -524,86 +509,105 @@ visualization products and generating images.
 %   colors.
 % \end{itemize}
 
-Several of these requirements are contradictory, making the choice of a
-general purpose color map difficult.  All of the examples in
-Section~\ref{sec:PreviousWork:ColorMaps} excel in some of the requirements,
-but fail completely in one or more of the others.  It is impossible to have
-a color map that performs perfectly against all of the requirements.  Our color
-map must be a compromise that works reasonably well in all areas.
-
+\ifthenelse{\boolean{expanded}}{
+  Several of these requirements are contradictory, making the choice of a
+  general purpose color map difficult.  All of the examples in
+  Section~\ref{sec:PreviousWork:ColorMaps} excel in some of the requirements,
+  but fail completely in one or more of the others.  It is impossible to have
+  a color map that performs perfectly against all of the requirements.  Our color
+  map must be a compromise that works reasonably well in all areas.
+}{}
 
 \section{Color Map Design}
 \label{sec:ColorMapDesign}
 
 There are many color maps in existence today, but very few of them satisfy
 all of the requirements listed in Section~\ref{sec:ColorMapRequirements}.
-For inspiration, I turn to the field of cartography.  People
+For inspiration, look at the field of cartography.  People
 have been making maps for thousands of years, and throughout this history
 there has been much focus on both the effectiveness of
 conveying information as well as the aesthetics of the design.
-
 Brewer\scite{Brewer05} provides excellent advice for designing cartographic
 color maps and many well-designed examples.\footnote{Brewer's color maps
 are also available on her web site:
-\href{http://www.colorbrewer.org}{www.colorbrewer.org}.} Brewer divides her
-color maps into three classes: qualitative, sequential, and diverging.
-Examples of these color maps are shown in Figure~\ref{fig:BrewerExamples}.
+\href{http://www.colorbrewer.org}{www.colorbrewer.org}.}
 
-\begin{figure}
-  \centering
-  \subfigure[Qualitative]{\includegraphics{images/ColorMapsQualitative}}
-  \quad
-  \subfigure[Sequential]{\includegraphics{images/ColorMapsSequential}}
-  \quad
-  \subfigure[Diverging]{\includegraphics{images/ColorMapsDiverging}}
-  \caption{Examples of color maps from Brewer\scite{Brewer05}.}
-  \label{fig:BrewerExamples}
-\end{figure}
+\ifthenelse{\boolean{expanded}}{
 
-The qualitative color maps (also known as nominal color maps\lcite{Ware04})
-are used to represent a collection of discrete, unordered classes.  Since
-the colors have no ordering (by design), they are not appropriate for
-mapping a scalar variable.
+  \begin{figure}
+    \centering
+    \subfigure[Qualitative]{\includegraphics{images/ColorMapsQualitative}}
+    \quad
+    \subfigure[Sequential]{\includegraphics{images/ColorMapsSequential}}
+    \quad
+    \subfigure[Diverging]{\includegraphics{images/ColorMapsDiverging}}
+    \caption{Examples of color maps from Brewer\scite{Brewer05}.}
+    \label{fig:BrewerExamples}
+  \end{figure}
 
-The sequential color maps (also known as ordinal\lcite{Ware04} or
-saturation\lcite{Rheingans99} color maps) are (nearly) monochromatic.  They
-range from a heavily saturated color to various levels of unsaturation.
-Luminance is also often increased as saturation is decreased so that the
-color map terminates in a color at or close to white.  The monotonic nature
-of the saturation level maps well to a scalar value.
-% Sequential maps are
-% usually oriented such that the most saturated color represents the lowest
-% scalar value whereas the more luminant white represents the highest scalar
-% value.  However, the color map, which has a limited range of luminance, can
-% sometimes be flipped.  For example, if a red or orange sequential color map
-% represented temperature, it would be more natural to represent the highest
-% temperature with the most saturated color.
+  Brewer divides her color maps into three classes: qualitative, sequential,
+  and diverging.  Examples of these color maps are shown in
+  Figure~\ref{fig:BrewerExamples}.  The qualitative color maps (also known as
+  nominal color maps\lcite{Ware04}) are used to represent a collection of
+  discrete, unordered classes.  Since the colors have no ordering (by
+  design), they are not appropriate for mapping a scalar variable.
 
-The diverging color maps (also known as ratio\lcite{Ware04},
-bipolar\lcite{Spence01}, or double-ended\lcite{Rheingans99}) have two major
-color components.  The map transitions from one color component to the
-other by passing through an unsaturated color (white or yellow).  Diverging
-color maps are typically used to represent a scalar with a significant
-value at or near the median.  For example, a color map for elevation could
-put sea level at white with below sea level in blue and above sea level in
-tan\lcite{Tufte97}.  The ordering of the colors is usually based on the
-context within which they are used.
+  The sequential color maps (also known as ordinal\lcite{Ware04} or
+  saturation\lcite{Rheingans99} color maps) are (nearly) monochromatic.  They
+  range from a heavily saturated color to various levels of unsaturation.
+  Luminance is also often increased as saturation is decreased so that the
+  color map terminates in a color at or close to white.  The monotonic nature
+  of the saturation level maps well to a scalar value.
+  % Sequential maps are
+  % usually oriented such that the most saturated color represents the lowest
+  % scalar value whereas the more luminant white represents the highest scalar
+  % value.  However, the color map, which has a limited range of luminance, can
+  % sometimes be flipped.  For example, if a red or orange sequential color map
+  % represented temperature, it would be more natural to represent the highest
+  % temperature with the most saturated color.
 
-Sequential color maps are clearly appropriate for scientific visualization.
-Their monotonic nature maps well to scalar values.  Diverging color maps
-are a less obvious choice.  We cannot expect there to be some significant
-median value that the diverging color map is designed to highlight.
+  The diverging color maps (also known as ratio\lcite{Ware04},
+  bipolar\lcite{Spence01}, or double-ended\lcite{Rheingans99}) have two major
+  color components.  The map transitions from one color component to the
+  other by passing through an unsaturated color (white or yellow).  Diverging
+  color maps are typically used to represent a scalar with a significant
+  value at or near the median.  For example, a color map for elevation could
+  put sea level at white with below sea level in blue and above sea level in
+  tan\lcite{Tufte97}.  The ordering of the colors is usually based on the
+  context within which they are used.
 
-However, diverging color maps can better satisfy the requirements given in
-Section~\ref{sec:ColorMapRequirements} than their sequential counterparts.
-First, the more colorful nature of the diverging color map can be more
-aesthetically pleasing.  Second, the diverging color map can have up to
-twice the perceptual resolution of the sequential color map without
-sacrificing the requirements of surface shading or losing viewers
-with dichromatic vision.  Furthermore, the diverging color map visually
-divides scalar values into three logical regions: low, midrange, and high
-values.  These regions provide more visual cues that are helpful for
-understanding data.
+  Sequential color maps are clearly appropriate for scientific visualization.
+  Their monotonic nature maps well to scalar values.  Diverging color maps
+  are a less obvious choice.  We cannot expect there to be some significant
+  median value that the diverging color map is designed to highlight.
+
+  However, diverging color maps can better satisfy the requirements given in
+  Section~\ref{sec:ColorMapRequirements} than their sequential counterparts.
+  First, the more colorful nature of the diverging color map can be more
+  aesthetically pleasing.  Second, the diverging color map can have up to
+  twice the perceptual resolution of the sequential color map without
+  sacrificing the requirements of surface shading or losing viewers
+  with dichromatic vision.  Furthermore, the diverging color map visually
+  divides scalar values into three logical regions: low, midrange, and high
+  values.  These regions provide more visual cues that are helpful for
+  understanding data.
+
+}{ % ifthenelse expanded
+
+  This paper is most interested in the diverging class of color maps (also
+  known as ratio\lcite{Ware04}, bipolar\lcite{Spence01}, or
+  double-ended\lcite{Rheingans99}).  Diverging color maps have two major
+  color components.  The map transitions from one color component to the
+  other by passing through an unsaturated color (white or yellow).
+
+  The original design of diverging color maps is to show data with a
+  significant value in the middle of the range.  However, our group has also
+  found it useful to use a diverging color map on a wide variety of scalar
+  fields because it divides the scalar values into three logical regions:
+  low, midrange, and high values.  These regions provide visual cues that
+  are helpful for understanding data.
+
+}
 
 What diverging color maps lack in general is a natural ordering of colors.
 To impose a color ordering, we carefully chose two colors that most
@@ -632,7 +636,7 @@ with each.    If we characterize our color map with function $\cvec{c}(x)$
 that takes scalar value $x$ and returns a color vector, the color map is
 perceptually uniform if
 \begin{equation}
-  \frac{\DeltaE\{\cvec{c}(x),\cvec{c}(x+\Delta{x})}{\Delta{}x}
+  \frac{\DeltaE\{\cvec{c}(x),\cvec{c}(x+\Delta{x})\}}{\Delta{}x}
   \label{eq:StrictContinuousDE}
 \end{equation}
 is constant for all valid $x$.
@@ -643,7 +647,7 @@ points in \Lab space that are not in a line.  However, it is possible to
 ensure that the rate of change is constant.  That is,
 \begin{equation}
   \lim_{\Delta{}x \rightarrow 0}{
-    \frac{\DeltaE\{\cvec{c}(x),\cvec{c}(x+\Delta{x})}{\Delta{}x} }
+    \frac{\DeltaE\{\cvec{c}(x),\cvec{c}(x+\Delta{x})\}}{\Delta{}x} }
   \label{eq:ContinuousDE}
 \end{equation}
 is constant for all valid $x$.  This relaxed property is sufficient for
@@ -651,15 +655,20 @@ describing a perceptually linear color map so long as we make sure that the
 curve does not return to any set of colors.
 
 We can resolve Equation~\ref{eq:ContinuousDE} a bit by applying the \DeltaE
-operation and splitting up the $\cvec{c}$ function into its components.
+operation and splitting up the $\cvec{c}$ function into its components
+($\DeltaE\{\cvec{c_1},\cvec{c_2}\}$ $=\lVert\cvec{c_1}-\cvec{c_2}\rVert$
+$=\sqrtsign{\sum_i({c_1}_i-{c_2}_i)^2}$).
+
 \begin{equation}
   \begin{split}
-    { \lim_{\Delta x \rightarrow 0}
-      \frac{\left\lVert \cvec{c}(x+\Delta x) - \cvec{c}(x) \right\rVert}
-      {\Delta x}} \\
-    { \lim_{\Delta x \rightarrow 0}
-      \left\lVert \frac{\cvec{c}(x+\Delta x)- \cvec{c}(x)}
-	  {\Delta x} \right\rVert } \\
+    \ifthenelse{\boolean{expanded}}{
+      { \lim_{\Delta x \rightarrow 0}
+        \frac{\left\lVert \cvec{c}(x+\Delta x) - \cvec{c}(x) \right\rVert}
+             {\Delta x}} \\
+      { \lim_{\Delta x \rightarrow 0}
+        \left\lVert \frac{\cvec{c}(x+\Delta x)- \cvec{c}(x)}
+	            {\Delta x} \right\rVert } \\
+    }{}
     { \lim_{\Delta x \rightarrow 0}
       \sqrtsign{ \sum_i \left( \frac
 	  {\operatorname{c}_i(x+\Delta x)
@@ -676,16 +685,17 @@ operation and splitting up the $\cvec{c}$ function into its components.
 
 In the final form of Equation~\ref{eqn:dE_limit}, we can clearly see that
 the limit is the definition of a derivative.  So replacing the limit with a
-derivative, we get the following.
+derivative, we get\ifthenelse{\boolean{expanded}}{ the following.
 
 \begin{equation}
   \sqrtsign{\sum_i (\operatorname{c}_{i}'(x))^2}
   \label{eqn:dE_comp_dif}
 \end{equation}
 
-With some abuse of notation, let us declare $\cvec{c}'(x)$ as the piecewise
-derivative of $\cvec{c}(x)$.  Using this notation,
-Equation~\ref{eqn:dE_comp_dif} clearly resolves to the following.
+}{$\sqrtsign{\sum_i (\operatorname{c}_{i}'(x))^2}$.}  With some abuse of
+notation, let us declare $\cvec{c}'(x)$ as the piecewise derivative of
+$\cvec{c}(x)$.  Using this notation, the constant rate of change
+requirement reduces to the following.
 
 \begin{equation}
   \left\lVert \cvec{c}'(x) \right\rVert
@@ -711,16 +721,17 @@ in Figure~\ref{fig:LinearMachBands}.
   \label{fig:LinearMachBands}
 \end{figure}
 
-Rather than have a sharp transition in the luminance, we require a
-``leveling off'' of the luminance as the color map approaches white.  To
-compensate, the chromaticity must change more dramatically in this part of
-the color map.  A method for designing this type of color map is defined in
-the next section.
+Having this sharp transition is fine, perhaps even desirable, when the
+white value has special significance, but to use the divergent color map in
+general situations we require a ``leveling off'' of the luminance as the
+color map approaches white.  To compensate, the chromaticity must change
+more dramatically in this part of the color map.  A method for designing
+this type of color map is defined in the next section.
 
 \subsection{\Msh Color Space}
 \label{sec:MshColorSpace}
 
-To simplify the design of continuous, diverging color maps, I derive a new
+To simplify the design of continuous, diverging color maps, we derive a new
 color space called \Msh.  \Msh is basically a polar form of the \Lab color
 space.  $M$ is the magnitude of the vector, $s$ (the saturation) is the
 angle away from the $L*$ axis, and $h$ (the hue) is the angle of the
@@ -733,18 +744,16 @@ color spaces is straightforward.
     s &= \arccos \frac{L*}{M} \\
     h &= \arctan \frac{b*}{a*}
   \end{split}
-  \label{eqn:LabToMsh}
-\end{equation}
-
-\begin{equation}
+  \qquad\qquad
   \begin{split}
     L* &= M \cos s \\
     a* &= M \sin s \cos h \\
     b* &= M \sin s \sin h
   \end{split}
-  \label{eqn:MshToLab}
+  \label{eqn:LabMshConvert}
 \end{equation}
 
+\ifthenelse{\boolean{expanded}}{
 Note that \Msh, like all polar coordinates, has a pole in which one of the
 coordinates is ill defined.  Specifically, when $s = 0$ (the color is on
 the $L*$ axis), $h$ has no effect.  This pole was chosen because it
@@ -760,6 +769,7 @@ naturally levels out while the chromaticity changes faster.
 % not be noticeable as it coincides with a singularity in perception.  In
 % fact, we can make a jump in the value of the hue at that point without it
 % being noticeable.
+}{}
 
 An ideal way to build a diverging color map in \Msh space is to start at
 one color, linearly reduce $s$ to 0 (to get white), flip $h$ to the
@@ -777,69 +787,78 @@ behaves in this way in \Lab space as
 where $M$ and $h$ are constant and $\operatorname{s}(x)$ is a linear
 function of slope $s_m$.
 
-Now we can plug Equation~\ref{eqn:s_linear} into Equation~\ref{eqn:dE} and
-resolve.
+To show that linear saturation changes in \Msh are perceptually linear, we
+plug Equation~\ref{eqn:s_linear} into Equation~\ref{eqn:dE} and resolve to
+show that perceptual changes are indeed constant.
 
 \begin{equation}
   \begin{gathered}
     \left\lVert M s_m \sin\operatorname{s}(x) \quad
         M s_m \cos\operatorname{s}(x) \cos h \quad
         M s_m \cos\operatorname{s}(x) \sin(h) \right\rVert \\
-    \sqrtsign{ M^2 s_m^2 \left( \sin^2 \operatorname{s}(x)
+    \ifthenelse{\boolean{expanded}}{
+      \sqrtsign{ M^2 s_m^2 \left( \sin^2 \operatorname{s}(x)
         + \cos^2 \operatorname{s}(x) \cos^2 h
         + \cos^2 \operatorname{s}(x) \sin^2 h \right) } \\
+    }{}
     \sqrtsign{ M^2 s_m^2 \left( \sin^2 \operatorname{s}(x)
         + \cos^2 \operatorname{s}(x) \left( \cos^2 h
           + \sin^2 h \right) \right) } \\
-    \sqrtsign{ M^2 s_m^2 \left( \sin^2 \operatorname{s}(x)
+    \ifthenelse{\boolean{expanded}}{
+      \sqrtsign{ M^2 s_m^2 \left( \sin^2 \operatorname{s}(x)
         + \cos^2 \operatorname{s}(x) \right) } \\
+    }{}
     M s_m
     \label{eqn:s_linear_uniform}
   \end{gathered}
 \end{equation}
 
 Clearly Equation~\ref{eqn:s_linear_uniform} resolves to a constant and
-therefore meets our criterion for a ``uniform'' color space.  There is still
-a discontinuity when we flip $h$.  However, because this discontinuous
-change of hue occurs when there is no saturation, it is not noticeable.
-And unlike the piecewise linear interpolation in \Lab space, this piecewise
-linear interpolation in \Msh space results in a smooth change in luminance
-throughout the entire color map, as evidenced in Figure~\ref{fig:s_plot}.
+therefore meets our criterion for a ``uniform'' color space.  There is
+still a discontinuity when we flip $h$.  However, because this
+discontinuous change of hue occurs when there is no saturation, it is not
+noticeable.  And unlike the piecewise linear interpolation in \Lab space,
+this piecewise linear interpolation in \Msh space results in a smooth
+change in luminance throughout the entire color
+map\ifthenelse{\boolean{expanded}}{, as evidenced in
+  Figure~\ref{fig:s_plot}}{}.
 
+\ifthenelse{\boolean{expanded}}{
 \begin{figure}
   \centering
-  \includegraphics{images/LinearMshPlot}
+  \ifthenelse{\boolean{expanded}}{
+    \includegraphics{images/LinearMshPlot}
+  }{
+    \includegraphics[scale=0.75]{images/LinearMshPlot}
+  }
   \caption{Plot of $L*$, $a*$, and $b*$ coordinates when interpolating $s$
     linearly in \Msh space.  Dashed lines show effect when colors are
     ``clipped'' to the gamut of a typical monitor.}
   \label{fig:s_plot}
 \end{figure}
+}{}
 
-Although the color map shape shown in Figure~\ref{fig:s_plot} has good
-visual properties, it does not conform well to the gamut of colors
-displayable by a video monitor.  When trying to display many of these
-colors, you must ``clip'' to what can be represented (demonstrated by the
-dashed lines).  Notice the harsh bends of the intensity ($L*$) that occur
-near the middle.  These bends can lead to Mach banding.  We can correct for
-this problem by reducing $M$ at each end, but this adds the problem that
-colors will change faster near white when $M$ is larger.  Dropping the $M$
-for the middle white value to be consistent will make the color changes
-consistent again, but at the expense of the brightness of the color map.
-In practice it is difficult to choose a single value for $M$ that yields
-colors all within a typical display gamut and still provides pleasingly
-bright colors.
+A common problem we run into with interpolating in \Msh space is that the
+interpolated colors often leave the gamut of colors displayable by a video
+monitor.  When trying to display many of these colors, you must ``clip'' to
+what can be represented.  This clipping can lead to noticable artifacts in
+the color map.
 
-\sticky{The usefulness of the spin is somewhat diminished by the fact that
-  I am also lowering the luminance of white from that shown in
-  Figure~\ref{fig:s_plot}.  However, I had to do that to make the effects
-  of the gamut clipping noticeable.}
+We have two techniques for picking interpolation points.  The first is to
+uniformly reduce the $M$ of each points.  Dropping $M$ will bring all the
+interpolated colors toward the gamut of displayable colors.
 
-We can restore the uniformity of the color map again by adding some
-``spin'' to the hue.  Even though $h$ is interpolated linearly, the changes
-have a greater effect on the color when $s$ is larger, which can
-counterbalance the growing $M$ (although a large change can still cause a
-noticeable pointing of the luminance).  The next section describes how to
-choose an appropriate hue change.
+Although you will always be able to pull all the colors within the display
+gamut by reducing $M$, it usually results in colors that are too dim.
+Thus, a second technique we can do is to allow $M$ to be smaller for the
+endpoints than for the middle white color.  This breaks the uniformity of
+the color map because a smaller $M$ will mean that a change in $s$ will
+have a smaller effect.  We can restore the uniformity of the color map
+again by adding some ``spin'' to the hue.  Even though $h$ is interpolated
+linearly, the changes have a greater effect on the color when $s$ is
+larger, which can counterbalance the growing $M$ (although a large change
+can still cause a noticeable pointing of the luminance).  The next section
+describes how to choose an appropriate hue change.
 
 \subsection{Choosing a Hue Spin}
 \label{sec:ChoosingAHueSpin}
@@ -855,7 +874,11 @@ conveniently define the rate of change.)
 
 \begin{figure}
   \centering
-  \includegraphics[height=2in]{images/MshDeltaMovements}
+  \ifthenelse{\boolean{expanded}}{
+    \includegraphics[height=2in]{images/MshDeltaMovements}
+  }{
+    \includegraphics[height=1.5in]{images/MshDeltaMovements}
+  }
   \caption{A small linear movement in \Msh space}
   \label{sec:LinearMshMovement}
 \end{figure}
@@ -877,12 +900,12 @@ unacceptable.  However we can get pretty close to constant by choosing
 $h_u$ so that Equation~\ref{eq:DeltaEforLinearMshMovement} is equal for
 $\cvec{c}_s$ and $\cvec{c}_u$.
 
-\begin{multline}
+\begin{equation}
   \sqrt{(M_m \Delta x)^2 + (s_m \Delta x M_s)^2 + (h_m \Delta x M_s \sin s_s)^2}
-  \\ =
+  =
   \sqrt{(M_m \Delta x)^2 + (s_m \Delta x M_u)^2}
   \label{eqn:hm_criterion}
-\end{multline}
+\end{equation}
 
 Note that the right side of Equation~\ref{eqn:hm_criterion} is missing a
 term because it evaluates to 0 for the unsaturated color.  We can safely
@@ -890,10 +913,12 @@ get rid of the square roots because there is a sum of square real numbers
 inside them both.
 
 \begin{align}
-    (M_m \Delta x)^2 + (s_m M_s)^2 \quad & \notag \\
+    (M_m \Delta x)^2 + (s_m M_s)^2 
     + (h_m M_s \sin s_s)^2 &= (M_m \Delta x)^2 + (s_m M_u)^2 \notag \\
     h_m^2 M_s^2 \sin^2 s_s &= s_m^2 (M_u^2 - M_s^2) \notag \\
-    h_m^2 &= \frac{s_m^2 (M_u^2 - M_s^2)}{M_s^2 \sin^2 s_s} \notag \\
+    \ifthenelse{\boolean{expanded}}{
+      h_m^2 &= \frac{s_m^2 (M_u^2 - M_s^2)}{M_s^2 \sin^2 s_s} \notag \\
+    }{}
     h_m &= \pm \frac{s_m \sqrt{M_u^2 - M_s^2}}{M_s \sin s_s}
     \label{eqn:adjusted_hm}
 \end{align}
@@ -911,7 +936,9 @@ different value for each of the saturated colors used in the diverging
 color map.  The direction in which the hue is ``spun'' is unimportant with
 regard to perception.  I usually adjust the hue to be away from 0 (except
 in the purple hues) because it provides slightly more aesthetically
-pleasing results.  Figure~\ref{fig:AdjustHue} gives a simple algorithm for
+pleasing results.
+\ifthenelse{\boolean{expanded}}{
+Figure~\ref{fig:AdjustHue} gives a simple algorithm for
 adjusting the hue.
 
 \begin{figure}
@@ -933,10 +960,16 @@ adjusting the hue.
     unsaturated color in \Msh space.}
   \label{fig:AdjustHue}
 \end{figure}
+}{}
 
+\ifthenelse{\boolean{expanded}}{
 \begin{figure}
   \centering
-  \includegraphics{images/HueSpinPlot}
+  \ifthenelse{\boolean{expanded}}{
+    \includegraphics{images/HueSpinPlot}
+  }{
+    \includegraphics[scale=0.75]{images/HueSpinPlot}
+  }
   \caption{Plot of $L*$, $a*$, and $b*$ coordinates when interpolating
     piecewise linearly in \Msh space and applying a hue spin.  Notice the
     amplified bend in the $a*$ and $b*$ curves, which determine hue.}
@@ -947,7 +980,9 @@ Figure~\ref{fig:hue_spin_plot} shows the effects of applying a hue spin.
 The plot is smooth, perceptually uniform, and comparable to the plot given
 in Figure~\ref{fig:s_plot}.  In addition, the hue spin allows the entire
 curve to remain in the gamut of displayable colors.
+}{}
 
+\ifthenelse{\boolean{expanded}}{
 
 \subsection{Interpolating Control Points}
 \label{sec:InterpolatingControlPoints}
@@ -1001,7 +1036,7 @@ make it easier for users to define.
 The \proc{InterpolateColor} algorithm works as follows.  The colors are
 first converted to \Msh.\footnote{The implementations of \proc{RGB2Msh} and
 \proc{Msh2RGB} can be derived from Equations \ref{eqn:rgb2xyz},
-\ref{eqn:xyz2lab}, \ref{eqn:LabToMsh}, and \ref{eqn:MshToLab}.}  To enforce
+\ref{eqn:xyz2lab}, and \ref{eqn:LabMshConvert}.}  To enforce
 a diverging color map, white is added between the two control points
 (lines~\ref{code:InterpolateColor:AddWhiteBegin}--\ref{code:InterpolateColor:AddWhiteEnd}).
 The middle white points is not added if either color is already unsaturated
@@ -1052,6 +1087,7 @@ demonstrated in Figure~\ref{fig:ColorMapInteraction}.
   \label{fig:ColorMapInteraction}
 \end{figure}
 
+}{} % \ifthenelse expended (removing control point interpolation from submitted).
 
 \section{Results}
 \label{sec:Results}
@@ -1066,41 +1102,41 @@ demonstrated in Figure~\ref{fig:ColorMapInteraction}.
 
 \begin{figure*}
   \centering
-  \begin{tabular}{c@{\;}c@{\;}c@{\;}c@{\;}c@{\;}c}
-    \includegraphics[width=1.1in]{images/Cool2WarmSpatialContrast} &
-    \includegraphics[width=1.1in]{images/RainbowSpatialContrast} &
-    \includegraphics[width=1.1in]{images/GrayscaleSpatialContrast} &
-    \includegraphics[width=1.1in]{images/BlackBodySpatialContrast} &
-    \includegraphics[width=1.1in]{images/Green2RedSpatialContrast} &
-    \includegraphics[width=1.1in]{images/Blue2YellowSpatialContrast} \\
+  \begin{tabular}{c@{\,}c@{\,}c@{\,}c@{\,}c@{\,}c}
+    \includegraphics[width=0.16\textwidth]{images/Cool2WarmSpatialContrast} &
+    \includegraphics[width=0.16\textwidth]{images/RainbowSpatialContrast} &
+    \includegraphics[width=0.16\textwidth]{images/GrayscaleSpatialContrast} &
+    \includegraphics[width=0.16\textwidth]{images/BlackBodySpatialContrast} &
+    \includegraphics[width=0.16\textwidth]{images/Green2RedSpatialContrast} &
+    \includegraphics[width=0.16\textwidth]{images/Blue2YellowSpatialContrast} \\
 
-    \includegraphics[width=1.1in]{images/Cool2WarmLfSensitivity} &
-    \includegraphics[width=1.1in]{images/RainbowLfSensitivity} &
-    \includegraphics[width=1.1in]{images/GrayscaleLfSensitivity} &
-    \includegraphics[width=1.1in]{images/BlackBodyLfSensitivity} &
-    \includegraphics[width=1.1in]{images/Green2RedLfSensitivity} &
-    \includegraphics[width=1.1in]{images/Blue2YellowLfSensitivity} \\
+    \includegraphics[width=0.16\textwidth]{images/Cool2WarmLfSensitivity} &
+    \includegraphics[width=0.16\textwidth]{images/RainbowLfSensitivity} &
+    \includegraphics[width=0.16\textwidth]{images/GrayscaleLfSensitivity} &
+    \includegraphics[width=0.16\textwidth]{images/BlackBodyLfSensitivity} &
+    \includegraphics[width=0.16\textwidth]{images/Green2RedLfSensitivity} &
+    \includegraphics[width=0.16\textwidth]{images/Blue2YellowLfSensitivity} \\
 
-    \includegraphics[width=1.1in]{images/Cool2WarmHfNoise} &
-    \includegraphics[width=1.1in]{images/RainbowHfNoise} &
-    \includegraphics[width=1.1in]{images/GrayscaleHfNoise} &
-    \includegraphics[width=1.1in]{images/BlackBodyHfNoise} &
-    \includegraphics[width=1.1in]{images/Green2RedHfNoise} &
-    \includegraphics[width=1.1in]{images/Blue2YellowHfNoise} \\
+    \includegraphics[width=0.16\textwidth]{images/Cool2WarmHfNoise} &
+    \includegraphics[width=0.16\textwidth]{images/RainbowHfNoise} &
+    \includegraphics[width=0.16\textwidth]{images/GrayscaleHfNoise} &
+    \includegraphics[width=0.16\textwidth]{images/BlackBodyHfNoise} &
+    \includegraphics[width=0.16\textwidth]{images/Green2RedHfNoise} &
+    \includegraphics[width=0.16\textwidth]{images/Blue2YellowHfNoise} \\
 
-    \includegraphics[width=1.1in]{images/Cool2WarmDeuteranope} &
-    \includegraphics[width=1.1in]{images/RainbowDeuteranope} &
-    \includegraphics[width=1.1in]{images/GrayscaleDeuteranope} &
-    \includegraphics[width=1.1in]{images/BlackBodyDeuteranope} &
-    \includegraphics[width=1.1in]{images/Green2RedDeuteranope} &
-    \includegraphics[width=1.1in]{images/Blue2YellowDeuteranope} \\
+    \includegraphics[width=0.16\textwidth]{images/Cool2WarmDeuteranope} &
+    \includegraphics[width=0.16\textwidth]{images/RainbowDeuteranope} &
+    \includegraphics[width=0.16\textwidth]{images/GrayscaleDeuteranope} &
+    \includegraphics[width=0.16\textwidth]{images/BlackBodyDeuteranope} &
+    \includegraphics[width=0.16\textwidth]{images/Green2RedDeuteranope} &
+    \includegraphics[width=0.16\textwidth]{images/Blue2YellowDeuteranope} \\
 
-    \includegraphics[width=1.1in]{images/Cool2WarmShading} &
-    \includegraphics[width=1.1in]{images/RainbowShading} &
-    \includegraphics[width=1.1in]{images/GrayscaleShading} &
-    \includegraphics[width=1.1in]{images/BlackBodyShading} &
-    \includegraphics[width=1.1in]{images/Green2RedShading} &
-    \includegraphics[width=1.1in]{images/Blue2YellowShading}
+    \includegraphics[width=0.16\textwidth]{images/Cool2WarmShading} &
+    \includegraphics[width=0.16\textwidth]{images/RainbowShading} &
+    \includegraphics[width=0.16\textwidth]{images/GrayscaleShading} &
+    \includegraphics[width=0.16\textwidth]{images/BlackBodyShading} &
+    \includegraphics[width=0.16\textwidth]{images/Green2RedShading} &
+    \includegraphics[width=0.16\textwidth]{images/Blue2YellowShading}
   \end{tabular}
   \caption{Comparison of color map effectiveness.  The color maps are, from
     left to right, cool-warm, rainbow, grayscale, heated body, isoluminant,
@@ -1115,30 +1151,41 @@ demonstrated in Figure~\ref{fig:ColorMapInteraction}.
 Applying the design described in Section~\ref{sec:ColorMapDesign}, we can
 build the cool to warm color map shown in Figure~\ref{fig:Cool2WarmBar}.
 The control points, to be interpolated in \Msh space, are given in
-Table~\ref{table:Cool2Warm}.  Table~\ref{table:Cool2WarmRGB} gives example
-interpolated \RGB values for this color map.  \RGB values are computed from
-\Lab values using a D65 white point.
+Table~\ref{table:Cool2Warm}.
+\ifthenelse{\boolean{expanded}}{
+  Table~\ref{table:Cool2WarmRGB} gives example interpolated \RGB values for
+  this color map.  \RGB values are computed from \Lab values using a D65
+  white point.
+}{}
 
 \begin{table}
   \centering
   \caption{Cool to warm color map control points.}
   \begin{tabular}{c@{\qquad}ccc}
+    \hline\noalign{\smallskip}
     Color & M & s & h \\
+    \noalign{\smallskip}
     \hline
+    \noalign{\smallskip}
     Red & 80 & 1.08 & 0.5 \\
     White & 88 & 0 & 1.061/-1.661 \\
-    Blue & 80 & 1.08 & -1.1
+    Blue & 80 & 1.08 & -1.1 \\
+    \hline
   \end{tabular}
   \label{table:Cool2Warm}
 \end{table}
 
+\ifthenelse{\boolean{expanded}}{
 \begin{table}
   \centering
   \caption{Cool to warm color map \RGB values.}
   \begin{tabular}{r@{.}l@{\qquad}rrr}
+    \hline\noalign{\smallskip}
     \multicolumn{2}{c}{Scalar\qquad\qquad}
     		&	Red	&	Green	&	Blue	\\
+    \noalign{\smallskip}
     \hline
+    \noalign{\smallskip}
     0&0		&	59	&	76	&	192	\\
     0&03125	&	68	&	90	&	204	\\
     0&0625	&	77	&	104	&	215	\\
@@ -1156,6 +1203,16 @@ interpolated \RGB values for this color map.  \RGB values are computed from
     0&4375	&	204	&	217	&	238	\\
     0&46875	&	213	&	219	&	230	\\
     0&5		&	221	&	221	&	221	\\
+    \hline
+  \end{tabular}
+  \qquad
+  \begin{tabular}{r@{.}l@{\qquad}rrr}
+    \hline\noalign{\smallskip}
+    \multicolumn{2}{c}{Scalar\qquad\qquad}
+    		&	Red	&	Green	&	Blue	\\
+    \noalign{\smallskip}
+    \hline
+    \noalign{\smallskip}
     0&53125	&	229	&	216	&	209	\\
     0&5625	&	236	&	211	&	197	\\
     0&59375	&	241	&	204	&	185	\\
@@ -1171,10 +1228,13 @@ interpolated \RGB values for this color map.  \RGB values are computed from
     0&90625	&	213	&	80	&	66	\\
     0&9375	&	203	&	62	&	56	\\
     0&96875	&	192	&	40	&	47	\\
-    1&0		&	180	&	4	&	38
+    1&0		&	180	&	4	&	38      \\
+    \\
+    \hline
   \end{tabular}
   \label{table:Cool2WarmRGB}
 \end{table}
+}{}
 
 This diverging color map works admirably for all of our
 requirements outlined in
@@ -1214,23 +1274,32 @@ cool-warm map, which yields poorer results with low contrast.
 
 In addition, despite having a relatively large perceptual response, the
 color map still allows for a significant amount of annotation or visual
-components to be added, as shown in Figures
-\ref{fig:ColorMapWithAnnotation} and \ref{fig:ColorMapOnShuttle}.
+components to be added, as shown in Figure~\ref{fig:AnnotationExamples}.
+%Figures \ref{fig:ColorMapWithAnnotation} and \ref{fig:ColorMapOnShuttle}.
+
+%%% \begin{figure}
+%%%   \centering
+%%%   \includegraphics[width=\linewidth]{images/AnnotationExample}
+%%%   \caption{A terrain with the color map applied can still be annotated in
+%%%     multiple different ways.}
+%%%   \label{fig:ColorMapWithAnnotation}
+%%% \end{figure}
+
+%%% \begin{figure}
+%%%   \centering
+%%%   \includegraphics[width=\linewidth]{images/ShuttleExample}
+%%%   \caption{Shuttle body with color map applied coupled with annotation and
+%%%     streamlines.}
+%%%   \label{fig:ColorMapOnShuttle}
+%%% \end{figure}
 
 \begin{figure}
   \centering
-  \includegraphics[width=\linewidth]{images/AnnotationExample}
-  \caption{A terrain with the color map applied can still be annotated in
-    multiple different ways.}
-  \label{fig:ColorMapWithAnnotation}
-\end{figure}
-
-\begin{figure}
-  \centering
-  \includegraphics[width=\linewidth]{images/ShuttleExample}
-  \caption{Shuttle body with color map applied coupled with annotation and
-    streamlines.}
-  \label{fig:ColorMapOnShuttle}
+  \includegraphics[height=0.31\linewidth]{images/AnnotationExample}
+  \includegraphics[height=0.31\linewidth]{images/ShuttleExample}
+  \caption{Examples of using the color map in conjunction with multiple
+    other forms of annotation.}
+  \label{fig:AnnotationExamples}
 \end{figure}
 
 Using the techniques described in Section~\ref{sec:ColorMapDesign}, we can
@@ -1289,10 +1358,11 @@ specific meaning or for modifying the scaling of the colors.
 Although we have not been able to do user studies, the design of this color
 map is based on well established theories on color perception.  This map is
 a clear improvement over what is commonly used today, and I hope that many
-will follow in adopting it as the new standard.
+will follow in adopting it.
 
 
-\acknowledgements{
+\section{Acknowledgements}
+
 Thanks to Russell M. Taylor II for his help on color space and color map
 design.  Thanks to Patricia Crossno, Brian Wylie, Timothy Shead, and the
 ParaView development team for their critical comments and general
@@ -1302,10 +1372,9 @@ This work was done at Sandia National Laboratories.  Sandia is a
 multiprogram laboratory operated by Sandia Corporation, a Lockheed Martin
 Company, for the United States Department of Energy's National Nuclear
 Security Administration under contract DE-AC04-94AL85000.
-}
 
 
-\bibliographystyle{abbrv}
+\bibliographystyle{splncs}
 \bibliography{ColorMaps}
 
 \end{document}
