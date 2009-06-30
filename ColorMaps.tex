@@ -17,7 +17,7 @@
 
 % Booleans to control different ways to build this document.
 \newboolean{anonymous}
-\setboolean{anonymous}{true}
+\setboolean{anonymous}{false}
 
 \newboolean{expanded}
 \setboolean{expanded}{false}
@@ -523,7 +523,7 @@ visualization products and generating images.
 
 There are many color maps in existence today, but very few of them satisfy
 all of the requirements listed in Section~\ref{sec:ColorMapRequirements}.
-For inspiration, look at the field of cartography.  People
+For inspiration, we look at the field of cartography.  People
 have been making maps for thousands of years, and throughout this history
 there has been much focus on both the effectiveness of
 conveying information as well as the aesthetics of the design.
@@ -1320,18 +1320,23 @@ Figure~\ref{fig:OtherColorMaps}.
   \label{fig:OtherColorMaps}
 \end{figure}
 
-\sticky{A paragraph on distribution has been removed for anonymous review.}
-%% An implementation of the \proc{InterpolateColor} algorithm in
-%% Figure~\ref{fig:InterpolateColor} has been added to the
-%% \texttt{vtkColorTransferFunction} class in the Visualization Toolkit (VTK),
-%% a free, open-source scientific visualization
-%% library.\footnote{\href{http://www.vtk.org}{www.vtk.org}} This diverging
-%% color map interpolation has also been added to ParaView, a free, open-source
-%% end-user scientific visualization
-%% application.\footnote{\href{http://www.paraview.org}{www.paraview.org}}
-%% Any developers or users of scientific visualization software are encouraged
-%% to use these color map building tools for their own needs.
+  An implementation of using the \Msh color space to create diverging maps
+  has been added to the \texttt{vtkColorTransferFunction} class in the
+  Visualization Toolkit (VTK), a free, open-source scientific visualization
+  library.\footnote{\href{http://www.vtk.org}{www.vtk.org}} Any developers
+  or users of scientific visualization software are encouraged to use these
+  color map building tools for their own needs.
 
+  This diverging color map interpolation has also been added to ParaView, a
+  free, open-source end-user scientific visualization
+  application,\footnote{\href{http://www.paraview.org}{www.paraview.org}}
+  and was first featured in the 3.4 release in October 2008.  Although
+  ParaView does let users change the color map and there is no way to track
+  who does so, in our experience few users actually do this.  In the nearly
+  3000 messages on the ParaView users' mailing list from October 2008 to
+  July 2009, there was no mention of the change of color map from rainbow
+  to cool-warm diverging.  Users seem to have accepted the change with
+  little notice despite most users' affinity for rainbow color maps.
 
 \section{Discussion}
 \label{sec:Discussion}
@@ -1363,16 +1368,23 @@ will follow in adopting it.
 
 \section{Acknowledgements}
 
-Thanks to Russell M. Taylor II for his help on color space and color map
-design.  Thanks to Patricia Crossno, Brian Wylie, Timothy Shead, and the
-ParaView development team for their critical comments and general
-willingness to be guinea pigs.
+\ifthenelse{\boolean{anonymous}}{
 
-This work was done at Sandia National Laboratories.  Sandia is a
-multiprogram laboratory operated by Sandia Corporation, a Lockheed Martin
-Company, for the United States Department of Energy's National Nuclear
-Security Administration under contract DE-AC04-94AL85000.
+  \sticky{Acknowledgements removed for anonymous review.}
 
+}{
+
+  Thanks to Russell M. Taylor II for his help on color space and color map
+  design.  Thanks to Patricia Crossno, Brian Wylie, Timothy Shead, and the
+  ParaView development team for their critical comments and general
+  willingness to be guinea pigs.
+
+  This work was done at Sandia National Laboratories.  Sandia is a
+  multiprogram laboratory operated by Sandia Corporation, a Lockheed Martin
+  Company, for the United States Department of Energy's National Nuclear
+  Security Administration under contract DE-AC04-94AL85000.
+
+}
 
 \bibliographystyle{splncs}
 \bibliography{ColorMaps}
