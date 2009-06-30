@@ -106,20 +106,23 @@ us to pseudocolor an image or object based on varying numerical data.
 Obviously, the choice of color map is important to allow the viewer to
 easily perform the reverse mapping back to scalar values.
 
+\ifthenelse{\boolean{expanded}}{
 \begin{figure}
   \centering
   \includegraphics[width=2.5in]{images/RainbowBar}
   \caption{The rainbow color map.  Know thy enemy.}
   \label{fig:RainbowColorMap}
 \end{figure}
+}{}
 
 By far, the most common color map used in scientific visualization is the
-rainbow color map, shown in Figure~\ref{fig:RainbowColorMap}.  In a recent
-review on the use of color maps, Borland and Taylor\scite{Borland07} find
-that the rainbow color map was used as the default in 8 out of the 9
-toolkits they examined.  Borland and Taylor also find that in IEEE
-Visualization papers from 2001 to 2005 the rainbow color map is used 51
-percent of the time.
+rainbow color map\ifthenelse{\boolean{expanded}}{, shown in
+  Figure~\ref{fig:RainbowColorMap}}, which cycles through all of the most
+saturated colors.  In a recent review on the use of color maps, Borland and
+Taylor\scite{Borland07} find that the rainbow color map was used as the
+default in 8 out of the 9 toolkits they examined.  Borland and Taylor also
+find that in IEEE Visualization papers from 2001 to 2005 the rainbow color
+map is used 51 percent of the time.
 
 Despite its popularity, the rainbow color map has been shown to be a poor
 choice for a color map in nearly all problem domains.  This well-studied
@@ -1100,54 +1103,6 @@ demonstrated in Figure~\ref{fig:ColorMapInteraction}.
   \label{fig:Cool2WarmBar}
 \end{figure}
 
-\begin{figure*}
-  \centering
-  \begin{tabular}{c@{\,}c@{\,}c@{\,}c@{\,}c@{\,}c}
-    \includegraphics[width=0.16\textwidth]{images/Cool2WarmSpatialContrast} &
-    \includegraphics[width=0.16\textwidth]{images/RainbowSpatialContrast} &
-    \includegraphics[width=0.16\textwidth]{images/GrayscaleSpatialContrast} &
-    \includegraphics[width=0.16\textwidth]{images/BlackBodySpatialContrast} &
-    \includegraphics[width=0.16\textwidth]{images/Green2RedSpatialContrast} &
-    \includegraphics[width=0.16\textwidth]{images/Blue2YellowSpatialContrast} \\
-
-    \includegraphics[width=0.16\textwidth]{images/Cool2WarmLfSensitivity} &
-    \includegraphics[width=0.16\textwidth]{images/RainbowLfSensitivity} &
-    \includegraphics[width=0.16\textwidth]{images/GrayscaleLfSensitivity} &
-    \includegraphics[width=0.16\textwidth]{images/BlackBodyLfSensitivity} &
-    \includegraphics[width=0.16\textwidth]{images/Green2RedLfSensitivity} &
-    \includegraphics[width=0.16\textwidth]{images/Blue2YellowLfSensitivity} \\
-
-    \includegraphics[width=0.16\textwidth]{images/Cool2WarmHfNoise} &
-    \includegraphics[width=0.16\textwidth]{images/RainbowHfNoise} &
-    \includegraphics[width=0.16\textwidth]{images/GrayscaleHfNoise} &
-    \includegraphics[width=0.16\textwidth]{images/BlackBodyHfNoise} &
-    \includegraphics[width=0.16\textwidth]{images/Green2RedHfNoise} &
-    \includegraphics[width=0.16\textwidth]{images/Blue2YellowHfNoise} \\
-
-    \includegraphics[width=0.16\textwidth]{images/Cool2WarmDeuteranope} &
-    \includegraphics[width=0.16\textwidth]{images/RainbowDeuteranope} &
-    \includegraphics[width=0.16\textwidth]{images/GrayscaleDeuteranope} &
-    \includegraphics[width=0.16\textwidth]{images/BlackBodyDeuteranope} &
-    \includegraphics[width=0.16\textwidth]{images/Green2RedDeuteranope} &
-    \includegraphics[width=0.16\textwidth]{images/Blue2YellowDeuteranope} \\
-
-    \includegraphics[width=0.16\textwidth]{images/Cool2WarmShading} &
-    \includegraphics[width=0.16\textwidth]{images/RainbowShading} &
-    \includegraphics[width=0.16\textwidth]{images/GrayscaleShading} &
-    \includegraphics[width=0.16\textwidth]{images/BlackBodyShading} &
-    \includegraphics[width=0.16\textwidth]{images/Green2RedShading} &
-    \includegraphics[width=0.16\textwidth]{images/Blue2YellowShading}
-  \end{tabular}
-  \caption{Comparison of color map effectiveness.  The color maps are, from
-    left to right, cool-warm, rainbow, grayscale, heated body, isoluminant,
-    and blue-yellow.  The demonstrations are, from top to bottom, a spatial
-    contrast sensitivity function, a low-frequency sensitivity function,
-    high-frequency noise, an approximation of the color map viewed by
-    someone with deuteranope color-deficient vision (computed with
-    Vischeck), and 3D shading.}
-  \label{fig:MapComparison}
-\end{figure*}
-
 Applying the design described in Section~\ref{sec:ColorMapDesign}, we can
 build the cool to warm color map shown in Figure~\ref{fig:Cool2WarmBar}.
 The control points, to be interpolated in \Msh space, are given in
@@ -1243,6 +1198,54 @@ pleasing, the order of the colors is natural, the rate of change is
 perceptually linear, and the colors are still easily distinguished by those
 with dichromatic vision.  The map also has a good perceptual range and
 minimally interferes with shading.
+
+\begin{figure*}
+  \centering
+  \begin{tabular}{c@{\,}c@{\,}c@{\,}c@{\,}c@{\,}c}
+    \includegraphics[width=0.16\textwidth]{images/Cool2WarmSpatialContrast} &
+    \includegraphics[width=0.16\textwidth]{images/RainbowSpatialContrast} &
+    \includegraphics[width=0.16\textwidth]{images/GrayscaleSpatialContrast} &
+    \includegraphics[width=0.16\textwidth]{images/BlackBodySpatialContrast} &
+    \includegraphics[width=0.16\textwidth]{images/Green2RedSpatialContrast} &
+    \includegraphics[width=0.16\textwidth]{images/Blue2YellowSpatialContrast} \\
+
+    \includegraphics[width=0.16\textwidth]{images/Cool2WarmLfSensitivity} &
+    \includegraphics[width=0.16\textwidth]{images/RainbowLfSensitivity} &
+    \includegraphics[width=0.16\textwidth]{images/GrayscaleLfSensitivity} &
+    \includegraphics[width=0.16\textwidth]{images/BlackBodyLfSensitivity} &
+    \includegraphics[width=0.16\textwidth]{images/Green2RedLfSensitivity} &
+    \includegraphics[width=0.16\textwidth]{images/Blue2YellowLfSensitivity} \\
+
+    \includegraphics[width=0.16\textwidth]{images/Cool2WarmHfNoise} &
+    \includegraphics[width=0.16\textwidth]{images/RainbowHfNoise} &
+    \includegraphics[width=0.16\textwidth]{images/GrayscaleHfNoise} &
+    \includegraphics[width=0.16\textwidth]{images/BlackBodyHfNoise} &
+    \includegraphics[width=0.16\textwidth]{images/Green2RedHfNoise} &
+    \includegraphics[width=0.16\textwidth]{images/Blue2YellowHfNoise} \\
+
+    \includegraphics[width=0.16\textwidth]{images/Cool2WarmDeuteranope} &
+    \includegraphics[width=0.16\textwidth]{images/RainbowDeuteranope} &
+    \includegraphics[width=0.16\textwidth]{images/GrayscaleDeuteranope} &
+    \includegraphics[width=0.16\textwidth]{images/BlackBodyDeuteranope} &
+    \includegraphics[width=0.16\textwidth]{images/Green2RedDeuteranope} &
+    \includegraphics[width=0.16\textwidth]{images/Blue2YellowDeuteranope} \\
+
+    \includegraphics[width=0.16\textwidth]{images/Cool2WarmShading} &
+    \includegraphics[width=0.16\textwidth]{images/RainbowShading} &
+    \includegraphics[width=0.16\textwidth]{images/GrayscaleShading} &
+    \includegraphics[width=0.16\textwidth]{images/BlackBodyShading} &
+    \includegraphics[width=0.16\textwidth]{images/Green2RedShading} &
+    \includegraphics[width=0.16\textwidth]{images/Blue2YellowShading}
+  \end{tabular}
+  \caption{Comparison of color map effectiveness.  The color maps are, from
+    left to right, cool-warm, rainbow, grayscale, heated body, isoluminant,
+    and blue-yellow.  The demonstrations are, from top to bottom, a spatial
+    contrast sensitivity function, a low-frequency sensitivity function,
+    high-frequency noise, an approximation of the color map viewed by
+    someone with deuteranope color-deficient vision (computed with
+    Vischeck), and 3D shading.}
+  \label{fig:MapComparison}
+\end{figure*}
 
 Figure~\ref{fig:MapComparison} compares the cool-warm color map to some
 common alternatives as well as some recommended by
