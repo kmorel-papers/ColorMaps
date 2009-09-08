@@ -285,7 +285,7 @@ to do the reverse mapping from colors back to numbers.
   human visual system is most sensitive to changes in
   luminance\lcite{Mullen85,Ware04}.  However, a problem with using only
   luminance is that a human's perception of brightness is subject to the
-  brightness of the surrounding area (an effected called simultaneous
+  brightness of the surrounding area (an effect called simultaneous
   contrast\lcite{Stone05}).  Consequently, when asked to compare the
   luminance of two objects separated by distance and background, human
   subjects err up to 20\%\lcite{Ware88}.  Another problem with grayscale
@@ -662,29 +662,27 @@ operation and splitting up the $\cvec{c}$ function into its components
 ($\DeltaE\{\cvec{c_1},\cvec{c_2}\}$ $=\lVert\cvec{c_1}-\cvec{c_2}\rVert$
 $=\sqrtsign{\sum_i({c_1}_i-{c_2}_i)^2}$).
 
-\begin{equation}
-  \begin{split}
+\begin{gather}
     \ifthenelse{\boolean{expanded}}{
       { \lim_{\Delta x \rightarrow 0}
         \frac{\left\lVert \cvec{c}(x+\Delta x) - \cvec{c}(x) \right\rVert}
              {\Delta x}} \\
       { \lim_{\Delta x \rightarrow 0}
         \left\lVert \frac{\cvec{c}(x+\Delta x)- \cvec{c}(x)}
-	            {\Delta x} \right\rVert } \\
+	            {\Delta x} \right\rVert } \notag \\
     }{}
     { \lim_{\Delta x \rightarrow 0}
       \sqrtsign{ \sum_i \left( \frac
 	  {\operatorname{c}_i(x+\Delta x)
 	    - \operatorname{c}_i(x)}
-	  {\Delta x} \right)^2 } } \\
+	  {\Delta x} \right)^2 } } \notag \\
     {\sqrtsign{ \sum_i \left( \lim_{\Delta x \rightarrow 0}
        \frac
 	  {\operatorname{c}_i(x+\Delta x)
 	    - \operatorname{c}_i(x)}
 	  {\Delta x} \right)^2 } }
-  \end{split}
   \label{eqn:dE_limit}
-\end{equation}
+\end{gather}
 
 In the final form of Equation~\ref{eqn:dE_limit}, we can clearly see that
 the limit is the definition of a derivative.  So replacing the limit with a
@@ -794,27 +792,26 @@ To show that linear saturation changes in \Msh are perceptually linear, we
 plug Equation~\ref{eqn:s_linear} into Equation~\ref{eqn:dE} and resolve to
 show that perceptual changes are indeed constant.
 
-\begin{equation}
-  \begin{gathered}
-    \left\lVert M s_m \sin\operatorname{s}(x) \quad
+\begin{align}
+  \left\lVert \cvec{c}'(x) \right\rVert
+    &= \left\lVert M s_m \sin\operatorname{s}(x) \quad
         M s_m \cos\operatorname{s}(x) \cos h \quad
-        M s_m \cos\operatorname{s}(x) \sin(h) \right\rVert \\
+        M s_m \cos\operatorname{s}(x) \sin(h) \right\rVert \notag \\
     \ifthenelse{\boolean{expanded}}{
-      \sqrtsign{ M^2 s_m^2 \left( \sin^2 \operatorname{s}(x)
+      &= \sqrtsign{ M^2 s_m^2 \left( \sin^2 \operatorname{s}(x)
         + \cos^2 \operatorname{s}(x) \cos^2 h
-        + \cos^2 \operatorname{s}(x) \sin^2 h \right) } \\
+        + \cos^2 \operatorname{s}(x) \sin^2 h \right) } \notag \\
     }{}
-    \sqrtsign{ M^2 s_m^2 \left( \sin^2 \operatorname{s}(x)
+    &= \sqrtsign{ M^2 s_m^2 \left( \sin^2 \operatorname{s}(x)
         + \cos^2 \operatorname{s}(x) \left( \cos^2 h
-          + \sin^2 h \right) \right) } \\
+          + \sin^2 h \right) \right) } \notag \\
     \ifthenelse{\boolean{expanded}}{
-      \sqrtsign{ M^2 s_m^2 \left( \sin^2 \operatorname{s}(x)
-        + \cos^2 \operatorname{s}(x) \right) } \\
+      &= \sqrtsign{ M^2 s_m^2 \left( \sin^2 \operatorname{s}(x)
+        + \cos^2 \operatorname{s}(x) \right) } \notag \\
     }{}
-    M s_m
+    &= M s_m
     \label{eqn:s_linear_uniform}
-  \end{gathered}
-\end{equation}
+\end{align}
 
 Clearly Equation~\ref{eqn:s_linear_uniform} resolves to a constant and
 therefore meets our criterion for a ``uniform'' color space.  There is
@@ -882,7 +879,10 @@ conveniently define the rate of change.)
   }{
     \includegraphics[height=1.5in]{images/MshDeltaMovements}
   }
-  \caption{A small linear movement in \Msh space}
+  \caption{A small linear movement in \Msh space.  The three axes, $L*$,
+    $a*$, and $b*$, refer to the three dimensions in \Lab space.  Linear
+    movements in \Msh space (a polar version of \Lab) result in nonlinear
+    movements of the \Lab coordinates.}
   \label{sec:LinearMshMovement}
 \end{figure}
 
@@ -937,8 +937,8 @@ determine a good hue to use for the white point (from the given side).
 Note that Equation~\ref{eqn:adjusted_hu} will most certainly yield a
 different value for each of the saturated colors used in the diverging
 color map.  The direction in which the hue is ``spun'' is unimportant with
-regard to perception.  I usually adjust the hue to be away from 0 (except
-in the purple hues) because it provides slightly more aesthetically
+regard to perception.  The examples here adjust the hue to be away from 0
+(except in the purple hues) because it provides slightly more aesthetically
 pleasing results.
 \ifthenelse{\boolean{expanded}}{
 Figure~\ref{fig:AdjustHue} gives a simple algorithm for
