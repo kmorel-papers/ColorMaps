@@ -22,6 +22,9 @@
 \newboolean{expanded}
 \setboolean{expanded}{false}
 
+\newboolean{colorplate}
+\setboolean{colorplate}{true}
+
 
 \ifthenelse{\boolean{expanded}}{
   \title{Diverging Color Maps for Scientific Visualization (Expanded)}
@@ -48,6 +51,10 @@
 % Put figures inline with text when possible
 \usepackage{float}
 \floatplacement{figure}{htb}
+
+\ifthenelse{\boolean{colorplate}}
+           {\usepackage{plates}}
+           {\usepackage[figures]{plates}}
 
 % Avoid putting figures on their own page.
 \renewcommand{\textfraction}{0.05}
@@ -117,7 +124,7 @@ easily perform the reverse mapping back to scalar values.
 
 By far, the most common color map used in scientific visualization is the
 rainbow color map\ifthenelse{\boolean{expanded}}{, shown in
-  Figure~\ref{fig:RainbowColorMap}}, which cycles through all of the most
+  \autoref{fig:RainbowColorMap}}, which cycles through all of the most
 saturated colors.  In a recent review on the use of color maps, Borland and
 Taylor\scite{Borland07} find that the rainbow color map was used as the
 default in 8 out of the 9 toolkits they examined.  Borland and Taylor also
@@ -186,7 +193,7 @@ to do the reverse mapping from colors back to numbers.
   larger bands of color.  These bands can hide important changes in the
   underlying data.  Thus, nonuniform perceptual changes simultaneously
   introduce artifacts and obfuscate real data\lcite{Borland07}.  This is
-  demonstrated in Figure~\ref{fig:RainbowSpatialContrast}.
+  demonstrated in \autoref{fig:RainbowSpatialContrast}.
 
   \begin{figure}
     \centering
@@ -233,7 +240,7 @@ to do the reverse mapping from colors back to numbers.
   \end{figure}
 
   Better color maps exist.  A very simple one is the grayscale color map
-  shown in Figure~\ref{fig:GrayscaleColorMap}.  Completely devoid of any
+  shown in \autoref{fig:GrayscaleColorMap}.  Completely devoid of any
   chromaticity, this map relies entirely on luminance to demonstrate the
   numerical value.  Although a very simple map to create and use, this map
   is surprisingly effective as the human visual system is most sensitive to
@@ -259,7 +266,7 @@ to do the reverse mapping from colors back to numbers.
   surrounding area.  Thus, when asked to compare the luminance of two
   objects separated by distance and background, human subjects err up to
   20\%\lcite{Ware88}.  This effect, demonstrated in
-  Figure~\ref{fig:SimultaneousContrast}, is called simultaneous
+  \autoref{fig:SimultaneousContrast}, is called simultaneous
   contrast\lcite{Stone05}. Adding a chromaticity shift helps, but does not
   fix the problem entirely.  A chromatic shift also has the possitive side
   effect of increasing the dynamic range of the color map.
@@ -271,7 +278,7 @@ to do the reverse mapping from colors back to numbers.
   almost entirely of luminance shifts.  Thus the luminance shift of the
   grayscale color map masks the surface luminance shifts, especially in the
   darker part of the map, as demonstrated in
-  Figure~\ref{fig:LuminanceVsShading}.  The problem cannot be corrected
+  \autoref{fig:LuminanceVsShading}.  The problem cannot be corrected
   without a major reduction in the range that the luminance shifts in the
   color map.
 
@@ -327,11 +334,11 @@ to do the reverse mapping from colors back to numbers.
 
   A type of color map that is often suggested for use with 3D surfaces is
   an isoluminant color map such as those demonstrated in
-  Figure~\ref{fig:IsoluminantColorMap}.  Somewhat opposite to the grayscale
+  \autoref{fig:IsoluminantColorMap}.  Somewhat opposite to the grayscale
   map, an isoluminant map maintains a constant (perceptual) luminance and
   relies entirely on chromatic shifts.  An isoluminant color map is
   theoretically ideal for mapping onto shaded surfaces, as is demonstrated
-  in Figure~\ref{fig:LuminanceVsShading}.
+  in \autoref{fig:LuminanceVsShading}.
 
   Isoluminant color maps are not without their flaws, however.  Human
   perception is less sensitive to changes in saturation or hue than changes
@@ -550,7 +557,7 @@ are also available on her web site:
 
   Brewer divides her color maps into three classes: qualitative, sequential,
   and diverging.  Examples of these color maps are shown in
-  Figure~\ref{fig:BrewerExamples}.  The qualitative color maps (also known as
+  \autoref{fig:BrewerExamples}.  The qualitative color maps (also known as
   nominal color maps\lcite{Ware04}) are used to represent a collection of
   discrete, unordered classes.  Since the colors have no ordering (by
   design), they are not appropriate for mapping a scalar variable.
@@ -709,7 +716,7 @@ is not entirely possible to do for diverging color maps.  Lines from red to
 blue will not go through white.  A piecewise linear interpolation is mostly
 effective, but can create an artificial Mach band at white where the
 luminance sharply transitions from increasing to decreasing as demonstrated
-in Figure~\ref{fig:LinearMachBands}.
+in \autoref{fig:LinearMachBands}.
 
 \begin{figure}
   \centering
@@ -821,7 +828,7 @@ noticeable.  And unlike the piecewise linear interpolation in \Lab space,
 this piecewise linear interpolation in \Msh space results in a smooth
 change in luminance throughout the entire color
 map\ifthenelse{\boolean{expanded}}{, as evidenced in
-  Figure~\ref{fig:s_plot}}{}.
+  \autoref{fig:s_plot}}{}.
 
 \ifthenelse{\boolean{expanded}}{
 \begin{figure}
@@ -886,7 +893,7 @@ conveniently define the rate of change.)
   \label{sec:LinearMshMovement}
 \end{figure}
 
-Figure~\ref{sec:LinearMshMovement} shows how a small movement in this
+\autoref{sec:LinearMshMovement} shows how a small movement in this
 linear \Msh function behaves in \Lab space.  The distance measurements take
 advantage of the property that if you rotate a vector of radius $r$ by some
 small angle $\Delta\alpha$, then the change in the vector is
@@ -941,7 +948,7 @@ regard to perception.  The examples here adjust the hue to be away from 0
 (except in the purple hues) because it provides slightly more aesthetically
 pleasing results.
 \ifthenelse{\boolean{expanded}}{
-Figure~\ref{fig:AdjustHue} gives a simple algorithm for
+\autoref{fig:AdjustHue} gives a simple algorithm for
 adjusting the hue.
 
 \begin{figure}
@@ -979,9 +986,9 @@ adjusting the hue.
   \label{fig:hue_spin_plot}
 \end{figure}
 
-Figure~\ref{fig:hue_spin_plot} shows the effects of applying a hue spin.
+\autoref{fig:hue_spin_plot} shows the effects of applying a hue spin.
 The plot is smooth, perceptually uniform, and comparable to the plot given
-in Figure~\ref{fig:s_plot}.  In addition, the hue spin allows the entire
+in \autoref{fig:s_plot}.  In addition, the hue spin allows the entire
 curve to remain in the gamut of displayable colors.
 }{}
 
@@ -1028,7 +1035,7 @@ curve to remain in the gamut of displayable colors.
   \label{fig:InterpolateColor}
 \end{figure}
 
-The \proc{InterpolateColor} algorithm in Figure~\ref{fig:InterpolateColor}
+The \proc{InterpolateColor} algorithm in \autoref{fig:InterpolateColor}
 combines the techniques described previously in this section.  The
 algorithm simplifies the process of building a continuous diverging color
 map by allowing a user to define colors at control points.
@@ -1052,14 +1059,14 @@ $0.05$ radians) and similar hue angles (less than $\frac{\pi}{3}$ radians)
 is somewhat arbitrary, but the values provided here work well in practice.}
 If either control point is unsaturated, its hue is adjusted
 (lines~\ref{code:InterpolateColor:AdjustHueBegin}--\ref{code:InterpolateColor:AdjustHueEnd})
-using the \proc{AdjustHue} function in Figure~\ref{fig:AdjustHue}.
+using the \proc{AdjustHue} function in \autoref{fig:AdjustHue}.
 Finally, the two \Msh colors are linearly interpolated
 (line~\ref{code:InterpolateColor:LinearInterpolate}).  The result is
 converted back to \RGB and returned.
 
 The \proc{InterpolateColor} algorithm makes it easy for users to build and
 modify continuous diverging color maps using \RGB control points as
-demonstrated in Figure~\ref{fig:ColorMapInteraction}.
+demonstrated in \autoref{fig:ColorMapInteraction}.
 
 \begin{figure}
   \centering
@@ -1095,20 +1102,20 @@ demonstrated in Figure~\ref{fig:ColorMapInteraction}.
 \section{Results}
 \label{sec:Results}
 
-\begin{figure}
+\begin{plate}
   \centering
   \includegraphics[width=2.5in]{images/Cool2WarmBar}
   \caption{A continuous diverging color map that is well suited to scientific
     visualization.}
   \label{fig:Cool2WarmBar}
-\end{figure}
+\end{plate}
 
 Applying the design described in Section~\ref{sec:ColorMapDesign}, we can
-build the cool to warm color map shown in Figure~\ref{fig:Cool2WarmBar}.
+build the cool to warm color map shown in \autoref{fig:Cool2WarmBar}.
 The control points, to be interpolated in \Msh space, are given in
-Table~\ref{table:Cool2Warm}.
+\autoref{table:Cool2Warm}.
 \ifthenelse{\boolean{expanded}}{
-  Table~\ref{table:Cool2WarmRGB} gives example interpolated \RGB values for
+  \autoref{table:Cool2WarmRGB} gives example interpolated \RGB values for
   this color map.  \RGB values are computed from \Lab values using a D65
   white point.
 }{}
@@ -1199,7 +1206,7 @@ perceptually linear, and the colors are still easily distinguished by those
 with dichromatic vision.  The map also has a good perceptual range and
 minimally interferes with shading.
 
-\begin{figure*}
+\begin{plate*}
   \centering
   \begin{tabular}{c@{\,}c@{\,}c@{\,}c@{\,}c@{\,}c}
     \includegraphics[width=0.16\textwidth]{images/Cool2WarmSpatialContrast} &
@@ -1245,9 +1252,9 @@ minimally interferes with shading.
     someone with deuteranope color-deficient vision (computed with
     Vischeck), and 3D shading.}
   \label{fig:MapComparison}
-\end{figure*}
+\end{plate*}
 
-Figure~\ref{fig:MapComparison} compares the cool-warm color map to some
+\autoref{fig:MapComparison} compares the cool-warm color map to some
 common alternatives as well as some recommended by
 Rheingans\scite{Rheingans99} and Ware\scite{Ware04}.  The cool-warm color
 map works well in all the cases demonstrated here.  The rainbow color map
@@ -1260,7 +1267,7 @@ most people with color-deficient vision.  The blue-yellow map works
 reasonably well in all these cases, but has a lower resolution than the
 cool-warm map, which yields poorer results with low contrast.
 
-%% , as demonstrated in Figure~\ref{fig:Cool2WarmResponse}.
+%% , as demonstrated in \autoref{fig:Cool2WarmResponse}.
 %% Using our initial criteria, we can think of a diverging color map as
 %% ``locally'' optimal.  We cannot add or modify any color anywhere in the map
 %% without degrading one or more of the requirements.
@@ -1277,7 +1284,7 @@ cool-warm map, which yields poorer results with low contrast.
 
 In addition, despite having a relatively large perceptual response, the
 color map still allows for a significant amount of annotation or visual
-components to be added, as shown in Figure~\ref{fig:AnnotationExamples}.
+components to be added, as shown in \autoref{fig:AnnotationExamples}.
 %Figures \ref{fig:ColorMapWithAnnotation} and \ref{fig:ColorMapOnShuttle}.
 
 %%% \begin{figure}
@@ -1296,20 +1303,20 @@ components to be added, as shown in Figure~\ref{fig:AnnotationExamples}.
 %%%   \label{fig:ColorMapOnShuttle}
 %%% \end{figure}
 
-\begin{figure}
+\begin{plate}
   \centering
   \includegraphics[height=0.31\linewidth]{images/AnnotationExample}
   \includegraphics[height=0.31\linewidth]{images/ShuttleExample}
   \caption{Examples of using the color map in conjunction with multiple
     other forms of annotation.}
   \label{fig:AnnotationExamples}
-\end{figure}
+\end{plate}
 
 Using the techniques described in Section~\ref{sec:ColorMapDesign}, we can
 also design continuous diverging color maps with different colors.  Such
 color maps may be useful in domain-specific situations when colors have
 specific meaning.  Some examples are given in
-Figure~\ref{fig:OtherColorMaps}.
+\autoref{fig:OtherColorMaps}.
 
 \begin{figure}
   \centering
