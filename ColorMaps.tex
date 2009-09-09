@@ -44,10 +44,6 @@
 % Make fonts slightly bigger for equations to make them easier to read.
 \DeclareMathSizes{9}{9}{7}{6}
 
-% Commands I use for citing.
-\newcommand{\lcite}[1]{~\cite{#1}}
-\newcommand{\scite}[1]{~\cite{#1}}
-
 % Put figures inline with text when possible
 \usepackage{float}
 \floatplacement{figure}{htb}
@@ -126,7 +122,7 @@ By far, the most common color map used in scientific visualization is the
 rainbow color map\ifthenelse{\boolean{expanded}}{, shown in
   \autoref{fig:RainbowColorMap}}, which cycles through all of the most
 saturated colors.  In a recent review on the use of color maps, Borland and
-Taylor\scite{Borland07} find that the rainbow color map was used as the
+Taylor~\cite{Borland07} find that the rainbow color map was used as the
 default in 8 out of the 9 toolkits they examined.  Borland and Taylor also
 find that in IEEE Visualization papers from 2001 to 2005 the rainbow color
 map is used 51 percent of the time.
@@ -134,7 +130,7 @@ map is used 51 percent of the time.
 Despite its popularity, the rainbow color map has been shown to be a poor
 choice for a color map in nearly all problem domains.  This well-studied
 field of perception shows that the rainbow color map obfuscates, rather
-than clarifies, the display of data in a variety of ways\lcite{Borland07}.
+than clarifies, the display of data in a variety of ways~\cite{Borland07}.
 The choice of a color map can be a complicated decision that depends on the
 visualization type and problem domain, but the rainbow color map is a poor
 choice for almost all of them.
@@ -142,7 +138,7 @@ choice for almost all of them.
 One of the major contributors to the dominance of the rainbow color map is the
 lack of a clear alternative, especially in terms of scientific
 visualization.  There are many publications that recommend
-very good choices for color maps\lcite{Brewer05,Levkowitz92,Rheingans99,Ware04}.
+very good choices for color maps~\cite{Brewer05,Levkowitz92,Rheingans99,Ware04}.
 However, each candidate has its features and flaws, and the choice of
 the ``right'' one is difficult.  The conclusion of
 all these publications is to pick from a variety of color maps for the best
@@ -184,7 +180,7 @@ to do the reverse mapping from colors back to numbers.
   ordering.  Perceptual experiments show that although a test subject with
   no prior training will always order grayscale colors in order of
   luminance (in one direction or the other), the test subjects will order
-  rainbow colors in numerous different ways\lcite{Ware04}.
+  rainbow colors in numerous different ways~\cite{Ware04}.
 
   The second problem is that the perceptual changes in the colors are not
   uniform.  The colors appear to change faster in the cyan and yellow
@@ -192,7 +188,7 @@ to do the reverse mapping from colors back to numbers.
   to change more slowly in the blue, green, and red regions, which creates
   larger bands of color.  These bands can hide important changes in the
   underlying data.  Thus, nonuniform perceptual changes simultaneously
-  introduce artifacts and obfuscate real data\lcite{Borland07}.  This is
+  introduce artifacts and obfuscate real data~\cite{Borland07}.  This is
   demonstrated in \autoref{fig:RainbowSpatialContrast}.
 
   \begin{figure}
@@ -213,21 +209,21 @@ to do the reverse mapping from colors back to numbers.
   deficiencies in vision.  Roughly 5\% of the population cannot distinguish
   between the red and green colors.  Viewers with color deficiencies cannot
   distinguish many colors considered ``far apart'' in the rainbow color
-  map\lcite{Light04}.
+  map~\cite{Light04}.
 
 }{
 
   First, the colors do not follow any natural
   perceived ordering.  Perceptual experiments show that test subjects will
-  order rainbow colors in numerous different ways\lcite{Ware04}.  Second,
+  order rainbow colors in numerous different ways~\cite{Ware04}.  Second,
   perceptual changes in the colors are not uniform.  The colors appear to
   change faster in the cyan and yellow regions than in the blue, green, and
   red regions.  These nonuniform perceptual changes simultaneously
-  introduce artifacts and obfuscate real data\lcite{Borland07}.  Third, the
+  introduce artifacts and obfuscate real data~\cite{Borland07}.  Third, the
   colors are sensitive to deficiencies in vision.  Roughly 5\% of the
   population cannot distinguish between the red and green colors.  Viewers
   with color deficiencies cannot distinguish many colors considered ``far
-  apart'' in the rainbow color map\lcite{Light04}.
+  apart'' in the rainbow color map~\cite{Light04}.
 
 }
 
@@ -244,7 +240,7 @@ to do the reverse mapping from colors back to numbers.
   chromaticity, this map relies entirely on luminance to demonstrate the
   numerical value.  Although a very simple map to create and use, this map
   is surprisingly effective as the human visual system is most sensitive to
-  changes in luminance\lcite{Mullen85,Ware04}.  The grayscale color map is
+  changes in luminance~\cite{Mullen85,Ware04}.  The grayscale color map is
   used heavily in the image processing and medical visualization fields.
 
   \begin{figure}
@@ -265,9 +261,9 @@ to do the reverse mapping from colors back to numbers.
   human's perception of brightness is subject to the brightness of the
   surrounding area.  Thus, when asked to compare the luminance of two
   objects separated by distance and background, human subjects err up to
-  20\%\lcite{Ware88}.  This effect, demonstrated in
+  20\%~\cite{Ware88}.  This effect, demonstrated in
   \autoref{fig:SimultaneousContrast}, is called simultaneous
-  contrast\lcite{Stone05}. Adding a chromaticity shift helps, but does not
+  contrast~\cite{Stone05}. Adding a chromaticity shift helps, but does not
   fix the problem entirely.  A chromatic shift also has the possitive side
   effect of increasing the dynamic range of the color map.
 
@@ -290,12 +286,12 @@ to do the reverse mapping from colors back to numbers.
   the image processing and medical visualization fields.  Although a very
   simple map to create and use, this map is surprisingly effective as the
   human visual system is most sensitive to changes in
-  luminance\lcite{Mullen85,Ware04}.  However, a problem with using only
+  luminance~\cite{Mullen85,Ware04}.  However, a problem with using only
   luminance is that a human's perception of brightness is subject to the
   brightness of the surrounding area (an effect called simultaneous
-  contrast\lcite{Stone05}).  Consequently, when asked to compare the
+  contrast~\cite{Stone05}).  Consequently, when asked to compare the
   luminance of two objects separated by distance and background, human
-  subjects err up to 20\%\lcite{Ware88}.  Another problem with grayscale
+  subjects err up to 20\%~\cite{Ware88}.  Another problem with grayscale
   maps and others that rely on large luminance changes is that the
   luminance shifts interfear with the interpretation of shading on 3D
   surfaces.  This effect is particularly predominant in the dark regions of
@@ -342,7 +338,7 @@ to do the reverse mapping from colors back to numbers.
 
   Isoluminant color maps are not without their flaws, however.  Human
   perception is less sensitive to changes in saturation or hue than changes
-  in luminance, especially for high frequency data\lcite{Rogowitz96}.
+  in luminance, especially for high frequency data~\cite{Rogowitz96}.
   Holding the luminance constant also restricts the colors that can be
   represented.  Thus, the isoluminant color map will have a lower fidelity
   than one in which the luminance is allowed to change.  Isoluminant color
@@ -357,12 +353,12 @@ to do the reverse mapping from colors back to numbers.
   isoluminant color map is theoretically ideal for mapping onto shaded
   surfaces.  However, human perception is less sensitive to changes in
   saturation or hue than changes in luminance, espeically for high
-  frequency data\lcite{Rogowitz96}.
+  frequency data~\cite{Rogowitz96}.
 
 }
 
 These color maps comprise those most commonly used in the literature and
-tools today.  Other color maps are proposed by Ware\scite{Ware04} as well
+tools today.  Other color maps are proposed by Ware~\cite{Ware04} as well
 as several others.  Most are similar in spirit to those here with uniform
 changes in luminance, saturation, hue, or some combination thereof.
 
@@ -371,12 +367,12 @@ changes in luminance, saturation, hue, or some combination thereof.
 
 All color spaces are based on the tristimulus theory, which states that any
 perceived color can be uniquely represented by a
-3-tuple\lcite{Stone03}.  This result is a side effect
+3-tuple~\cite{Stone03}.  This result is a side effect
 of the fact that there are exactly 3 different types of color receptors in
 the human eye.  Limited space prevents more than a few applicable additive
 color spaces from being listed here.  Any textbook on color will provide
 more spaces in more detail\ifthenelse{\boolean{expanded}}{}{ with
-  conversions between them}\lcite{Stone03,Wyszecki82}.
+  conversions between them}~\cite{Stone03,Wyszecki82}.
 
 The color space most frequently used in computer applications is the \RGB
 color space.  This color space is adopted by many graphics packages such as
@@ -387,18 +383,18 @@ used in a monitor, television, or projector.
 
 Although it is often convenient to use \RGB to specify colors in terms of
 the output medium, the display may have nonlinearities that interfere with
-the blending and interpolation of colors\lcite{Stone03}.  When computing
+the blending and interpolation of colors~\cite{Stone03}.  When computing
 physical light effects, it is best to use a color space defined by the
 physical properties of light.  \XYZ is a widely used color space defined by
 physical light spectra.
 \ifthenelse{\boolean{expanded}}{
   This conversion can be particularly difficult due to differences between
   displays that make the color definition somewhat
-  ambiguous\lcite{Fortner97}.  For the purposes of this paper, we will
+  ambiguous~\cite{Fortner97}.  For the purposes of this paper, we will
   assume the \RGB space conforms to the canonical monitor defined by the
   sRGB specification, a standard of the International Electrotechnical
   Commission (IEC 61966-2-1) that is widely used by many color management
-  programs\lcite{Stone03}.  The conversion from the sRGB components to \RGB
+  programs~\cite{Stone03}.  The conversion from the sRGB components to \RGB
   components with physically linear properties is given in
   Equation~\ref{eqn:sRGB2linearRGB}.
 
@@ -476,7 +472,7 @@ arbitrary; this paper uses \Lab.
 \Lab is an approximation of how humans perceive light.  The Euclidean
 distance between two points is the approximate perceived difference between
 the two colors.  This Euclidean distance in \Lab space is known as \DeltaE
-and makes a reasonable metric for comparing color differences\lcite{Wyszecki82}.
+and makes a reasonable metric for comparing color differences~\cite{Wyszecki82}.
 This paper uses the notation $\DeltaE\{\cvec{c_1},\cvec{c_2}\}$ to denote
 the \DeltaE for the pair of colors $\cvec{c_1}$ and $\cvec{c_2}$.
 
@@ -488,7 +484,7 @@ Our ultimate goal is to design a color map that works well for
 general-purpose scientific visualization and a wide
 variety of tasks and users.  As such we have the following requirements.
 These criteria conform to many of those proposed
-previously\lcite{Fortner97,Levkowitz92,Light04}.
+previously~\cite{Fortner97,Levkowitz92,Light04}.
 
 \begin{itemize}
 \item The map yields images that are aesthetically pleasing.
@@ -537,7 +533,7 @@ For inspiration, we look at the field of cartography.  People
 have been making maps for thousands of years, and throughout this history
 there has been much focus on both the effectiveness of
 conveying information as well as the aesthetics of the design.
-Brewer\scite{Brewer05} provides excellent advice for designing cartographic
+Brewer~\cite{Brewer05} provides excellent advice for designing cartographic
 color maps and many well-designed examples.\footnote{Brewer's color maps
 are also available on her web site:
 \href{http://www.colorbrewer.org}{www.colorbrewer.org}.}
@@ -551,19 +547,19 @@ are also available on her web site:
     \subfigure[Sequential]{\includegraphics{images/ColorMapsSequential}}
     \quad
     \subfigure[Diverging]{\includegraphics{images/ColorMapsDiverging}}
-    \caption{Examples of color maps from Brewer\scite{Brewer05}.}
+    \caption{Examples of color maps from Brewer~\cite{Brewer05}.}
     \label{fig:BrewerExamples}
   \end{figure}
 
   Brewer divides her color maps into three classes: qualitative, sequential,
   and diverging.  Examples of these color maps are shown in
   \autoref{fig:BrewerExamples}.  The qualitative color maps (also known as
-  nominal color maps\lcite{Ware04}) are used to represent a collection of
+  nominal color maps~\cite{Ware04}) are used to represent a collection of
   discrete, unordered classes.  Since the colors have no ordering (by
   design), they are not appropriate for mapping a scalar variable.
 
-  The sequential color maps (also known as ordinal\lcite{Ware04} or
-  saturation\lcite{Rheingans99} color maps) are (nearly) monochromatic.  They
+  The sequential color maps (also known as ordinal~\cite{Ware04} or
+  saturation~\cite{Rheingans99} color maps) are (nearly) monochromatic.  They
   range from a heavily saturated color to various levels of unsaturation.
   Luminance is also often increased as saturation is decreased so that the
   color map terminates in a color at or close to white.  The monotonic nature
@@ -576,14 +572,14 @@ are also available on her web site:
   % represented temperature, it would be more natural to represent the highest
   % temperature with the most saturated color.
 
-  The diverging color maps (also known as ratio\lcite{Ware04},
-  bipolar\lcite{Spence01}, or double-ended\lcite{Rheingans99}) have two major
+  The diverging color maps (also known as ratio~\cite{Ware04},
+  bipolar~\cite{Spence01}, or double-ended~\cite{Rheingans99}) have two major
   color components.  The map transitions from one color component to the
   other by passing through an unsaturated color (white or yellow).  Diverging
   color maps are typically used to represent a scalar with a significant
   value at or near the median.  For example, a color map for elevation could
   put sea level at white with below sea level in blue and above sea level in
-  tan\lcite{Tufte97}.  The ordering of the colors is usually based on the
+  tan~\cite{Tufte97}.  The ordering of the colors is usually based on the
   context within which they are used.
 
   Sequential color maps are clearly appropriate for scientific visualization.
@@ -605,8 +601,8 @@ are also available on her web site:
 }{ % ifthenelse expanded
 
   This paper is most interested in the diverging class of color maps (also
-  known as ratio\lcite{Ware04}, bipolar\lcite{Spence01}, or
-  double-ended\lcite{Rheingans99}).  Diverging color maps have two major
+  known as ratio~\cite{Ware04}, bipolar~\cite{Spence01}, or
+  double-ended~\cite{Rheingans99}).  Diverging color maps have two major
   color components.  The map transitions from one color component to the
   other by passing through an unsaturated color (white or yellow).
 
@@ -627,9 +623,9 @@ concept of ``cool'' and ``warm'' colors.
 Studies show that people identify red and yellow colors as warm and blue and
 blue-green colors as cool across subjects, contexts, and
 cultures.  Furthermore, people associate warmth with positive activation
-and coolness with negative activation\lcite{Hardin97}.  Consequently,
+and coolness with negative activation~\cite{Hardin97}.  Consequently,
 mapping cool blues to low values and warm reds to high values is
-natural\lcite{Fortner97}.
+natural~\cite{Fortner97}.
 
 
 \subsection{Perceptual Uniformity}
@@ -1256,7 +1252,7 @@ minimally interferes with shading.
 
 \autoref{fig:MapComparison} compares the cool-warm color map to some
 common alternatives as well as some recommended by
-Rheingans\scite{Rheingans99} and Ware\scite{Ware04}.  The cool-warm color
+Rheingans~\cite{Rheingans99} and Ware~\cite{Ware04}.  The cool-warm color
 map works well in all the cases demonstrated here.  The rainbow color map
 exhibits problems with irregular perception and sensitivity to color
 deficiencies.  The grayscale and heated-body color maps work poorly in
